@@ -17,17 +17,4 @@
 <xi:include href='ch04.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
 <xi:include href='ch05.xml'
 	    xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='ch06.xml'
-	    xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='ch07.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='ch09.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='ch08.xml'
-	    xmlns:xi='http://www.w3.org/2001/XInclude'/>
-
-
-
-<xi:include href='appa.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='appc.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='appd.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
-<xi:include href='appb.xml' xmlns:xi='http://www.w3.org/2001/XInclude'/>
 </book>
