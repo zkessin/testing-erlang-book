@@ -1,0 +1,27 @@
+<!DOCTYPE bookinfo PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN' 'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
+<bookinfo>
+
+  <!-- All rights reserved. -->
+  <publisher>
+    <publishername>O&#x2019;Reilly Media, Inc.    </publishername>
+    <address format='linespecific'>
+      <street>1005 Gravenstein Highway North</street>
+      <city>Sebastopol</city>
+      <state>CA</state>
+      <postcode>95472</postcode>
+    </address>
+  </publisher>
+
+<isbn></isbn>
+  <edition>1</edition>
+  <author><firstname>Zachary</firstname><surname>Kessin</surname>
+    <authorblurb><para>Zachary Kessin has been working on developing interactive web applications since 1994. In the last few years Zachary&apos;s focus has been on building complex applications in the browser with Javascript, browser-based testing with Selenium, functional programming, and code generation.</para></authorblurb></author>
+  <editor><firstname>Simon</firstname><surname>St. Laurent</surname></editor>
+  <editor role='production'><firstname/><surname/></editor>
+  <editor role='copy'><firstname/><surname/></editor>
+  <othercredit role='indexer'><firstname/><surname/></othercredit>
+  <othercredit role='coverdesigner'><firstname/><surname/></othercredit>
+  <revhistory>
+  </revhistory>
+  <legalnotice role='perfect'><para></para></legalnotice>
+</bookinfo>

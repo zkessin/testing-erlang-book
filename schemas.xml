@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">  
+  <uri resource="book.xml"	typeId="DocBook"/>
+  <uri resource="ch00.xml"	typeId="DocBook"/>
+  <uri resource="ch01.xml"	typeId="DocBook"/>
+  <uri resource="ch02.xml"	typeId="DocBook"/>
+  <uri resource="ch03.xml"	typeId="DocBook"/>
+  <uri resource="ch04.xml"	typeId="DocBook"/>
+  <uri resource="ch05.xml"	typeId="DocBook"/>
+  <uri resource="ch06.xml"	typeId="DocBook"/>
+  <uri resource="ch07.xml"	typeId="DocBook"/>
+  <uri resource="ch08.xml"	typeId="DocBook"/>
+  <uri resource="ch09.xml"	typeId="DocBook"/>
+  <uri resource="ch10.xml"	typeId="DocBook"/>
+  <uri resource="ch11.xml"	typeId="DocBook"/>
+  <uri resource="ch12.xml"	typeId="DocBook"/>
+  <uri resource="appa.xml"	typeId="DocBook"/>
+  <uri resource="appb.xml"	typeId="DocBook"/>
+  <uri resource="appc.xml"	typeId="DocBook"/>
+  <uri resource="appd.xml"	typeId="DocBook"/>
+  <uri resource="status.xml"	typeId="DocBook"/>
+
+</locatingRules>
