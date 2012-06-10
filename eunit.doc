@@ -44,5 +44,31 @@ include::eunit/src/square_test.erl[source, erlang]
 
 === Running Tests
 
+There are a few ways to run a test suite in EUnit. First of all you
+can call +module:test()+ to run the tests in the +square_test+ module
+run the function +square_test/0+ from the REPL. You can also run tests
+by calling the function +eunit:test/1+ and passing the name of the
+test module. So in this case you can call +eunit:test(square_test)+. 
+
+Normally when running tests all tests that pass are not shown (after
+all there may be a large number of them). To show them call the
+function +eunit:test/2+ with the second parameter being set to
++[verbose]+ this will show all the tests and will also show timing
+information on the tests.
+
+If you have a whole directory of tests and wish to run them as a group
+you can call the +eunit:test/1,2+ functions with the name of the
+directory instead of a file this will cause EUnit to run all tests in
+a directory.
+
+If you wish to run a test from the unix command line you can start the
+tests on load with the erlang +-run+ command parameter. I generally
+have wrapped my test runner into a custom function that will run the
+tests and then call +init:stop/0+ to cause Erlang to exit. 
+
+TODO: Show Makefile and all.erl
+
 === Test Generators
+
+=== Debugging Macros
 
