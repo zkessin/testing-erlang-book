@@ -8,7 +8,39 @@ should be to validate the basic logic of the application. For building
 Unit tests in Erlang the normal tool is EUnit which comes as a
 standard part of the Erlang distribution.
 
-In EUnit 
+Tests in EUnit can be created in the same module as the code to be
+tested or in a separate module. If the tests are in their own module
+then all the functions to be tested must be exported for the tests to
+work. However it is possible to compile the module with a +export_all+
+directive for testing. If the tests are in their own module then that
+module should be named the same at the module to be tested but with
+the suffix +_test+. So a module +square+ will have tests in
++square_test+. 
+
+When building a test the first thing that you should do is include the
+file +eunit/include/eunit.hrl+ which contains all the macros that are
+used by EUnit. After that the test module should define a set of
+functions each with a name ending in "_test" that define the actual
+tests. 
+
+To Illustrate this lets define a very simple module +square+ that
+contains a simple function +square/1+ that takes a number and squares
+it.  
+
+.square.erl
+----
+
+include::eunit/src/square.erl[source, erlang]
+----
+
+To test this code we need a test script like +square_test+ 
+
+.square_test.erl
+----
+
+include::eunit/src/square_test.erl[source, erlang]
+----
+
 
 === Running Tests
 
