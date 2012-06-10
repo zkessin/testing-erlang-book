@@ -13,6 +13,7 @@ publisher.
 
 ## Technical Details
 
+
 This project is being written in AsciiDoc which is a pretty simple
 format, you can find details here: http://www.methods.co.nz/asciidoc/
 we will then convert it to Docbook (XML).
@@ -33,8 +34,9 @@ feel free.
 
 
 Each chapter should be its own file named <topic.txt> So unit tests
-are *unit_tests.txt* There should also be a directory *unit_tests*
-that contains source code, figured and so on for each chapter.
+are *eunit.txt* There should also be a directory *eunit* with sub
+directories *images* and *src* that contains source code, figures and
+so on for each chapter.
 
 Indent code with spaces not tabs, make it easy to read. Make sure all
 code is referenced in the text in some useful way. 
