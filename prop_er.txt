@@ -1,0 +1,4 @@
+== PropEr
+
+Similar to QuickCheck
+https://github.com/manopapad/proper
