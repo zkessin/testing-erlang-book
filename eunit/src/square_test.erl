@@ -1,5 +1,5 @@
 -module(square_test).
--import_lib("eunit/include/eunit.hrl").
+-include_lib("eunit/include/eunit.hrl").
 
 square_0_test() ->
     ?assertEqual(0, square:square(0)).
