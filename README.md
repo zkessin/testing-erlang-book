@@ -32,7 +32,6 @@ feel free.
 
 ## Style Guide
 
-
 Each chapter should be its own file named <topic.txt> So unit tests
 are *eunit.txt* There should also be a directory *eunit* with sub
 directories *images* and *src* that contains source code, figures and
@@ -41,3 +40,9 @@ so on for each chapter.
 Indent code with spaces not tabs, make it easy to read. Make sure all
 code is referenced in the text in some useful way. 
 
+
+## TO Build 
+
+To build this on Linux install the asciidoc package (via yum or
+apt-get) make a html directory and run the build.sh script this will
+turn everything into HTML
