@@ -1,10 +1,9 @@
 == Testing Erlang
 
-
-
 :Author:    Zachary Kessin
 :Email:     zkessin@gmail.com
 
+=== Chapters
 
 * link:preface.doc.html[]
 * link:eunit.doc.html[Using EUnit]
@@ -13,3 +12,8 @@
 * link:quick_check.doc.html[Quick Check]
 * link:prop_er.doc.html[PropEr]
 * link:performance_tests.doc.html[Performance and Stress Tests]
+
+
+==== New Chapters 
+Add any new chapter links here, they will be moved up later
+

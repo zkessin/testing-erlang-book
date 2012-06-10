@@ -29,6 +29,8 @@ me. Also please make sure I have your name and email address, If you
 want to include your twitter handle or other contact details please
 feel free. 
 
+If you are adding a new chapter please add a link into
+"book.doc" in the "New Chapters" section
 
 ## Style Guide
 
