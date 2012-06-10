@@ -1,2 +1,0 @@
-
-== Testing against a Model with QuickCheck
