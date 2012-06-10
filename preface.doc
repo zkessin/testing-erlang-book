@@ -1,0 +1,32 @@
+== Preface
+
+I decided to start working on this book when I was doing a whole bunch
+of different testing related tasks in Erlang for a few different
+projects and I wanted to write down what I was learning to make sure I
+understood it fully as well as to help everyone else learn.
+
+=== Why are you writing on Github
+
+Well first of all I don't have time to do a full book by myself. I
+have written two whole books and will probably write more in the
+future, but for now I needed a different kind of project to work
+on. 
+
+In addition I felt that having an open process would result in a
+better book. I hope other people contribute sections to this book that
+I would never have thought of and can improve what I am writing.
+
+=== Who This Book is For
+
+This book is designed for people who are starting to use Erlang or who
+have been using it for a while and want to explore how to do different
+forms of testing in Erlang. 
+
+=== Who this Book is Not For
+
+=== Contributors
+
+_Please add a paragraph about yourself here and include it with your
+first pull request_ 
+
+*Zachary Kessin* 

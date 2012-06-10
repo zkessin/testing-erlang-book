@@ -1,0 +1,44 @@
+== Advanced EUnit
+
+=== Running Concurrent Tests
+
+When you first start building tests in [[EUnit]] they will in general
+go really fast. Running your entire test suite will take a fraction of
+a second and it will get run a lot. However as things progress more
+tests will be added and each one will cause the suite to take a little
+longer to run. At some point You will find that instead of taking 0.2
+seconds to run your suite it will take long enough to annoy you. At
+this point you might think that hey why not run each test in its own
+process and have the whole thing take advantage of the fact that I
+have a big fast computer with lots of cores, here is how to do it.
+
+
+
+=== Automatically Running Tests
+
+      
+What if every time a source file changed the system would notice and
+run your tests again? One of the best practices for unit tests is that
+they should provide a very short feedback loop for possible
+bugs. Ideally within a second or two of saving a file the system could
+run the test suite and provide some form of visual feedback.
+
+
+In order to do this we need a few things. First we need a way to
+monitor a set of files for changes. Then when a change has been
+noticed we should compile any changed files and run the tests. However
+it is not enough to monitor the erlang source files ([[.erl]]) the
+monitor should also monitor any header ([[.hrl]]) files that are
+included.  Ideally the system would also be able to show you what has
+changed from your last change.
+
+
+In addition the system needs a way to alert the developer that a test
+has broken. This can be done in several ways. It would of course be
+possible to have the test runner print a message to the Erlang
+console, this has the advantage of being very flexible and not
+requiring any other software. If you are developing with Emacs it
+could alert the user via a plugin and Distel <ulink
+url="https://github.com/massemanet/distel"/>. We could also create a
+desktop widget with something like etk or wx-erlang that will display
+an error. Finally it could report to a web browser over a web socket.
