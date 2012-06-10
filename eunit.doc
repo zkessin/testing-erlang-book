@@ -66,7 +66,22 @@ tests on load with the erlang +-run+ command parameter. I generally
 have wrapped my test runner into a custom function that will run the
 tests and then call +init:stop/0+ to cause Erlang to exit. 
 
-TODO: Show Makefile and all.erl
+I like to run my tests from a Makefile as in this example. The
+Makefile will build everything that may need it and then start erlang
+and run the test suite. The Erlang compiler can output create Makefile
+directives for each source file to track dependencies of include files
+if needed.
+
+.Makefile
+----
+include::eunit/src/Makefile[source, make]
+----
+
+.tests.erl
+----
+include::eunit/src/tests.erl[source, erlang]
+----
+
 
 === Test Generators
 
