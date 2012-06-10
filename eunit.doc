@@ -41,6 +41,26 @@ To test this code we need a test script like +square_test+
 include::eunit/src/square_test.erl[source, erlang]
 ----
 
+=== EUnit Assertions
+
+A test will fail if the process exits, this could be from calling the
+Erlang BIF +exit/1+ or by a value miss match. However using assertions
+will in general result in a more readable error report so such is
+generally preferred. 
+
+EUnit features a number of assertions for determining if a test has
+passed. All of these are implemented as processor macros via the
++eunit.hrl+ file. 
+
+The most basic assertion is +?assert/1+ which will pass if the value
+is true and fail otherwise. There is also an +?assertNot/1+ which will
+pass if the value is false
+
+The next form is +?assertEqual/2+ which takes an expected value and an
+expression for example +?asssertEqual(4, square:square(2))+ will pass
+and +?assertEqual(5, square:square(2))+ will fail. 
+
+TODO: Fill in the other assertions
 
 === Running Tests
 
