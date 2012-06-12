@@ -8,6 +8,8 @@
 * link:preface.doc.html[]
 * link:eunit.doc.html[Using EUnit]
 * link:advanced_eunit.doc.html[Advanced Topics in EUnit]
+* link:eunit_auto_test_runner.html[Run tests Automaticly When Files change]
+* link:eunit_code_coverage.doc.html[Generating Code Coverage Reports]
 * link:common_test.doc.html[Common Test]
 * link:quick_check.doc.html[Quick Check]
 * link:prop_er.doc.html[PropEr]
