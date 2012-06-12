@@ -1,0 +1,6 @@
+== Generating EUnit Code Coverage Reports
+
+Ideally your unit tests should cover all your code, but does it? Once
+again this is a borring repetitive task that should be automated. 
+
+TODO FIGURE OUT HOW TO DO THIS 
