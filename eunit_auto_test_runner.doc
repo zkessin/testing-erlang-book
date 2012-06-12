@@ -7,8 +7,12 @@ they should provide a very short feedback loop for possible
 bugs. Ideally within a second or two of saving a file the system could
 run the test suite and provide some form of visual feedback.
 
+This will require a reasonably powerful computer, so it probably
+should not be run on a netbook with an Atom processor, but on a more
+powerful machine there are probably cycles to spare so that is ok.
 
 === Monitoring files for changes
+
 In order to do this we need a few things. First we need a way to
 monitor a set of files for changes. Then when a change has been
 noticed we should compile any changed files and run the tests. However
@@ -23,10 +27,22 @@ distel to call our testing server and run the tests. But that only
 works if the user is running Emacs. If members of the team are using
 VIM or Eclipse we need something else.
 
+Linux provides a set of events called +inotify+ to show you when files
+have changed. There is a module for Elang that can be found on github
+at https://github.com/massemanet/inotify that will let you monitor the
+file system. But again this is not portable to the Mac or Windows so
+we will skip it.
+
+The final option is to just poll the file system. If we keep a last
+modified date or a checksum for each file we can check every *N*
+seconds for changes and run our tests. This is rather brute force and
+lacks some level of elegance, but is reasonably simple and will work
+independent of the user's tool chain and platform.
 
 
 
 === The User Interface
+
 In addition the system needs a way to alert the developer that a test
 has broken. This can be done in several ways. It would of course be
 possible to have the test runner print a message to the Erlang
@@ -35,4 +51,4 @@ requiring any other software. If you are developing with Emacs it
 could alert the user via a plugin and Distel <ulink
 url="https://github.com/massemanet/distel"/>. We could also create a
 desktop widget with something like etk or wx-erlang that will display
-an error. Finally it could report to a web browser over a web socket.
+an error. Finally it could report to a web browser over a web socket. 
