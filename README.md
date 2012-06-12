@@ -11,6 +11,9 @@ This book is for now a work in progress and is at an early phase. The
 end goal is that it will be published as a book/ebook by a major
 publisher.
 
+In addition I am going to put the built HTML online in the near
+future. 
+
 ## Technical Details
 
 
@@ -43,7 +46,7 @@ Indent code with spaces not tabs, make it easy to read. Make sure all
 code is referenced in the text in some useful way. 
 
 
-## TO Build 
+## To Build 
 
 To build this on Linux install the asciidoc package (via yum or
 apt-get) make a html directory and run the build.sh script this will
