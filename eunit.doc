@@ -105,5 +105,24 @@ include::eunit/src/tests.erl[source, erlang]
 
 === Test Generators
 
-=== Debugging Macros
+=== Setup and Cleanup (Fixtures)
+
+Often when running tests we want to have some form of setup and
+cleanup happen before and after each test. For example The setup code
+could create a Mnesia or ETS table and the cleanup code can delete
+it. In order to do this we need to use a test generator instead of a
+basic test.
+
+In +fixtures.erl+ we use have a generator that returns the tuple
++{setup, setup/0, cleanup/1, ?_test()}+ which is the actual test. In
+this case +setup/0+ and +cleanup/1+ are called before and after each
+test. 
+
+.fixtures.erl
+----
+include::eunit/src/fixtures.erl[source, erlang]
+----
+
+
+=== Macros For Debugging
 
