@@ -21,6 +21,17 @@ This project is being written in AsciiDoc which is a pretty simple
 format, you can find details here: http://www.methods.co.nz/asciidoc/
 we will then convert it to Docbook (XML).
 
+## How do you decide what to include
+
+Mostly its what ever I am working with on a given day. If I am doing
+unit testing I will be adding content about unit tests. If I am
+working on Stress testing then I will be writing about that. 
+
+## Why haven't you included something about <X>
+
+Probably because it hasn't come up in any of my projects. Feel free to
+start work on it and send me a pull request!
+
 ## To Contribute
 
 If you want to contribute to this project please read the style guide
