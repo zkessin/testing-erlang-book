@@ -19,8 +19,37 @@ files to compile you can use +cover:compile_directory/1+ or
 +cover:compile_beam_directory/1+ functions (There are a number of
 other options as well, see the documentation for details.)
 
-
 A coverage report can be generated in several formats, you can
 ask +cover+ to report by line, function or clause, all have their
 uses. 
+
+For this report I want to run all my tests and then generate a report
+of all lines of code that have no coverage in the tests. The +cover+
+module is already smart enough to not to report on non code lines. 
+
+This code reports missing coverage in a format that emacs can
+understand, so if you run it from a Makefile in emacs then you can
+jump to each uncovered line and see what it is.  In addition this
+script is setup to not report on test modules. So if a module's name
+ends in +_test+ it will ignore it.
+
+
+.eunit_cover.erl
+----
+include::eunit_code_coverage/src/eunit_cover.erl[source, erlang]
+----
+
+This module will produce output like this.
+
+----
+src/util.erl:12: No Code Coverage
+src/util.erl:15: No Code Coverage
+src/util.erl:16: No Code Coverage
+src/util.erl:17: No Code Coverage
+4 Uncovered lines
+
+
+----
+
+
 
