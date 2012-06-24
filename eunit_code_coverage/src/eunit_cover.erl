@@ -22,6 +22,7 @@ cover()->
 					       Count	=:= 0
 				       end, NonTestModules),
     [io:format("src/~p.erl:~p: No Code Coverage~n",[Module, Line])|| {{Module, Line}, 0} <-Zeros],
+    io:format("~p Uncovered lines~n", [length(Zeros)]),
     init:stop().
     
     
