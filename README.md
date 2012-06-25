@@ -27,7 +27,7 @@ Mostly its what ever I am working with on a given day. If I am doing
 unit testing I will be adding content about unit tests. If I am
 working on Stress testing then I will be writing about that. 
 
-## Why haven't you included something about <X>
+## Why haven't you included something about "X"
 
 Probably because it hasn't come up in any of my projects. Feel free to
 start work on it and send me a pull request!
