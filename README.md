@@ -48,8 +48,8 @@ If you are adding a new chapter please add a link into
 
 ## Style Guide
 
-Each chapter should be its own file named <topic.txt> So unit tests
-are *eunit.txt* There should also be a directory *eunit* with sub
+Each chapter should be its own file named <topic.doc> So unit tests
+are *eunit.doc* There should also be a directory *eunit* with sub
 directories *images* and *src* that contains source code, figures and
 so on for each chapter.
 
