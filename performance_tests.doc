@@ -1,6 +1,7 @@
 == Stress Tests and Performance Tests
 
-WARNING: This chapter is a work in progress
+WARNING: This chapter is a work in progress, examples and the like
+will be added
 
 Unit tests  are great in that they tell you if
 your code is working correctly. They are also nice in that a new team
