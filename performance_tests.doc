@@ -79,8 +79,27 @@ Of course the only way to actually find the bottlenecks in code is to
 run it under load and wait for things to break. Thankfully Erlang
 provides a number of tools for doing that.
 
-TODO Expand
+First of all if you are using gen_servers make sure you are sending
+them messages with a timeout set, that way if something gets slowed
+down eventually they will start to die en mass and you will know that
+something is wrong.
 
+If a process is bottle necking your system its message queue size will
+start to grow as messages arrive faster than they can be handled. The
+size of the message queue can be seen by using the +process_info/2+
+NIF. 
 
-==== Using Tsung for Load Generation
+If you call +process_info(Pid, message_queue_len)+ it will return
++{message_queue_len,Length}+. (You can also see the messages if you
+want). In general you may suspect that your code is running slowly
+because a process is falling behind its messages, but of course you
+want to know for sure. 
+
+Erlang does not provide a built in way to monitor queue lengths
+so some form of polling is required. What would be nice is being able
+to come up with a list of processes to monitor and have them all
+polled periodically. If the message queue of any process goes over
+some pre-determined threshold the monitor will take some form of
+action, such as writing a log. 
+
 
