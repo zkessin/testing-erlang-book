@@ -3,11 +3,9 @@
 WARNING: This chapter is a work in progress, examples and the like
 will be added
 
-Unit tests  are great in that they tell you if
-your code is working correctly. They are also nice in that a new team
-member can look at a result of a unit test run and know if the tests
-passed or failed.
-
+Unit tests are great in that they tell you if your code is working
+correctly. They are also nice in that a new team member can look at a
+result of a unit test run and know if the tests passed or failed.
 
 Performance testing is a whole different thing. While Unit tests are
 binary in their results (pass or fail) a performance test is very much
@@ -71,5 +69,18 @@ support the workload then stop.
 
 TIP: A larger server may be cheaper than programmer time
 
-It may be the case that going up one size in intense, or adding a few
-more servers will be cheaper and 
+It may be the case that going up one size on your server nodes, or adding a few
+more servers will be cheaper and easier than having a programmer spend
+a week finding the next bottleneck.
+
+=== Finding the bottlenecks
+
+Of course the only way to actually find the bottlenecks in code is to
+run it under load and wait for things to break. Thankfully Erlang
+provides a number of tools for doing that.
+
+TODO Expand
+
+
+==== Using Tsung for Load Generation
+
