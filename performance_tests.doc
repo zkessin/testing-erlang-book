@@ -100,6 +100,6 @@ so some form of polling is required. What would be nice is being able
 to come up with a list of processes to monitor and have them all
 polled periodically. If the message queue of any process goes over
 some pre-determined threshold the monitor will take some form of
-action, such as writing a log. 
+action, such as writing an entry to a log. 
 
 
