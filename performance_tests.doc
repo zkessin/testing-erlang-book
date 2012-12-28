@@ -75,6 +75,8 @@ a week finding the next bottleneck.
 
 === Finding the bottlenecks
 
+NOTE: This section needs work
+
 Of course the only way to actually find the bottlenecks in code is to
 run it under load and wait for things to break. Thankfully Erlang
 provides a number of tools for doing that.
@@ -92,16 +94,18 @@ comes into play. Amdahl's law states that in a parallel system the
 most speedup that can be had by creating more processes is limited by
 the sequential parts of the problem. 
 
-First of all if you are using gen_servers make sure you are sending
-them messages with a timeout set, that way if something gets slowed
-down eventually they will start to die en mass and you will know that
-something is wrong.
-
 
 If a process is bottle necking your system its message queue size will
 start to grow as messages arrive faster than they can be handled. The
 size of the message queue can be seen by using the +process_info/2+
 NIF. 
+
+
+First of all if you are using gen_servers make sure you are sending
+them messages with a timeout set, that way if something gets slowed
+down eventually they will start to die en mass and you will know that
+something is wrong.
+
 
 If you call +process_info(Pid, message_queue_len)+ it will return
 +{message_queue_len,Length}+. (You can also see the messages if you
@@ -116,4 +120,6 @@ polled periodically. If the message queue of any process goes over
 some pre-determined threshold the monitor will take some form of
 action, such as writing an entry to a log. 
 
-
+If you find that a process is backing up then you probably want to
+turn it into a pool, with something like
+https://github.com/devinus/poolboy[Poolboy] 
