@@ -79,10 +79,24 @@ Of course the only way to actually find the bottlenecks in code is to
 run it under load and wait for things to break. Thankfully Erlang
 provides a number of tools for doing that.
 
+There are a number of ways for a system to get slowed down. It could
+be bound by disk or Network IO, which could be a database or an
+external service. 
+
+However another place that things could be bottle-necked is by a
+single named process being overloaded. In that case what will happen
+is that the processes message queue will start to backup.  
+
+Here is where http://en.wikipedia.org/wiki/Amdahl's_law[Amdahl's law]
+comes into play. Amdahl's law states that in a parallel system the
+most speedup that can be had by creating more processes is limited by
+the sequential parts of the problem. 
+
 First of all if you are using gen_servers make sure you are sending
 them messages with a timeout set, that way if something gets slowed
 down eventually they will start to die en mass and you will know that
 something is wrong.
+
 
 If a process is bottle necking your system its message queue size will
 start to grow as messages arrive faster than they can be handled. The
