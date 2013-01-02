@@ -46,3 +46,44 @@ use a complex setup.
 
 === Using Travis-CI 
 
+Using Travis-CI is also very easy. However there are a few
+requirements to use Travis-CI. First of all your project must be
+hosted on github, which is pretty common these days. 
+
+Secondly you must include a file in the root of the directory called
+_.travis.yml_ which will tell travis how to build your
+application. Assuming that you are using rebar as a build tool this is
+pretty easy, and it should generally look like this example.
+
+. .travis.yml
+[source, yml]
+----
+language    : erlang
+script      : rebar compile && rebar  eunit
+otp_release :
+  - R15B02
+----
+
+Of course there are many more options you can use to build your
+project but this covers the basics.
+
+You then must go to the travis-ci site (https://travis-ci.org) and
+sign in with your github account. When you do that it will query a
+list of your projects and you can enable CI on the projects you
+choose. 
+
+After you enable travis-ci on your repository it will compile and test
+it every time you do a push. 
+
+NOTE: when you first enable Travis-ci it will not run the tests until
+you do a push to your repository. 
+
+
+Another nice feature of travis-ci is that if you are building an open
+source library that must work with multiple versions of Erlang and OTP
+you can specify several versions of OTP with the _otp_release_ option
+in the +.travis.yml+ file. If you do this it will run a separate job
+for each version of OTP and let you know if any of them fail.  
+
+WARNING: As of this writing travis-ci does not work with Erlang
+R15B03, R15B02 does work. 
