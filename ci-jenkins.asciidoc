@@ -1,1 +1,48 @@
-== CI With Jenkins
+== CI With Jenkins or Travis-ci
+
+There are a number of CI packages out there that can work with Erlang,
+including Travis-ci, circle-ci and Jenkins-ci. At the most basic level
+they all do about the same job. They watch the project repository for
+changes and when they see one they grab the code, compile build and
+test it as so to report any build problems to the team. 
+
+In many projects this build will include Erlang code as well as other
+kinds of code, which may include Java, Ruby, JavaScript or other
+languages. As such most CI solutions will support and have guides for
+a number of languages. When choosing a CI solution it is worthwhile to
+check that all required languages are supported and that there are
+decent guides to how to use them with that setup.
+
+In addition CI systems come in two major types, SAAS CI and hosted
+CI. Travis-CI is a SAAS service, which is to say that it runs on the
+Their servers and you can point it at your Github Repository for
+testing. Travis is free for Open Source Projects and costs money for
+closed source projects.
+
+Jenkins CI is a more traditional software package in that they assume
+you will download their code and install it on your own server (which
+of course could be a cloud server). However if you want a very easy
+install of Jenkins CI consider using the Turnkey Linux Appliance
+http://www.turnkeylinux.org/jenkins which can be downloaded and run
+under XEN, VMWare or several other types of Virtual Machine. 
+
+I found that downloading and installing it under VMWare was pretty
+easy, however it does come with an out of date version of Jenkins-CI
+that will have to be updated. 
+
+=== Using Jenkins-CI
+
+In order to use a CI solution we first need a repository, as our goal
+here is to setup CI and test it we will go with a very simple
+repository called "increment-ci"
+https://github.com/zkessin/increment-ci which will contain a single
+Erlang module with 1 function that only adds one. Our goal here is to
+simply demonstrate how our CI System works so there is no reason to
+use a complex setup.
+
+
+
+
+
+=== Using Travis-CI 
+
