@@ -51,7 +51,7 @@ requirements to use Travis-CI. First of all your project must be
 hosted on github, which is pretty common these days. 
 
 Secondly you must include a file in the root of the directory called
-_.travis.yml_ which will tell travis how to build your
++.travis.yml+ which will tell travis how to build your
 application. Assuming that you are using rebar as a build tool this is
 pretty easy, and it should generally look like this example.
 
