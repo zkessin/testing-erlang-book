@@ -39,7 +39,7 @@ Secondly you must include a file in the root of the directory called
 application. Assuming that you are using rebar as a build tool this is
 pretty easy, and it should generally look like this example.
 
-. Example .travis.yml
+.Example .travis.yml
 [source, yml]
 ------
 language    : erlang
