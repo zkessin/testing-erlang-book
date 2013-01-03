@@ -30,8 +30,6 @@ I found that downloading and installing it under VMWare was pretty
 easy, however it does come with an out of date version of Jenkins-CI
 that will have to be updated. 
 
-=== Using Jenkins-CI
-
 In order to use a CI solution we first need a repository, as our goal
 here is to setup CI and test it we will go with a very simple
 repository called "increment-ci"
@@ -40,13 +38,9 @@ Erlang module with 1 function that only adds one. Our goal here is to
 simply demonstrate how our CI System works so there is no reason to
 use a complex setup.
 
-
-
-
-
 === Using Travis-CI 
 
-Using Travis-CI is also very easy. However there are a few
+Using Travis-CI is relativly easy. However there are a few
 requirements to use Travis-CI. First of all your project must be
 hosted on github, which is pretty common these days. 
 
@@ -55,14 +49,14 @@ Secondly you must include a file in the root of the directory called
 application. Assuming that you are using rebar as a build tool this is
 pretty easy, and it should generally look like this example.
 
-. .travis.yml
+. Example .travis.yml
 [source, yml]
-----
+------
 language    : erlang
 script      : rebar compile && rebar  eunit
 otp_release :
   - R15B02
-----
+------
 
 Of course there are many more options you can use to build your
 project but this covers the basics.
@@ -87,3 +81,22 @@ for each version of OTP and let you know if any of them fail.
 
 WARNING: As of this writing travis-ci does not work with Erlang
 R15B03, R15B02 does work. 
+
+The one downside of Travis-CI is that if you are not building an open
+source project then you have to pay to use their hosted service. 
+
+NOTE: TODO Exapand that
+
+
+=== Using Jenkins-CI
+
+First of all if you are using Jenkins-CI you will have to do a bit of
+manual setup. Jenkins was originally for use with Java and Ant/Maven
+projects, so you may have to coach it a bit to get it to speak erlang.
+
+In the turnkey linux install the first thing I had to do was to login
+as root and install erlang and rebar. 
+
+
+
+
