@@ -11,7 +11,7 @@
 * link:eunit_auto_test_runner.doc.html[Run tests Automaticly When Files change]
 * link:eunit_code_coverage.doc.html[Generating Code Coverage Reports]
 * link:eunit_tdd_practicum.doc.html[Lets do some TDD Together]
-* link:jenkins-ci.asciidoc[CI with Jenkins]
+* link:ci.asciidoc[CI with Travis and Jenkins]
 * link:common_test.doc.html[Common Test]
 * link:quick_check.doc.html[Quick Check]
 * link:prop_er.doc.html[PropEr]
