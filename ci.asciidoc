@@ -6,12 +6,12 @@ they all do about the same job. They watch the project repository for
 changes and when they see one they grab the code, compile build and
 test it as so to report any build problems to the team. 
 
-In many projects this build will include Erlang code as well as other
+In many projects this build will include Erlang, as well as other
 kinds of code, which may include Java, Ruby, JavaScript or other
 languages. As such most CI solutions will support and have guides for
 a number of languages. When choosing a CI solution it is worthwhile to
 check that all required languages are supported and that there are
-decent guides to how to use them with that setup.
+decent guides to how to use them with that setup. 
 
 In addition CI systems come in two major types, SAAS CI and hosted
 CI. Travis-CI is a SAAS service, which is to say that it runs on the
@@ -19,16 +19,6 @@ Their servers and you can point it at your Github Repository for
 testing. Travis is free for Open Source Projects and costs money for
 closed source projects.
 
-Jenkins CI is a more traditional software package in that they assume
-you will download their code and install it on your own server (which
-of course could be a cloud server). However if you want a very easy
-install of Jenkins CI consider using the Turnkey Linux Appliance
-http://www.turnkeylinux.org/jenkins which can be downloaded and run
-under XEN, VMWare or several other types of Virtual Machine. 
-
-I found that downloading and installing it under VMWare was pretty
-easy, however it does come with an out of date version of Jenkins-CI
-that will have to be updated. 
 
 In order to use a CI solution we first need a repository, as our goal
 here is to setup CI and test it we will go with a very simple
@@ -90,13 +80,40 @@ NOTE: TODO Exapand that
 
 === Using Jenkins-CI
 
+Jenkins CI is a more traditional software package in that they assume
+you will download their code and install it on your own server (which
+can be a cloud server). However if you want a very easy install of
+Jenkins CI consider using the Turnkey Linux Appliance
+http://www.turnkeylinux.org/jenkins which can be downloaded and run
+under XEN, VMWare or several other types of Virtual Machine.
+
+I found that downloading and installing Jenkins-CI under VMWare was pretty
+easy, however it does come with an out of date version of Jenkins-CI
+that will have to be updated. This can be done by replacing the
++jenkins.war+ file with the current version and rebooting the
+appliance. 
+
+
 First of all if you are using Jenkins-CI you will have to do a bit of
 manual setup. Jenkins was originally for use with Java and Ant/Maven
 projects, so you may have to coach it a bit to get it to speak erlang.
 
 In the turnkey linux install the first thing I had to do was to login
-as root and install erlang and rebar. 
+as root and install erlang and rebar. Once this was done I was able to
+check my code out of the git repository and get it to build without
+too much problem. It did take a few attempts while I did things like
+set paths to binaries and the like. Once this was done I found that
+Jenkins was able to watch my github repository and report on any
+problems. It understood the output of rebar and eunit. *EXPAND*
 
+If you are hosting your project somewhere other than GitHub then
+Jenkins will still be able to help you. In addition to git Jenkins
+knows how to talk to SVN and HG as well as several other version
+control systems. 
+
+*TODO Private Github Repository*
+
+*TODO setup walk threw* 
 
 
 
