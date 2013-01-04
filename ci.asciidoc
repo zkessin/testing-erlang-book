@@ -28,6 +28,10 @@ Erlang module with 1 function that only adds one. Our goal here is to
 simply demonstrate how our CI System works so there is no reason to
 use a complex setup.
 
+Thankfully both Jenkins and Travis once setup understand the output
+from EUnit when run in rebar. So Once the setup is complete and you
+have gotten the project to build everything should just work.
+
 === Using Travis-CI 
 
 Using Travis-CI is relativly easy. However there are a few
@@ -40,7 +44,7 @@ application. Assuming that you are using rebar as a build tool this is
 pretty easy, and it should generally look like this example.
 
 .Example .travis.yml
-[source, yml]
+[source,yml]
 ------
 language    : erlang
 script      : rebar compile && rebar  eunit
@@ -93,10 +97,10 @@ that will have to be updated. This can be done by replacing the
 +jenkins.war+ file with the current version and rebooting the
 appliance. 
 
-
+==== Setting Up Jenkins for Erlang
 First of all if you are using Jenkins-CI you will have to do a bit of
 manual setup. Jenkins was originally for use with Java and Ant/Maven
-projects, so you may have to coach it a bit to get it to speak erlang.
+projects, so you may have to coach it a bit to get it to speak Erlang.
 
 In the turnkey linux install the first thing I had to do was to login
 as root and install erlang and rebar. Once this was done I was able to
@@ -111,7 +115,24 @@ Jenkins will still be able to help you. In addition to git Jenkins
 knows how to talk to SVN and HG as well as several other version
 control systems. 
 
+==== Using a Private git repository
 *TODO Private Github Repository*
+If you want to use a private repository on github, bitbucket or
+another version control server you will need to setup a ssh key on
+your jenkins server. To do this login to the jenkins server and run
+the unix command +ssh-keygen+. (you can accept all the defaults), then
+do a manual checkout of the remote repository. It may ask you to
+accept the remote host for SSH usage, in that case say yes.
+
+After you have done that you should be able to set off builds from the
+web page. 
+
+Ideally you will have Jenkins build every time a user makes a commit,
+without further intervention. In order to do this github will need to
+send a HTTP POST request to your Jenkins server.  If your Jenkins
+install is behind a firewall then you will need to allow a hole in
+your firewall so that github can access Jenkins.
+
 
 *TODO setup walk threw* 
 
