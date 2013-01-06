@@ -86,37 +86,47 @@ NOTE: TODO Exapand that
 
 Jenkins CI is a more traditional software package in that they assume
 you will download their code and install it on your own server (which
-can be a cloud server). However if you want a very easy install of
-Jenkins CI consider using the Turnkey Linux Appliance
-http://www.turnkeylinux.org/jenkins which can be downloaded and run
-under XEN, VMWare or several other types of Virtual Machine.
+can be a cloud server). The nice thing about this is that you can have
+your own environment that is configured as you want it. Of course you
+have to figure out how you do want Jenkins to be setup first. 
+
+Jenkins itself is written in Java and primarily is targeted at Java
+and other JVM languages. As such much of the documentation you will
+find online is about how to use Jenkins with Java. 
+
+If you want a very easy install of Jenkins CI consider using the
+Turnkey Linux Appliance http://www.turnkeylinux.org/jenkins which can
+be downloaded and run under XEN, VMWare or several other types of
+Virtual Machine.
 
 I found that downloading and installing Jenkins-CI under VMWare was pretty
 easy, however it does come with an out of date version of Jenkins-CI
 that will have to be updated. This can be done by replacing the
 +jenkins.war+ file with the current version and rebooting the
-appliance. 
+appliance.
 
 ==== Setting Up Jenkins for Erlang
 First of all if you are using Jenkins-CI you will have to do a bit of
 manual setup. Jenkins was originally for use with Java and Ant/Maven
 projects, so you may have to coach it a bit to get it to speak Erlang.
 
-In the turnkey linux install the first thing I had to do was to login
+In the TurnKey Linux install the first thing I had to do was to login
 as root and install erlang and rebar. Once this was done I was able to
 check my code out of the git repository and get it to build without
 too much problem. It did take a few attempts while I did things like
 set paths to binaries and the like. Once this was done I found that
 Jenkins was able to watch my github repository and report on any
-problems. It understood the output of rebar and eunit. *EXPAND*
+problems. It understood the output of rebar and eunit. 
+
+*EXPAND*
 
 If you are hosting your project somewhere other than GitHub then
 Jenkins will still be able to help you. In addition to git Jenkins
 knows how to talk to SVN and HG as well as several other version
-control systems. 
+control systems, including SVN and CVS.
 
 ==== Using a Private git repository
-*TODO Private Github Repository*
+
 If you want to use a private repository on github, bitbucket or
 another version control server you will need to setup a ssh key on
 your jenkins server. To do this login to the jenkins server and run
@@ -127,14 +137,38 @@ accept the remote host for SSH usage, in that case say yes.
 After you have done that you should be able to set off builds from the
 web page. 
 
-Ideally you will have Jenkins build every time a user makes a commit,
-without further intervention. In order to do this github will need to
-send a HTTP POST request to your Jenkins server.  If your Jenkins
-install is behind a firewall then you will need to allow a hole in
-your firewall so that github can access Jenkins.
+
+*TODO setup walk threw*
 
 
-*TODO setup walk threw* 
+==== Triggering Builds on a GitHub Commit
 
+The idea workflow for Jenkins would be that when a team member pushes
+code into github Jenkins will somehow notice this change and trigger a
+build. There are several ways to go about this.
 
+First of all we could have Jenkins poll GitHub. In theory we could
+have it poll once a minute or so. There are two problems with
+this. First of all it will generate a lot of extra network usage for
+no good reason. If you only have one or two repositories this is
+probably not that big a deal, but if your team has dozens it could get
+ugly.
 
+What would be better is if we could get our GitHub Repository to
+notify Jenkins as soon as a push is made which would kick off a
+build. Thankfully this is actually not to hard to do. Github, like
+most hosting providers has a +post-commit hook+ that can execute a
+unix command. In this case we want to use CURL or WGET to make a HTTP
+request to Jenkins to trigger the build. In this case the build will
+normally kickoff within a few seconds of when the code is pushed to
+GitHub. For most teams a delay of less than 10 seconds is probably
+fine.
+*TODO EXPAND*
+
+However if your Jenkins server is sitting behind a firewall then
+things get a bit more complex. In this case GitHub can not make a
+direct HTTP request to your server. There are several ways to handle this.
+
+==== Monitoring Code Quality
+
+*TODO Write this* 
