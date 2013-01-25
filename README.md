@@ -1,6 +1,26 @@
 
-#Testing Erlang
+# Testing Erlang
 
+## About this Book
+
+Erlang has existed for a long time but has only recently become a
+trending language that is being used in more and more places as people
+find that Erlang is the perfect fit for building networked concurrent
+applications for the web and other places.
+
+However in order to make a high performance scalable applications
+developers need to test those applications. The goal of this book is
+to introduce the reader to how to do different types of testing in
+Erlang. 
+
+This book starts with using EUnit for building Unit Tests in
+Erlang. It will then move on to other kinds of testing in
+Erlang. Including Statistical tests with QuickCheck, Type Checking
+with Dialyzer, Setting up CI with Jenkins or Travis, building
+performance tests and more.
+
+
+## Building as open source
 
 This is "Testing Erlang" which is an experiment in collective
 authoring of a book on how to do Testing in Erlang. I want to tap the
