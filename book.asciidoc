@@ -1,0 +1,24 @@
+== Testing Erlang
+
+:Author:    Zachary Kessin
+:Email:     zkessin@gmail.com
+
+=== Chapters
+
+* link:preface.asciidoc.html[]
+* link:eunit.asciidoc.html[Using EUnit]
+* link:rebar.asciidoc.html[Building With Rebar]
+* link:advanced_eunit.asciidoc.html[Advanced Topics in EUnit]
+* link:dialyzer.asciidoc.html[Checking types with Dialyzer]
+* link:eunit_auto_test_runner.asciidoc.html[Run tests Automaticly When Files change]
+* link:eunit_code_coverage.asciidoc.html[Generating Code Coverage Reports]
+* link:eunit_tdd_practicum.asciidoc.html[Lets do some TDD Together]
+* link:ci.asciidoc.html[CI with Travis and Jenkins]
+* link:common_test.asciidoc.html[Common Test]
+* link:quick_check.asciidoc.html[Quick Check]
+* link:prop_er.asciidoc.html[PropEr]
+* link:performance_tests.asciidoc.html[Performance and Stress Tests]
+* link:chaos_monkey.asciidoc.html[Testing Resilience with a Chaos Monkey]
+
+==== New Chapters 
+Add any new chapter links here, they will be moved up later
