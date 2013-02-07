@@ -16,3 +16,11 @@ that other parts are weekly coupled and can keep working. A standard
 tool for doing this is a _Chaos Monkey_. Which is a program that will
 randomly kill processes from time to time. Thus forcing developers to
 deal with the possibility of degraded service.
+
+
+=== How a  Chaos Monkey works
+
+=== How to implement one
+
+=== Testing that the system is still running.
+
