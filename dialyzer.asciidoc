@@ -1,1 +1,6 @@
 == Type Checking with Dialyzer
+
+Unlike Haskell and other Members of the ML family Erlang is not a
+strictly typed language. There are a number of historical reasons for
+this. However while Erlang does not do type checking in the compiler
+we do have tools to do this which can be run in a testing phase.
