@@ -3,7 +3,7 @@
 
 === Basics of Writing Tests 
 	  
-The basics of any group of tests will be the unit test. Unit tests
+The most basic of any group of tests will be the unit test. Unit tests
 should be to validate the basic logic of the application. For building
 Unit tests in Erlang the normal tool is EUnit which comes as a
 standard part of the Erlang distribution.
@@ -49,9 +49,9 @@ include::eunit/src/square_test.erl[source, erlang]
 === EUnit Assertions
 
 A test will fail if the process exits, this could be from calling the
-Erlang BIF +exit/1+ or other error. However using assertions will in
-general result in a more readable error report so it should be
-generally preferred.
+Erlang BIF +exit/1+ or other error, including a failed pattern
+match. However using assertions will in general result in a more
+readable error report so it should be generally preferred.
 
 EUnit features a number of assertions for determining if a test has
 passed. All of these are implemented as processor macros via the
@@ -160,6 +160,29 @@ include::eunit/src/Makefile[source, make]
 include::eunit/src/tests.erl[source, erlang]
 ----
 
+If you are building your project with +rebar+ then running your tests
+is as simple as running +rebar eunit+. It will then build everything
+and run all the eunit tests in your project. By default if you do this
+it will run all the tests for any dependencies you may have. Normally
+you probably do not want to do this as it can take a while to run, so
+use the command +rebar eunit skip_deps=true+ which will cause rebar to
+only run the tests of the actual project.
+
+=== Code Coverage 
+
+Ideally you want your unit tests to cover as much of your project as
+you can have. However there is an issue of how do you figure out what
+parts of your code base are covered? The practical way is to have your
+code base tell you.If you are running your tests with rebar then you
+can add the following directive to your +rebar.config+ file and it
+will create HTML pages that will tell you what is and is not covered.
+
+.rebar.config
+-----
+{cover_enabled, true}.
+-----
+
+TODO: Example screenshot
 
 === Test Generators
 
