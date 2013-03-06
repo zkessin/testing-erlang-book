@@ -82,3 +82,16 @@ code is referenced in the text in some useful way.
 To build this on Linux install the asciidoc package (via yum or
 apt-get) make a html directory and run the build.sh script this will
 turn everything into HTML
+
+
+=== Chapters
+
+* link:preface.asciidoc[]
+* link:rebar.asciidoc[Building With Rebar]
+* link:eunit.asciidoc[Using EUnit]
+* link:advanced_eunit.asciidoc[Advanced Topics in EUnit]
+* link:eunit_auto_test_runner.asciidoc[Run tests Automaticly When Files change]
+* link:eunit_tdd_practicum.asciidoc[Lets do some TDD Together]
+* link:ci.asciidoc[CI with Travis and Jenkins]
+* link:performance_tests.asciidoc[Performance and Stress Tests]
+* link:chaos_monkey.asciidoc[Testing Resilience with a Chaos Monkey]
