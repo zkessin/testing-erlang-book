@@ -86,12 +86,12 @@ turn everything into HTML
 
 === Chapters
 
-* link:preface.asciidoc[]
-* link:rebar.asciidoc[Building With Rebar]
-* link:eunit.asciidoc[Using EUnit]
-* link:advanced_eunit.asciidoc[Advanced Topics in EUnit]
-* link:eunit_auto_test_runner.asciidoc[Run tests Automaticly When Files change]
-* link:eunit_tdd_practicum.asciidoc[Lets do some TDD Together]
-* link:ci.asciidoc[CI with Travis and Jenkins]
-* link:performance_tests.asciidoc[Performance and Stress Tests]
-* link:chaos_monkey.asciidoc[Testing Resilience with a Chaos Monkey]
+* <preface.asciidoc>
+* [Building With Rebar]<rebar.asciidoc>
+* [Using EUnit]<eunit.asciidoc>
+* [Advanced Topics in EUnit]<advanced_eunit.asciidoc>
+* [Run tests Automaticly When Files change]<eunit_auto_test_runner.asciidoc>
+* [Lets do some TDD Together]<eunit_tdd_practicum.asciidoc>
+* [CI with Travis and Jenkins]<ci.asciidoc>
+* [Performance and Stress Tests]<performance_tests.asciidoc>
+* [Testing Resilience with a Chaos Monkey]<chaos_monkey.asciidoc>
