@@ -23,9 +23,9 @@ will look like this example.
 
 --------
 {deps, [
-        {webmachine,    "1.9.*",        {git, "git://github.com/basho/webmachine",				"HEAD"}},
-        {jsx,           ".*",           {git, "git://github.com/talentdeficit/jsx.git",                         "HEAD"}},
-        {jsxd,          ".*",           {git, "git://github.com/Licenser/jsxd.git",				"HEAD"}}]}.
+        {webmachine,    "1.9.*",        {git, "git://github.com/basho/webmachine",	"HEAD"}},
+        {jsx,           ".*",           {git, "git://github.com/talentdeficit/jsx.git", "HEAD"}},
+        {jsxd,          ".*",           {git, "git://github.com/Licenser/jsxd.git",	"HEAD"}}]}.
 --------
 #TODO: Explain the format of the deps directive
 
