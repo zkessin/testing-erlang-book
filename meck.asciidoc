@@ -1,0 +1,28 @@
+
+== Mocking With Meck
+
+If your code is anything like mine you will find that many of your
+functions depend heavily on external functions, which may come from
+the Erlang Standard Library or from other modules that may have been
+written in house or pulled from the web. 
+
+In an ideal world a test should be able to isolate your code from the
+modules it calls so that you can test your code without having to
+worry about questions like, the status of an external API or the
+complex behavior of a library method.
+
+To do that we use a mocking library such as +meck+ which can take
+functions in other modules and replace them with test functions that
+allow a simplified truth table.  
+
+Meck provides mocks on the level of the Erlang module, before running
+a test you must setup mocking for that library, then remove it when
+done. With Eunit 
+
+
+.setting up meck.erl
+----
+include::meck/src/meck_simple.erl[source, erlang]
+----
+
+
