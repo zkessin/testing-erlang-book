@@ -86,9 +86,10 @@ turn everything into HTML
 
 === Chapters
 
-* (preface.asciidoc)
+* [Preface](preface.asciidoc)
 * [Building With Rebar](rebar.asciidoc)
 * [Using EUnit](eunit.asciidoc)
+* [Mocking With Meck](meck.asciidoc)
 * [Advanced Topics in EUnit](advanced_eunit.asciidoc)
 * [Run tests Automaticly When Files change](eunit_auto_test_runner.asciidoc)
 * [Lets do some TDD Together](eunit_tdd_practicum.asciidoc)

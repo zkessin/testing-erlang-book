@@ -207,3 +207,5 @@ include::eunit/src/fixtures.erl[source, erlang]
 
 === Macros For Debugging
 
+
+=== What to test and what not to test

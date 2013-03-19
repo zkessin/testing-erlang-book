@@ -1,5 +1,7 @@
 == Let to some TDD together
 
+NOTE: Redo maybe with webmachine
+
 So far this book has talked a lot about the mechanics of tests, how to
 create them, how to run them and so on. With this chapter I want to do
 something different and walk threw an example of how to use tests to

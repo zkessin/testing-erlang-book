@@ -17,7 +17,16 @@ allow a simplified truth table.
 
 Meck provides mocks on the level of the Erlang module, before running
 a test you must setup mocking for that library, then remove it when
-done. With Eunit 
+done. 
+
+For example if you want to mock the webmachine +wrq:req_body/1+
+function you might use code like this in this example. 
+
+Here we setup the test with +meck:new(wrq)+ which tells meck to mock
+that module, then in the body of the test we use +meck:expect/3+ to
+tell it when the wrq:req_body/1 function is called to call our test
+function which returns a set binary to the caller. After this we can
+call +wrq:req_body/1+ and know exactly what it will return.
 
 
 .setting up meck.erl
@@ -26,3 +35,6 @@ include::meck/src/meck_simple.erl[source, erlang]
 ----
 
 
+=== More complex Meck Examples
+
+=== Places Meck can go wrong

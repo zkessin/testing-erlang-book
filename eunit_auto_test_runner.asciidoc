@@ -1,5 +1,6 @@
 == Automatically Running Tests
 
+NOTE: Use sync: https://github.com/rustyio/sync
       
 What if every time a source file changed the system would notice and
 run your tests again? One of the best practices for unit tests is that

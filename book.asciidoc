@@ -24,8 +24,9 @@ performance tests and more.
 === Chapters
 
 * link:preface.asciidoc.html[]
-* link:eunit.asciidoc.html[Using EUnit]
 * link:rebar.asciidoc.html[Building With Rebar]
+* link:eunit.asciidoc.html[Using EUnit]
+* link:meck.asciidoc.html[Mocking With meck]
 * link:advanced_eunit.asciidoc.html[Advanced Topics in EUnit]
 * link:eunit_auto_test_runner.asciidoc.html[Run tests Automaticly When Files change]
 * link:eunit_tdd_practicum.asciidoc.html[Lets do some TDD Together]
