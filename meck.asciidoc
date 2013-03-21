@@ -34,7 +34,21 @@ call +wrq:req_body/1+ and know exactly what it will return.
 include::meck/src/meck_simple.erl[source, erlang]
 ----
 
+=== Including Meck in your project
+
+The most basic way to include _meck_ in your project is to include it
+via Rebar, add this to the project's rebar.config file and run "rebar
+get_deps" to install it. 
+
+.rebar.config
+----
+{deps, [
+       {meck,        
+        ".*", {git, "git://github.com/eproxus/meck.git", "HEAD"}}]}.
+
+----
 
 === More complex Meck Examples
 
 === Places Meck can go wrong
+
