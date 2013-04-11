@@ -34,7 +34,6 @@ it.
 
 .square.erl
 ----
-
 include::eunit/src/square.erl[source, erlang]
 ----
 
@@ -42,7 +41,6 @@ To test this code we need a test script like +square_test+
 
 .square_test.erl
 ----
-
 include::eunit/src/square_test.erl[source, erlang]
 ----
 
@@ -209,3 +207,12 @@ include::eunit/src/fixtures.erl[source, erlang]
 
 
 === What to test and what not to test
+
+There is always an issue of what to test and what not to test. Some
+people like to test everything. However some code is hard to test in a
+way that can prove illuminating. I have found that tests for the init
+function of supervisors is often hard to test in a way that can prove
+useful for the developer. 
+
+
+
