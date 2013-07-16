@@ -1,6 +1,28 @@
 == Type Checking with Dialyzer
 
-Unlike Haskell and other Members of the ML family Erlang is not a
+Unlike Haskell and other Members of the ML family, Erlang is not a
 strictly typed language. There are a number of historical reasons for
-we do have tools to do this which can be run in a testing phase.
-this. However while Erlang does not do type checking in the compiler
+this, mostly that when Erlang was being created that the people who
+created it did not really understand how to build a Type System.
+
+However there are some very nice tools for providing type
+annoatiations and doing static type testing. These give some of the
+benefit that a type system like haskell's without having to invest in
+the full mechanism of Haskell's types.
+
+The main tool for testing types is Daialyzer, which is a utility that
+can check compiled code for type inconsistencies. This can be a
+powerful way to check your code for all sorts of problems, in terms of
+consistency of how functions are called. For Example, if you have some
+parts of your application that treat string data as lists and other
+parts that use binaries, dialyzer will find that for you.
+
+Or to show an example from an application that I have worked on, we
+had a function that was changed from having 4 arguments to 5. When we
+put the code in production there was one place where we had not
+converted it to the new signature. Had we run dialyzer on this we
+would have caught it before deploying our code to production.
+
+
+
+WARNING:  Dialyzer will hurt your feelings
