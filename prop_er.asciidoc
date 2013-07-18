@@ -1,4 +1,12 @@
-== PropEr
+== PropER
 
 Similar to QuickCheck
 https://github.com/manopapad/proper
+=== Installing PropER
+
+
+=== Setting up basic tests
+
+=== Using types to drive tests
+
+=== Integration with Jenkins
