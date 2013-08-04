@@ -92,7 +92,7 @@ fi
 === Running Dialyzer
 
 Once the PLT file has been created then we can run dialyzer on the
-code base. Normally dialyzer is run on the compile *beam* file but it
+code base. Normally dialyzer is run on the compiled *beam* file but it
 is also possible to run it on erlang source files.
 
 To run the basic dialyzer on a source projects from the unix command
@@ -108,6 +108,100 @@ can run dialyzer on all of them at once.
 
 
 === Understanding Errors 
+
+Dialyzer when run can emit several kinds of errors. The most simple
+kind of error is that of an unknown function. In this case what it
+really means is a function in an unknown module (if there is a known
+module but no function of a given name or airity that will be reported
+elsewhere) In this example, the system is showing three missing
+functions. The first one is an actual problem as it represents a real
+bug. In this case I had meant to call the function +emysql:execute/3+
+but had left out the "y" in +emysql+ so of course this function does
+not exist.
+
+[source,bash]
+----
+Unknown functions:
+  emsql:execute/3
+  s_template:render/1
+  mochiweb_cookies:cookie/3
+----
+
+The second function is a render function from a erlydtl (django)
+template that is created at run time, as such it is not included in
+the set of beam files that are being checked by dailyzer. (TODO How to
+fix this)
+
+The final error, +mochiweb_cookies:cookie/3+ is a function in a module
+that was not included in the +plt+ file, so it should just b e added
+to the plt file.
+
+A more subtle case that Dialyzer can catch is when patterns do not
+match. Which is to say that a function can return several things and
+your code does not match all of them. 
+
+For example if a function could return +{ok,Value}+ or +{error,
+REASON}+ and your code only matches the +{ok, Value}+ variation then
+Dialyzer will point it out to you by giving you a set of errors like
+in this example. 
+
+A more subtle bug is that in this case the function
++get_component:get_component/1+ will never return +{error, not_found}+
+so there is a whole chain of error checks that are catching errors
+that may never show up.
+.never_match.erl
+[source, erlang]
+-----
+include::examples/src/never_match.erl[]
+----
+
+From this code dialyzer will product an error like this one
+
+[source, bash]
+----
+src/never_match.erl:15: The pattern {'error', 'not_found'} can never match the type {'ok',[{<<_:32>>,<<_:32>>},...]}
+
+----
+
+This one takes some understanding to figure out what you are supposed
+to do with it. What it is saying is that in +never_match.erl:15+  the
+pattern +{'error', 'not_found'}+ will never match and that this block
+is in effect dead code. This is because the +get_component/1+ function
+will always return +{'ok', jsx:json_term()}+ and can never return
++{'error', 'not_found'}+. Note in this case the +-spec+ for that
+function says that it can return +{'error', 'not_found'}+, but the
+code says it can not so Dialyzer will figure out the correct success typing.
+
+
+Sometimes the error message is a bit complex, and takes some parsing
+to understand. This error comes from a call to upload an object to
+S3. 
+
+.Reformatted for readability
+[source, erlang]
+----
+src/cmp_s_actions.erl:53: The call
+erlcloud_s3:put_object(
+	Bucket::any(),
+	Key::nonempty_string(),
+	Value::binary(),
+	[{'acl', 'public_read'}],
+	[{[45 | 99 | 101 | 110 | 111 | 112 | 116 | 121,...],[47 | 97 |
+	101 | 103 | 105 | 109 | 110 | 112,...]},...]) 
+will never return since the success typing is 
+     (string(),string(),maybe_improper_list(binary() |
+     maybe_improper_list(any(),binary() | []) | byte(),binary() | []),
+     [atom() | tuple()],[{string(),string()}] |
+     {'aws_config',string(),string(),string(),non_neg_integer(),string(),string(),string(),string(),string(),'undefined'
+     | non_neg_integer(),'undefined' |
+     string(),string(),string(),non_neg_integer(),fun((pos_integer(),_)
+     ->
+      {'attempt',pos_integer()} | {'error',_}),'false' | 'undefined' |
+      string(),'false' | 'undefined' | string(),'undefined' |
+      string()}) -> [{'version_id',_},...]
+ and the contract is (string(),string(),iolist(),proplist(),[{string(),string()}] | aws_config()) -> proplist()
+
+----
 
 
 === Adding type annotations to functions
@@ -181,7 +275,29 @@ have a type of +binary()+ as they are string fields, however the
 
 ----
 
-We could make that declaration more expressive 
+We could make that declaration more expressive if we could replace the
++binary()+ type with specific types. in this example we replace the
+first two fields generic +binary()+ with a more specific type of
++user_id()+ and +email()+ that are for now just aliases of binary but
+we could also make them more specific if we chose. 
+
+However this does make the record definiton easier to understand as we
+can  
+
+[source, erlang]
+----
+-type user_id() ::binary().
+-type email()   ::binary().
+
+-record(user, {
+	  user_id			:: user_id(),
+	  email                         :: email(),
+	  avatar = none                 :: binary() | none
+}).
+
+----
+
+
 
 === Adding Type annotations to records
 
