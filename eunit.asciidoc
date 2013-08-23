@@ -2,8 +2,8 @@
 == Building Tests With EUnit
 
 === Basics of Writing Tests 
-	  
-The most basic of any group of tests will be the unit test. Unit tests
+
+The most basic of any group of tests will be the Unit Test. Unit tests
 should be to validate the basic logic of the application. For building
 Unit tests in Erlang the normal tool is EUnit which comes as a
 standard part of the Erlang distribution.
@@ -12,12 +12,21 @@ Tests in EUnit can be created in the same module as the code to be
 tested or in a separate module. If the tests are in their own module
 then all the functions to be tested must be exported for the tests to
 work. However it is possible to compile the module with a +export_all+
-directive for testing. If the tests are in their own module then that
+directive for testing. This can be done as in this example by using the erlang
++-ifdef(EUNIT)+.  If the tests are in their own module then that
 module should be named the same at the module to be tested but with
 the suffix +_test+. So a module +square+ will have tests in
 +square_test+.
 
-However there is no reason that there be a one to one correspondence
+.Export all for testing
+[source, erlang]
+----
+-ifdef(EUNIT).
+-compile(export_all).
+-endif.
+----
+
+However there is no requirement that there be a one to one correspondence
 between test modules and production modules. If having the tests for
 one module spread over two or more files makes sense then EUnit will
 let you do that.
@@ -28,9 +37,12 @@ used by EUnit. After that the test module should define a set of
 functions each with a name ending in "_test" that define the actual
 tests. 
 
+NOTE: Any valid atom is a legal function name in Erlang, so naming a test function something like
++'check that function does the right thing _test'+ is perfectly legal and will work just fine.
+
 To Illustrate this lets define a very simple module +square+ that
 contains a simple function +square/1+ that takes a number and squares
-it.  
+it.
 
 .square.erl
 ----
@@ -62,6 +74,9 @@ pass if the value is false
 The next form is +?assertEqual/2+ which takes an expected value and an
 expression for example +?asssertEqual(4, square:square(2))+ will pass
 and +?assertEqual(5, square:square(2))+ will fail. 
+
+The converse of the +?assertEqual/2+ macro is the +?assertNotEqual/2+ 
+macro. This will pass if the two parameters are not equal. 
 
 If you want to assert that something matches a pattern you can use the
 +?assertMatch/2+ macro which will assert that the returned value
@@ -164,7 +179,12 @@ and run all the eunit tests in your project. By default if you do this
 it will run all the tests for any dependencies you may have. Normally
 you probably do not want to do this as it can take a while to run, so
 use the command +rebar eunit skip_deps=true+ which will cause rebar to
-only run the tests of the actual project.
+only run the tests of the actual project. You can make the output of rebar tests
+more verbose with the +-v+ switch, which will do the same as the +verbose+ option
+above. 
+
+Rebar is my perfered method of running tests.
+
 
 === Code Coverage 
 
@@ -195,7 +215,8 @@ basic test.
 In +fixtures.erl+ we use have a generator that returns the tuple
 +{setup, setup/0, cleanup/1, ?_test()}+ which is the actual test. In
 this case +setup/0+ and +cleanup/1+ are called before and after each
-test. 
+test. The return value of setup is passed to cleanup, so if you need say
+delete a table or close a resource you can do it there. 
 
 .fixtures.erl
 ----
@@ -212,7 +233,10 @@ There is always an issue of what to test and what not to test. Some
 people like to test everything. However some code is hard to test in a
 way that can prove illuminating. I have found that tests for the init
 function of supervisors is often hard to test in a way that can prove
-useful for the developer. 
+useful for the developer. These things should of course be subject to some
+form of varification, but it does not have to be a unit test, it can be done in some other type of test.
+
+
 
 
 

@@ -19,7 +19,6 @@ Their servers and you can point it at your Github Repository for
 testing. Travis is free for Open Source Projects and costs money for
 closed source projects.
 
-
 In order to use a CI solution we first need a repository, as our goal
 here is to setup CI and test it we will go with a very simple
 repository called "increment-ci"
@@ -44,10 +43,10 @@ application. Assuming that you are using rebar as a build tool this is
 pretty easy, and it should generally look like this example.
 
 .Example .travis.yml
-[source,yml]
+[source,python]
 ------
 language    : erlang
-script      : rebar compile && rebar  eunit
+script      : rebar compile && rebar eunit
 otp_release :
   - R15B02
 ------
@@ -168,6 +167,17 @@ fine.
 However if your Jenkins server is sitting behind a firewall then
 things get a bit more complex. In this case GitHub can not make a
 direct HTTP request to your server. There are several ways to handle this.
+
+====  Run Dialyzer from Jenkins
+
+If you go threw the effort to setup Dialyzer to work on your project
+(which you should) and if you have Jenkins setup you should have
+Jenkins run dialyzer for you. This can be done as part of the same
+jenkins job that runs your unit tests, or as part of a separate job
+that only runs Dialyzer. However doing that will require that rebar
+fetch all the dependencies and compile the code twice so combining the
+two may make sense. 
+
 
 ==== Monitoring Code Quality
 

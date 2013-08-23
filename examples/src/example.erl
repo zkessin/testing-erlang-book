@@ -1,4 +1,4 @@
--module(never_match).
+-module(example).
 -compile(export_all).
 -type component_id() ::binary().
 
@@ -15,4 +15,3 @@ get_json_from_guid(Guid) ->
 	{error,not_found} ->
 	    {error, not_found}
     end.
-x

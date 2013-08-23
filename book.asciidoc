@@ -23,22 +23,20 @@ performance tests and more.
 
 === Chapters
 
-* link:preface.asciidoc.html[]
+* link:preface.asciidoc.html[Preface]
 * link:rebar.asciidoc.html[Building With Rebar]
 * link:eunit.asciidoc.html[Using EUnit]
 * link:meck.asciidoc.html[Mocking With meck]
-* link:advanced_eunit.asciidoc.html[Advanced Topics in EUnit]
-* link:eunit_auto_test_runner.asciidoc.html[Run tests Automaticly When Files change]
-* link:eunit_tdd_practicum.asciidoc.html[Lets do some TDD Together]
+* link:dialyzer.asciidoc.html[Checking types with Dialyzer]
+* link:prop_er.asciidoc.html[PropEr]
 * link:ci.asciidoc.html[CI with Travis and Jenkins]
-* link:performance_tests.asciidoc.html[Performance and Stress Tests]
-* link:chaos_monkey.asciidoc.html[Testing Resilience with a Chaos Monkey]
+
+
 
 === Chapters that will probably be in the 2nd Edition
 * link:common_test.asciidoc.html[Common Test]
 * link:quick_check.asciidoc.html[Quick Check]
-* link:prop_er.asciidoc.html[PropEr]
-* link:dialyzer.asciidoc.html[Checking types with Dialyzer]
+* link:advanced_eunit.asciidoc.html[Advanced Topics in EUnit]
 
 ==== New Chapters 
 Add any new chapter links here, they will be moved up later
