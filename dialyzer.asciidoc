@@ -1,16 +1,21 @@
 == Type Checking with Dialyzer
 
-Unlike Haskell and other Members of the ML family, Erlang is not a
-strictly typed language. There are a number of historical reasons for
+Unlike Haskell and other members of the ML family, Erlang is not a
+staticly typed language. There are a number of historical reasons for
 this, mostly that when Erlang was being created that the people who
-created it did not really understand how to build a Type System.
+created it did not really know how to build a Type System.
 
 However there are some very nice tools for providing type
 annoatiations and doing static type testing. These give some of the
 benefit that a type system like haskell's without having to invest in
-the full mechanism of Haskell's types.
+the full mechanism of Haskell's types. 
 
-The main tool for testing types is Daialyzer, which is a utility that
+.Thanks Kostas for all of this
+NOTE: Almost all of the tools relating to types are the product of the 
+work of Kostis Sagonas and his teams at Uppsala University (Sweden) and the
+National Technical Univeristy of Athens (Greece). 
+
+The main tool for testing types is Dialyzer, which is a utility that
 can check compiled code for type inconsistencies. This can be a
 powerful way to check your code for all sorts of problems, in terms of
 consistency of how functions are called. For Example, if you have some
@@ -30,12 +35,14 @@ WARNING:  Dialyzer will hurt your feelings
 In order to run dialyzer you need to create a Persistent Lookup
 Table. This is a file that normally lives in your home directory (but
 you can put it anywhere. This file contains basic information about
-the type signatures of system applications 
+the type signatures of system applications
 
 To create a basic PLT file use a command line like this one. It will
 take a few minutes to run and then create a plt file in the current
 directory. If you omit the +--output_plt+ command then it will create
-a plt file under a default name in your home directory. 
+a plt file under a default name in your home directory. It is probably a
+good idea to have a seperate PLT file for each project, as different 
+projects may use different versions of dependencies and so on. 
 
 .Basic PLT File
 [source,bash]
@@ -76,7 +83,7 @@ if [ ! -f $PLT ]; then
    rebar clean
    rebar get-deps
    rebar compile
-   
+
    dialyzer  --build_plt --apps kernel stdlib mnesia  inets ssl crypto \
        --output_plt $PLT
    apps=(deps/*/ebin)
@@ -104,10 +111,10 @@ dialyzer ebin --plt $PLT
 -----
 
 If you have more than one subdirectory of erlang applications then you
-can run dialyzer on all of them at once. 
+can run dialyzer on all of them at once.
 
 
-=== Understanding Errors 
+=== Understanding Errors
 
 Dialyzer when run can emit several kinds of errors. The most simple
 kind of error is that of an unknown function. In this case what it
@@ -163,14 +170,14 @@ src/never_match.erl:15: The pattern {'error', 'not_found'} can never match the t
 
 ----
 
-This one takes some understanding to figure out what you are supposed
-to do with it. What it is saying is that in +never_match.erl:15+  the
-pattern +{'error', 'not_found'}+ will never match and that this block
-is in effect dead code. This is because the +get_component/1+ function
-will always return +{'ok', jsx:json_term()}+ and can never return
-+{'error', 'not_found'}+. Note in this case the +-spec+ for that
-function says that it can return +{'error', 'not_found'}+, but the
-code says it can not so Dialyzer will figure out the correct success typing.
+This one takes some understanding to figure out what you are supposed to do with
+it. What it is saying is that in +never_match.erl:15+  the pattern +{'error',
+'not_found'}+ will never match and that this block is in effect dead code. This
+is because the +get_component/1+ function will always return +{'ok',
+jsx:json_term()}+ and can never return +{'error', 'not_found'}+. Note in this
+case the +-spec+ for that function says that it can return +{'error',
+'not_found'}+, but the code says it can not so Dialyzer will figure out the
+correct success typing.
 
 
 Sometimes the error message is a bit complex, and takes some parsing
@@ -235,14 +242,14 @@ known_content_type(ReqData, Context) ->
 	      {"application/json; charset=UTF-8",	true}],
     Allowed = proplists:get_value(ContentType, Values, false),
     {Allowed, ReqData, Context}.
-----    
+----
 
 Most erlang abstract types are written in a way that they look like
 functions. So, for example, the type integer is +integer()+ and a
 boolean is +boolean()+.
 
 In addition to abstract types there are also literal types, these are
-often atoms or numbers that represent themselves. So for example the
+atoms or integers that represent themselves. So for example the
 atom +'ok'+ is a literal type that will match itself, or the number
 +42+ is also a literal type.
 
@@ -298,10 +305,28 @@ can
 ----
 
 
-
 === Adding Type annotations to records
 
 === Creating your own types
- 
+
+To create a new type in a source file +.erl+ or +.hrl+ you can use the +-type+
+directive or the +-opaque+ directive.  A type can be exported from a module with
++-export_type+ directive. When you export a type from a module it can be refered
+to in other modules by the syntax +MODULE:TYPE()+ just like a function could be 
+
+If you have a type that should be treated as opaque outside the module where it
+is defined then instead of defining it with +-type+ use the +-opaque+ directive.
+The syntax is the same, but the difference is that dialyzer will issue a warning
+if any of the internal structure of that type is used anywhere else. This
+includes pattern matching on the type or any effort to refrence the inside of
+the object. 
+
+WARNING: The erlang compiler and runtime will still allow you to refrence the
+internal structure of an opaque type, Only Dialyzer will warn you about doing
+this. 
+
+
+=== Parameterized types
+
 
 

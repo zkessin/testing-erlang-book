@@ -45,6 +45,7 @@ contains a simple function +square/1+ that takes a number and squares
 it.
 
 .square.erl
+[source, erlang]
 ----
 include::eunit/src/square.erl[source, erlang]
 ----
@@ -52,6 +53,7 @@ include::eunit/src/square.erl[source, erlang]
 To test this code we need a test script like +square_test+ 
 
 .square_test.erl
+[source, erlang]
 ----
 include::eunit/src/square_test.erl[source, erlang]
 ----
@@ -104,6 +106,7 @@ When tests run there are two possible results, the first is that all
 tests pass in which case you will get a result like this:
 
 .All Pass
+[source, erlang]
 ----
   All 58 tests passed.
 ----
@@ -121,6 +124,7 @@ test to fail but does not give any of the information that the
 Exit will result in a failed test.
 
 .Failure
+[source, erlang]
 ----
 my_list_test: in_list_one_element_list_present_test...*failed*
 ::{assertEqual_failed,[{module,my_list_test},
@@ -164,11 +168,13 @@ directives for each source file to track dependencies of include files
 if needed.
 
 .Makefile
+[source, makefile]
 ----
 include::eunit/src/Makefile[source, make]
 ----
 
 .tests.erl
+[source, erlang]
 ----
 include::eunit/src/tests.erl[source, erlang]
 ----
@@ -196,6 +202,7 @@ can add the following directive to your +rebar.config+ file and it
 will create HTML pages that will tell you what is and is not covered.
 
 .rebar.config
+[source, erlang]
 -----
 {cover_enabled, true}.
 -----
@@ -219,6 +226,7 @@ test. The return value of setup is passed to cleanup, so if you need say
 delete a table or close a resource you can do it there. 
 
 .fixtures.erl
+[source, erlang]
 ----
 include::eunit/src/fixtures.erl[source, erlang]
 ----
