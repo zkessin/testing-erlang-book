@@ -15,7 +15,7 @@ Erlang.
 
 This book starts with using EUnit for building Unit Tests in
 Erlang. It will then move on to other kinds of testing in
-Erlang. Including Statistical tests with QuickCheck, Type Checking
+Erlang. Including Statistical tests with PropER, Type Checking
 with Dialyzer, Setting up CI with Jenkins or Travis, building
 performance tests and more.
 
@@ -27,19 +27,14 @@ authoring of a book on how to do Testing in Erlang. I want to tap the
 collective mind of the internet to make this book amazing and to cover
 a wide range of topics.
 
-This book is for now a work in progress and is at an early phase. The
-end goal is that it will be published as a book/ebook by a major
-publisher.
-
-In addition I am going to put the built HTML online in the near
-future. 
+This book is for now a work in progress and is at an early phase.
+When the book is finished it will be published by O'Reilly media.
 
 ## Technical Details
 
 
 This project is being written in AsciiDoc which is a pretty simple
 format, you can find details here: http://www.methods.co.nz/asciidoc/
-we will then convert it to Docbook (XML).
 
 ## How do you decide what to include
 
@@ -64,12 +59,12 @@ want to include your twitter handle or other contact details please
 feel free. 
 
 If you are adding a new chapter please add a link into
-"book.doc" in the "New Chapters" section
+"book.asciidoc.html" in the "New Chapters" section
 
 ## Style Guide
 
-Each chapter should be its own file named <topic.doc> So unit tests
-are *eunit.doc* There should also be a directory *eunit* with sub
+Each chapter should be its own file named <topic.asciidoc> So unit tests
+are *eunit.asciidoc* There should also be a directory *eunit* with sub
 directories *images* and *src* that contains source code, figures and
 so on for each chapter.
 
@@ -90,9 +85,8 @@ turn everything into HTML
 * [Building With Rebar](rebar.asciidoc)
 * [Using EUnit](eunit.asciidoc)
 * [Mocking With Meck](meck.asciidoc)
-* [Advanced Topics in EUnit](advanced_eunit.asciidoc)
-* [Run tests Automaticly When Files change](eunit_auto_test_runner.asciidoc)
-* [Lets do some TDD Together](eunit_tdd_practicum.asciidoc)
+* [Dialyzer](dialyzer.asciidoc)
+* [PropER](proper.asciidoc)
 * [CI with Travis and Jenkins](ci.asciidoc)
 * [Performance and Stress Tests](performance_tests.asciidoc)
 * [Testing Resilience with a Chaos Monkey](chaos_monkey.asciidoc)

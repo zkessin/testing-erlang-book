@@ -18,18 +18,31 @@ _{sub_dirs, []}_ directive to list the directories in which each
 part of the project will live in.
 
 In addition if your project is dependent on external libraries (as
-most are) then you can list those in the _{deps, []}_ directive. It
+most are) then you can list those in the +{deps, []}+ directive. It
 will look like this example.
 
+.rebar dependencies
+[source, erlang]
 --------
 {deps, [
         {webmachine,    "1.9.*",        {git, "git://github.com/basho/webmachine",	"HEAD"}},
         {jsx,           ".*",           {git, "git://github.com/talentdeficit/jsx.git", "HEAD"}},
         {jsxd,          ".*",           {git, "git://github.com/Licenser/jsxd.git",	"HEAD"}}]}.
 --------
+
+The final element which is +"HEAD"+ here can be any refrence to a git commit. 
+In most cases it is probably better to not use "HEAD" but to use an explicit tag
+or SHA1 value. Theis is because if you use "HEAD" it is possible for whomever
+owns the repository to update the code and when you next load your dependencies
+you will have a new, unknown and untested code base. While if you use an expicit
+tag then you will always get a known version of the state. More importantly if
+different developers (or different enviroments) last pulled in the dependincies
+at different times then wiht an eplicit SHA1 value then you can be sure that
+they will all be using an identical version of the code.
+
 #TODO: Explain the format of the deps directive
 
-To actually download the dependencies run _rebar get_deps_ it will go
+To actually download the dependencies run +rebar get_deps+ it will go
 and clone all of the repositories from github or other online sources
 into your _deps_ directory. In addition it will also download any of
 the dependencies of those projects. 
@@ -41,4 +54,5 @@ and then pull them together with rebar. This means that each project
 will stand alone and can be built and tested in isolation. This is a
 good way to deal with a long build process. By having 10-12 git
 repositories each with their own tests and CI jobs it will ensure that
-CI does not get out of hand.
+CI does not get out of hand, and that all tests run in a reasoanble amount of
+time.

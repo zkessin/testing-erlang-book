@@ -4,12 +4,22 @@
 If your code is anything like mine you will find that many of your
 functions depend heavily on external functions, which may come from
 the Erlang Standard Library or from other modules that may have been
-written in house or pulled from the web. 
+written in house or pulled from the web.
 
 In an ideal world a test should be able to isolate your code from the
 modules it calls so that you can test your code without having to
 worry about questions like, the status of an external API or the
-complex behavior of a library method.
+complex behavior of a library method. 
+
+Therefore for any external functions which are not pure in the functional sense
+we want to replace them with a simple known function that we know will always do 
+what we want so that only the code under test is 
+
+NOTE: Pure in the functional sense, which is to say that the return value of the
+function is only a result of the input parameters. You can assume that
++proplist:get_value/2+ will only return values based on the input, while say
+something in the +httpc+ module will probably require network access, which
+could cause tests to fail due to things outside your control.
 
 To do that we use a mocking library such as +meck+ which can take
 functions in other modules and replace them with test functions that
@@ -30,6 +40,7 @@ call +wrq:req_body/1+ and know exactly what it will return.
 
 
 .setting up meck.erl
+[source, erlang]
 ----
 include::meck/src/meck_simple.erl[source, erlang]
 ----
@@ -41,9 +52,10 @@ via Rebar, add this to the project's rebar.config file and run "rebar
 get_deps" to install it. 
 
 .rebar.config
+[source, erlang]
 ----
 {deps, [
-       {meck,        
+       {meck,
         ".*", {git, "git://github.com/eproxus/meck.git", "HEAD"}}]}.
 
 ----
@@ -51,4 +63,13 @@ get_deps" to install it.
 === More complex Meck Examples
 
 === Places Meck can go wrong
+
+The real problem with mocking frameworks like meck is that they violate the idea
+of DRY. For example if you have two modules, +a+ and +b+ and you change the way
+a function works in +b+ you must also change the mocks in +a_test+. 
+
+In addition in the case of meck the order in which rebar compiles your project
+can matter. If your project consists of many OTP applications in one git
+repository then if meck can not find a module it will fail. So while in normal
+compalation order of modules does not matter with meck it does. 
 

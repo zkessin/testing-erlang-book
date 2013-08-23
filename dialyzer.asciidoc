@@ -297,7 +297,7 @@ can
 -type email()   ::binary().
 
 -record(user, {
-	  user_id			:: user_id(),
+	  user_id                       :: user_id(),
 	  email                         :: email(),
 	  avatar = none                 :: binary() | none
 }).
@@ -308,6 +308,8 @@ can
 === Adding Type annotations to records
 
 === Creating your own types
+
+TODO: Some examples here
 
 To create a new type in a source file +.erl+ or +.hrl+ you can use the +-type+
 directive or the +-opaque+ directive.  A type can be exported from a module with
