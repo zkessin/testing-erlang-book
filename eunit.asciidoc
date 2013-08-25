@@ -37,12 +37,12 @@ used by EUnit. After that the test module should define a set of
 functions each with a name ending in "_test" that define the actual
 tests. 
 
-NOTE: Any valid atom is a legal function name in Erlang, so naming a test function something like
-+'check that function does the right thing _test'+ is perfectly legal and will work just fine.
+NOTE: Any valid atom is a legal function name in Erlang, so naming a test
+function something like +'check that function does the right thing _test'+ is
+perfectly legal and will work just fine.
 
 To Illustrate this lets define a very simple module +square+ that
-contains a simple function +square/1+ that takes a number and squares
-it.
+contains a simple function +square/1+ that takes a number and squares it.
 
 .square.erl
 [source, erlang]
@@ -179,27 +179,26 @@ include::eunit/src/Makefile[source, make]
 include::eunit/src/tests.erl[source, erlang]
 ----
 
-If you are building your project with +rebar+ then running your tests
-is as simple as running +rebar eunit+. It will then build everything
-and run all the eunit tests in your project. By default if you do this
-it will run all the tests for any dependencies you may have. Normally
-you probably do not want to do this as it can take a while to run, so
-use the command +rebar eunit skip_deps=true+ which will cause rebar to
-only run the tests of the actual project. You can make the output of rebar tests
-more verbose with the +-v+ switch, which will do the same as the +verbose+ option
-above. 
+If you are building your project with +rebar+ then running your tests is as
+simple as running +rebar eunit+. It will then build everything and run all the
+eunit tests in your project. By default if you do this it will run all the tests
+for any dependencies you may have. Normally you probably do not want to do this
+as it can take a while to run, so use the command +rebar eunit skip_deps=true+
+which will cause rebar to only run the tests of the actual project. You can make
+the output of rebar tests more verbose with the +-v+ switch, which will do the
+same as the +verbose+ option above. 
 
 Rebar is my perfered method of running tests.
 
 
 === Code Coverage 
 
-Ideally you want your unit tests to cover as much of your project as
-you can have. However there is an issue of how do you figure out what
-parts of your code base are covered? The practical way is to have your
-code base tell you.If you are running your tests with rebar then you
-can add the following directive to your +rebar.config+ file and it
-will create HTML pages that will tell you what is and is not covered.
+Ideally you want your unit tests to cover as much of your project as you can
+have. However there is an issue of how do you figure out what parts of your code
+base are covered? The practical way is to have your code base tell you.If you
+are running your tests with rebar then you can add the following directive to
+your +rebar.config+ file and it will create HTML pages that will tell you what
+is and is not covered.
 
 .rebar.config
 [source, erlang]
@@ -237,12 +236,12 @@ include::eunit/src/fixtures.erl[source, erlang]
 
 === What to test and what not to test
 
-There is always an issue of what to test and what not to test. Some
-people like to test everything. However some code is hard to test in a
-way that can prove illuminating. I have found that tests for the init
-function of supervisors is often hard to test in a way that can prove
-useful for the developer. These things should of course be subject to some
-form of varification, but it does not have to be a unit test, it can be done in some other type of test.
+There is always an issue of what to test and what not to test. Some people like
+to test everything. However some code is hard to test in a way that can prove
+illuminating. I have found that tests for the init function of supervisors is
+often hard to test in a way that can prove useful for the developer. These
+things should of course be subject to some form of varification, but it does not
+have to be a unit test, it can be done in some other type of test.
 
 
 
