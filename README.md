@@ -1,4 +1,3 @@
-
 # Testing Erlang
 
 ## About this Book
@@ -86,7 +85,7 @@ turn everything into HTML
 * [Using EUnit](eunit.asciidoc)
 * [Mocking With Meck](meck.asciidoc)
 * [Dialyzer](dialyzer.asciidoc)
-* [PropER](proper.asciidoc)
+* [PropER](prop_er.asciidoc)
 * [CI with Travis and Jenkins](ci.asciidoc)
 * [Performance and Stress Tests](performance_tests.asciidoc)
 * [Testing Resilience with a Chaos Monkey](chaos_monkey.asciidoc)
