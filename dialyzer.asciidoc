@@ -111,7 +111,7 @@ To run the basic dialyzer on a source projects from the unix command
 line use a command like this
 .dialyzer
 [source, bash]
-------
+-----
 dialyzer ebin --plt $PLT
 -----
 
