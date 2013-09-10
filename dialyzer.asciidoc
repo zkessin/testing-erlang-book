@@ -3,7 +3,8 @@
 Unlike Haskell and other members of the ML family, Erlang is not a staticly
 typed language. There are a number of historical reasons for this, mostly that
 when Erlang was being created that the people who created it did not really know
-how to build a Type System.
+how to build a Type System. While Erlang is not a staticly typed language it is however a 
+strongly typed language. 
 
 However there are some very nice tools for providing type annoatiations and
 doing static type testing. These give some of the benefit that a type system
@@ -22,7 +23,6 @@ called. For Example, if you have some parts of your application that treat
 string data as lists and other parts that use binaries, dialyzer will find that
 for you.
 
-
 Or to show an example from an application that I have worked on, we had a
 function that was changed from having 4 arguments to 5. When we put the code in
 production there was one place where we had not converted it to the new
@@ -33,7 +33,18 @@ One of the goals of Dialyzer was that it should not require any changes to your
 source code to be useful. You can specify types in your function and record
 definitions but it is not required. If you do nothing but take your existing
 code and run Dialyzer on it, then Dialyzer should be able to show many possible
-patterns in your code base. 
+patterns in your code base.
+
+.Dialyzer Internals
+****
+TODO: Expand
+
+The way dialyzer works is treating the paramters and return values of your project
+as a large constraint problem. It tries to figure out what types each function accepts
+and returns then sees if everything matches up. Once it has done that it tries to
+tighten up the constrains and repeats over several passes. 
+****
+
 
 WARNING:  Dialyzer will hurt your feelings
 
@@ -76,7 +87,8 @@ dependencies, compile them and build the plt file.
 
 [NOTE]
 On my macbook air this takes 5 minutes to run or so. Its a good time to get a
-cup of tea. But you only have to build the PLT file once.
+cup of tea. But you only have to build the PLT file once. You may have to redo it after masive changes
+to the dependencies of a code base. 
 
 
 .build Project PLT
@@ -108,7 +120,11 @@ Normally dialyzer is run on the compiled *beam* file but it is also possible to
 run it on erlang source files.
 
 To run the basic dialyzer on a source projects from the unix command
-line use a command like this
+line use a command like this. This requires that ebin contail the beam files to
+be examined that have been compiled with the *debug_info* flag. This can be done
+with rebar by spedifying  _{erl_opts, [debug_info]}._ in the *rebar.config*
+file.
+
 .dialyzer
 [source, bash]
 ------
@@ -120,6 +136,8 @@ dialyzer on all of them at once.
 
 
 === Understanding Errors
+
+TODO: Expand this a lot
 
 Dialyzer when run can emit several kinds of errors. The most simple kind of
 error is that of an unknown function. In this case what it really means is a
@@ -298,7 +316,6 @@ However this does make the record definiton easier to understand as we can
 
 ----
 
-
 === Adding Type annotations to records
 
 === Creating your own types
@@ -323,6 +340,15 @@ this.
 
 
 === Parameterized types
+TODO: subtypes
 
+=== Using Dialyzer with a CI System
+
+Of course a tool like Dialyzer is only useful if you run it on a regular basis.
+Ideally it should be run over every commit that is pushed into the repository.
+If your project is already using a CI system like Jenkins or Travis then it
+makes sense to have that system also run dialyzer over the code base after
+running the unit tests. (Or it could be done in parallel, it doesn't really
+matter). 
 
 
