@@ -41,7 +41,7 @@ NOTE: Any valid atom is a legal function name in Erlang, so naming a test
 function something like +'check that function does the right thing _test'+ is
 perfectly legal and will work just fine.
 
-To Illustrate this lets define a very simple module +square+ that
+To illustrate this lets define a very simple module +square+ that
 contains a simple function +square/1+ that takes a number and squares it.
 
 .square.erl
@@ -245,5 +245,22 @@ have to be a unit test, it can be done in some other type of test.
 
 
 
+=== Keeping tests Organized
+
+There are three places that eunit lets you setup a test. You can place the test in
+the main file of the module. This has the advantages of the fact that it keeps the tests
+and the code together, in addition Erlang will run the tests when it loads the module into
+the runtime, which if you are doing a fast compile/run cycle can be helpful. However it also 
+mixes the test code with the actually code. 
+
+A second option is to put the tests in a +_test.erl+ file in the +src+ directory, 
+the problem with this is that the beam files will end up in the ebin directory with the 
+executable code, which is not necessary, I dislike this approach as it tends to create a bunch of
+executables that may end up getting shipped when they don't need to be.
+
+My method of choice is to put the tests in the +test+ directory in +_test.erl+ files. When
+you run the tests with rebar it will put the beam files in the +.eunit+ directory and not 
+in the +ebin+ directory, so there is no chance that these will get executed by mistake when
+they are not supposed to.
 
 
