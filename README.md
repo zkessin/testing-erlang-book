@@ -14,10 +14,16 @@ Erlang.
 
 This book starts with using EUnit for building Unit Tests in
 Erlang. It will then move on to other kinds of testing in
-Erlang. Including Statistical tests with PropER, Type Checking
-with Dialyzer, Setting up CI with Jenkins or Travis, building
-performance tests and more.
+Erlang. Including Statistical tests with PropER, Setting up
+CI with Jenkins or Travis, building performance tests and more.
 
+Erlang also has a good set of tools for for static testing, Kostis
+Sagonas's research group has been working on a set of tools which
+provide a powerful aid to development of applications. These include
+Dialyzer which will find all sorts of discrepancies in a code base,
+including non matching types, and code that can never be executed. In
+addition they have created a tool called Concuerror which can detect all 
+sorts of concurrency errors. 
 
 ## Building as open source
 
