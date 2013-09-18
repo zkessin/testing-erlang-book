@@ -4,14 +4,14 @@ There are a number of CI packages out there that can work with Erlang,
 including Travis-ci, circle-ci and Jenkins-ci. At the most basic level
 they all do about the same job. They watch the project repository for
 changes and when they see one they grab the code, compile build and
-test it as so to report any build problems to the team. 
+test it as so to report any build problems to the team.
 
 In many projects this build will include Erlang, as well as other
 kinds of code, which may include Java, Ruby, JavaScript or other
 languages. As such most CI solutions will support and have guides for
 a number of languages. When choosing a CI solution it is worthwhile to
 check that all required languages are supported and that there are
-decent guides to how to use them with that setup. 
+decent guides to how to use them with that setup.
 
 In addition CI systems come in two major types, SAAS CI and hosted
 CI. Travis-CI is a SAAS service, which is to say that it runs on the
@@ -31,11 +31,11 @@ Thankfully both Jenkins and Travis once setup understand the output
 from EUnit when run in rebar. So Once the setup is complete and you
 have gotten the project to build everything should just work.
 
-=== Using Travis-CI 
+=== Using Travis-CI
 
-Using Travis-CI is relativly easy. However there are a few
+Using Travis-CI is relatively easy. However there are a few
 requirements to use Travis-CI. First of all your project must be
-hosted on github, which is pretty common these days. 
+hosted on github, which is pretty common these days.
 
 Secondly you must include a file in the root of the directory called
 +.travis.yml+ which will tell travis how to build your
@@ -57,45 +57,45 @@ project but this covers the basics.
 You then must go to the travis-ci site (https://travis-ci.org) and
 sign in with your github account. When you do that it will query a
 list of your projects and you can enable CI on the projects you
-choose. 
+choose.
 
 After you enable travis-ci on your repository it will compile and test
-it every time you do a push. 
+it every time you do a push.
 
 NOTE: when you first enable Travis-ci it will not run the tests until
-you do a push to your repository. 
+you do a push to your repository.
 
 
 Another nice feature of travis-ci is that if you are building an open
 source library that must work with multiple versions of Erlang and OTP
 you can specify several versions of OTP with the _otp_release_ option
 in the +.travis.yml+ file. If you do this it will run a separate job
-for each version of OTP and let you know if any of them fail.  
+for each version of OTP and let you know if any of them fail.
 
 WARNING: As of this writing travis-ci does not work with Erlang
-R15B03, R15B02 does work. 
+R15B03, R15B02 does work.
 
 The one downside of Travis-CI is that if you are not building an open
-source project then you have to pay to use their hosted service. 
+source project then you have to pay to use their hosted service.
 
-NOTE: TODO Exapand that
+NOTE: TODO Expand that
 
 === Using Circle-CI
 
-In addition to Travis-CI there is also Circle-CI, which is a compeating service. As of this writting
+In addition to Travis-CI there is also Circle-CI, which is a competing service. As of this writing
 Circle-CI defaults to erlang V14B02, but they will happily set your project to any version of erlang if you ask them
-to. 
+to.
 
 To run your test suite with circle you need to create a "circle.yml" file, which should look somewhat like this.
 
 .Example .cirlce.yml
 [source,python]
 ------
-checkout: 
+checkout:
   post:
     - ./rebar get-deps
     - ./rebar compile
-test: 
+test:
   override:
     - ./rebar -v eunit skip_deps=true
 ------
@@ -104,11 +104,11 @@ This will cause circle to checkout your project, run rebar to gather the depende
 everything. It will then run all of the tests with rebar and report the results.
 
 
-==== Running Dialyzer 
+==== Running Dialyzer
 
-If you wish to run dialyzer, you first need to setup your plt file. This is a relatively slow operation 
+If you wish to run dialyzer, you first need to setup your plt file. This is a relatively slow operation
 so you only want to have to do it once. Thankfully Circle provides a nice feature where it will
-let you cache some directories so that persistent files can be kept around. 
+let you cache some directories so that persistent files can be kept around.
 
 ==== Building a PLT file and caching it
 
@@ -118,11 +118,11 @@ Jenkins CI is a more traditional software package in that they assume
 you will download their code and install it on your own server (which
 can be a cloud server). The nice thing about this is that you can have
 your own environment that is configured as you want it. Of course you
-have to figure out how you do want Jenkins to be setup first. 
+have to figure out how you do want Jenkins to be setup first.
 
 Jenkins itself is written in Java and primarily is targeted at Java
 and other JVM languages. As such much of the documentation you will
-find online is about how to use Jenkins with Java. 
+find on-line is about how to use Jenkins with Java.
 
 If you want a very easy install of Jenkins CI consider using the
 Turnkey Linux Appliance http://www.turnkeylinux.org/jenkins which can
@@ -146,7 +146,7 @@ check my code out of the git repository and get it to build without
 too much problem. It did take a few attempts while I did things like
 set paths to binaries and the like. Once this was done I found that
 Jenkins was able to watch my github repository and report on any
-problems. It understood the output of rebar and eunit. 
+problems. It understood the output of rebar and eunit.
 
 *EXPAND*
 
@@ -165,7 +165,7 @@ do a manual checkout of the remote repository. It may ask you to
 accept the remote host for SSH usage, in that case say yes.
 
 After you have done that you should be able to set off builds from the
-web page. 
+web page.
 
 
 *TODO setup walk threw*
@@ -190,7 +190,7 @@ build. Thankfully this is actually not to hard to do. Github, like
 most hosting providers has a +post-commit hook+ that can execute a
 unix command. In this case we want to use CURL or WGET to make a HTTP
 request to Jenkins to trigger the build. In this case the build will
-normally kickoff within a few seconds of when the code is pushed to
+normally kick-off within a few seconds of when the code is pushed to
 GitHub. For most teams a delay of less than 10 seconds is probably
 fine.
 *TODO EXPAND*
@@ -207,9 +207,9 @@ Jenkins run dialyzer for you. This can be done as part of the same
 jenkins job that runs your unit tests, or as part of a separate job
 that only runs Dialyzer. However doing that will require that rebar
 fetch all the dependencies and compile the code twice so combining the
-two may make sense. 
+two may make sense.
 
 
 ==== Monitoring Code Quality
 
-*TODO Write this* 
+*TODO Write this*
