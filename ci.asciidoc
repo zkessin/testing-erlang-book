@@ -80,6 +80,37 @@ source project then you have to pay to use their hosted service.
 
 NOTE: TODO Exapand that
 
+=== Using Circle-CI
+
+In addition to Travis-CI there is also Circle-CI, which is a compeating service. As of this writting
+Circle-CI defaults to erlang V14B02, but they will happily set your project to any version of erlang if you ask them
+to. 
+
+To run your test suite with circle you need to create a "circle.yml" file, which should look somewhat like this.
+
+.Example .cirlce.yml
+[source,python]
+------
+checkout: 
+  post:
+    - ./rebar get-deps
+    - ./rebar compile
+test: 
+  override:
+    - ./rebar -v eunit skip_deps=true
+------
+
+This will cause circle to checkout your project, run rebar to gather the dependencies and compile
+everything. It will then run all of the tests with rebar and report the results.
+
+
+==== Running Dialyzer 
+
+If you wish to run dialyzer, you first need to setup your plt file. This is a relatively slow operation 
+so you only want to have to do it once. Thankfully Circle provides a nice feature where it will
+let you cache some directories so that persistent files can be kept around. 
+
+==== Building a PLT file and caching it
 
 === Using Jenkins-CI
 

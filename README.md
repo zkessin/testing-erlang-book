@@ -77,15 +77,5 @@ To build this on Linux install the asciidoc package (via yum or
 apt-get) make a html directory and run the build.sh script this will
 turn everything into HTML
 
+include::outline.asciidoc[]
 
-=== Chapters
-
-* [Preface](preface.asciidoc)
-* [Building With Rebar](rebar.asciidoc)
-* [Using EUnit](eunit.asciidoc)
-* [Mocking With Meck](meck.asciidoc)
-* [Dialyzer](dialyzer.asciidoc)
-* [PropER](prop_er.asciidoc)
-* [CI with Travis and Jenkins](ci.asciidoc)
-* [Performance and Stress Tests](performance_tests.asciidoc)
-* [Testing Resilience with a Chaos Monkey](chaos_monkey.asciidoc)

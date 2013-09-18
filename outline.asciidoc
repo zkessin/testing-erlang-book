@@ -1,0 +1,33 @@
+
+
+
+=== Chapters
+
+* [Preface](preface.asciidoc)
+* [Building With Rebar](rebar.asciidoc)
+** Introduction
+** Configuring Project Directories
+** Using Dependences 
+* [Using EUnit](eunit.asciidoc)
+** Basics of Unit testing
+** Eunit Test Macros
+** Running Tests
+** Setup and Tear Down
+* [Mocking With Meck](meck.asciidoc)
+* Common Test
+* [Dialyzer](dialyzer.asciidoc)
+** What is Dialyzer
+** Setting up the PLT File
+** Running Dialyzer
+** Understanding what it is telling you
+** Adding type information to your program
+** Dialyzer Options
+** Getting Dialyzer and EUnit to work together
+* [PropER](prop_er.asciidoc)
+** The concept of Property based Testing
+* Setting up CI
+** The basics of CI
+** Travis CI
+** Circle CI
+** Jenkins-CI 
+

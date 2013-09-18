@@ -15,4 +15,3 @@ get_json_from_guid(Guid) ->
 	{error,not_found} ->
 	    {error, not_found}
     end.
-x

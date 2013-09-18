@@ -3,8 +3,9 @@
 Unlike Haskell and other members of the ML family, Erlang is not a staticly
 typed language. There are a number of historical reasons for this, mostly that
 when Erlang was being created that the people who created it did not really know
-how to build a Type System. While Erlang is not a staticly typed language it is however a 
-strongly typed language. 
+how to build a type System. While Erlang is not a staticly typed language it is however a
+strongly typed language, in that it will mostly not automaticly convert types for you
+and if you pass the wrong type it will not silently handle it like some languages would.
 
 However there are some very nice tools for providing type annoatiations and
 doing static type testing. These give some of the benefit that a type system
@@ -148,6 +149,7 @@ it represents a real bug. In this case I had meant to call the function
 +emysql:execute/3+ but had left out the "y" in +emysql+ so of course this
 function does not exist.
 
+.Unknown Functions
 [source,bash]
 ----
 Unknown functions:
@@ -160,8 +162,25 @@ The second function is a render function from a erlydtl (django) template that
 is created at run time, as such it is not included in the set of beam files that
 are being checked by dailyzer. (TODO How to fix this)
 
+
+.Using Dialyzer with Erlydtl
+****
+if your project contains some ErlyDTL templates that are used to render HTML (or other 
+text, you will want to compile them with debug info so that Dialyzer can work with them. To 
+do this with rebar place the templates in the "template" directory, and add this to your +rebar.config+ file.
+
+.rebar.config
+[source,erlang]
+----
+{erlydtl_opts, [
+{compiler_options, [report, return, debug_info]}
+  ]}.
+----
+
+****
+
 The final error, +mochiweb_cookies:cookie/3+ is a function in a module that was
-not included in the +plt+ file, so it should just b e added to the plt file.
+not included in the +plt+ file, so it should just be added to the plt file.
 
 A more subtle case that Dialyzer can catch is when patterns do not match. Which
 is to say that a function can return several things and your code does not match
