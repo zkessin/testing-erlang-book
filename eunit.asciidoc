@@ -1,7 +1,7 @@
 
 == Building Tests With EUnit
 
-=== Basics of Writing Tests 
+=== Basics of Writing Tests
 
 The most basic of any group of tests will be the Unit Test. Unit tests
 should be to validate the basic logic of the application. For building
@@ -31,11 +31,11 @@ between test modules and production modules. If having the tests for
 one module spread over two or more files makes sense then EUnit will
 let you do that.
 
-When building a test moudle the first thing that you should do is include the
+When building a test module the first thing that you should do is include the
 file +eunit/include/eunit.hrl+ which contains all the macros that are
 used by EUnit. After that the test module should define a set of
 functions each with a name ending in "_test" that define the actual
-tests. 
+tests.
 
 NOTE: Any valid atom is a legal function name in Erlang, so naming a test
 function something like +'check that function does the right thing _test'+ is
@@ -50,7 +50,7 @@ contains a simple function +square/1+ that takes a number and squares it.
 include::eunit/src/square.erl[source, erlang]
 ----
 
-To test this code we need a test script like +square_test+ 
+To test this code we need a test script like +square_test+
 
 .square_test.erl
 [source, erlang]
@@ -67,7 +67,7 @@ readable error report so it should be generally preferred.
 
 EUnit features a number of assertions for determining if a test has
 passed. All of these are implemented as processor macros via the
-+eunit.hrl+ file. 
++eunit.hrl+ file.
 
 The most basic assertion is +?assert/1+ which will pass if the value
 is true and fail otherwise. There is also an +?assertNot/1+ which will
@@ -75,10 +75,10 @@ pass if the value is false
 
 The next form is +?assertEqual/2+ which takes an expected value and an
 expression for example +?asssertEqual(4, square:square(2))+ will pass
-and +?assertEqual(5, square:square(2))+ will fail. 
+and +?assertEqual(5, square:square(2))+ will fail.
 
-The converse of the +?assertEqual/2+ macro is the +?assertNotEqual/2+ 
-macro. This will pass if the two parameters are not equal. 
+The converse of the +?assertEqual/2+ macro is the +?assertNotEqual/2+
+macro. This will pass if the two parameters are not equal.
 
 If you want to assert that something matches a pattern you can use the
 +?assertMatch/2+ macro which will assert that the returned value
@@ -92,15 +92,13 @@ macros to test for an error +?assertException/2+, +assertError/2+,
 
 *TODO Example*
 
-
-
 === Running Tests
 
 There are a few ways to run a test suite in EUnit. First of all you
 can call +module:test()+ to run the tests in the +square_test+ module
 run the function +square_test/0+ from the REPL. You can also run tests
 by calling the function +eunit:test/1+ and passing the name of the
-test module. So in this case you can call +eunit:test(square_test)+. 
+test module. So in this case you can call +eunit:test(square_test)+.
 
 When tests run there are two possible results, the first is that all
 tests pass in which case you will get a result like this:
@@ -120,7 +118,7 @@ wrong.
 
 In the second case the test code called +exit(test)+ which causes the
 test to fail but does not give any of the information that the
-+?assert()+ family of macros gives. Any un caught failure including an
++?assert()+ family of macros gives. Any uncaught failure including an
 Exit will result in a failed test.
 
 .Failure
@@ -159,7 +157,7 @@ a directory.
 If you wish to run a test from the unix command line you can start the
 tests on load with the erlang +-run+ command parameter. I generally
 have wrapped my test runner into a custom function that will run the
-tests and then call +init:stop/0+ to cause Erlang to exit. 
+tests and then call +init:stop/0+ to cause Erlang to exit.
 
 I like to run my tests from a Makefile as in this example. The
 Makefile will build everything that may need it and then start erlang
@@ -186,12 +184,12 @@ for any dependencies you may have. Normally you probably do not want to do this
 as it can take a while to run, so use the command +rebar eunit skip_deps=true+
 which will cause rebar to only run the tests of the actual project. You can make
 the output of rebar tests more verbose with the +-v+ switch, which will do the
-same as the +verbose+ option above. 
+same as the +verbose+ option above.
 
-Rebar is my perfered method of running tests.
+Rebar is my preferred method of running tests.
 
 
-=== Code Coverage 
+=== Code Coverage
 
 Ideally you want your unit tests to cover as much of your project as you can
 have. However there is an issue of how do you figure out what parts of your code
@@ -210,11 +208,11 @@ TODO: Example screenshot
 
 === Test Generators
 
-=== Setup and Cleanup (Fixtures)
+=== Setup and Clean-up (Fixtures)
 
 Often when running tests we want to have some form of setup and
-cleanup happen before and after each test. For example The setup code
-could create a Mnesia or ETS table and the cleanup code can delete
+clean-up happen before and after each test. For example The setup code
+could create a Mnesia or ETS table and the clean-up code can delete
 it. In order to do this we need to use a test generator instead of a
 basic test.
 
@@ -222,7 +220,7 @@ In +fixtures.erl+ we use have a generator that returns the tuple
 +{setup, setup/0, cleanup/1, ?_test()}+ which is the actual test. In
 this case +setup/0+ and +cleanup/1+ are called before and after each
 test. The return value of setup is passed to cleanup, so if you need say
-delete a table or close a resource you can do it there. 
+delete a table or close a resource you can do it there.
 
 .fixtures.erl
 [source, erlang]
@@ -238,9 +236,9 @@ include::eunit/src/fixtures.erl[source, erlang]
 
 There is always an issue of what to test and what not to test. Some people like
 to test everything. However some code is hard to test in a way that can prove
-illuminating. I have found that tests for the init function of supervisors is
+illuminating. I have found that tests for the initialization function of supervisors is
 often hard to test in a way that can prove useful for the developer. These
-things should of course be subject to some form of varification, but it does not
+things should of course be subject to some form of verification, but it does not
 have to be a unit test, it can be done in some other type of test.
 
 
@@ -250,17 +248,15 @@ have to be a unit test, it can be done in some other type of test.
 There are three places that eunit lets you setup a test. You can place the test in
 the main file of the module. This has the advantages of the fact that it keeps the tests
 and the code together, in addition Erlang will run the tests when it loads the module into
-the runtime, which if you are doing a fast compile/run cycle can be helpful. However it also 
-mixes the test code with the actually code. 
+the runtime, which if you are doing a fast compile/run cycle can be helpful. However it also
+mixes the test code with the actually code.
 
-A second option is to put the tests in a +_test.erl+ file in the +src+ directory, 
-the problem with this is that the beam files will end up in the ebin directory with the 
+A second option is to put the tests in a +_test.erl+ file in the +src+ directory,
+the problem with this is that the beam files will end up in the ebin directory with the
 executable code, which is not necessary, I dislike this approach as it tends to create a bunch of
 executables that may end up getting shipped when they don't need to be.
 
 My method of choice is to put the tests in the +test+ directory in +_test.erl+ files. When
-you run the tests with rebar it will put the beam files in the +.eunit+ directory and not 
+you run the tests with rebar it will put the beam files in the +.eunit+ directory and not
 in the +ebin+ directory, so there is no chance that these will get executed by mistake when
 they are not supposed to.
-
-

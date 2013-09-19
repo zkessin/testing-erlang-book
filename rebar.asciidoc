@@ -1,4 +1,4 @@
-== Building Projects with Rebar 
+== Building Projects with Rebar
 
 Rebar is a build tool from the good folks at Basho that makes building
 and testing your project much easier. Rebar can find all the
@@ -6,12 +6,12 @@ dependencies of your project, download them from GitHub or other
 sources, compile, build, test and package them for distribution.
 
 For this book we are interested in how to gather dependencies, build
-and run our tests. 
+and run our tests.
 
 Rebar configuration is done with a _rebar.config_ file in the project
 root directory. The _rebar.config_ file is at its core a set of Erlang
 terms that describe the project. There are a number of options that
-are in common usage. 
+are in common usage.
 
 If your project contains a number of sub directories then use the
 _{sub_dirs, []}_ directive to list the directories in which each
@@ -30,29 +30,29 @@ will look like this example.
         {jsxd,          ".*",           {git, "git://github.com/Licenser/jsxd.git",	"HEAD"}}]}.
 --------
 
-The final element which is +"HEAD"+ here can be any refrence to a git commit. 
+The final element which is +"HEAD"+ here can be any refrence to a git commit.
 In most cases it is probably better to not use "HEAD" but to use an explicit tag
-or SHA1 value. Theis is because if you use "HEAD" it is possible for whomever
+or SHA1 value. This is because if you use "HEAD" it is possible for whomever
 owns the repository to update the code and when you next load your dependencies
-you will have a new, unknown and untested code base. While if you use an expicit
+you will have a new, unknown and untested code base. While if you use an explicit
 tag then you will always get a known version of the state. More importantly if
-different developers (or different enviroments) last pulled in the dependincies
-at different times then wiht an eplicit SHA1 value then you can be sure that
+different developers (or different environments) last pulled in the dependencies
+at different times then with an explicit SHA1 value then you can be sure that
 they will all be using an identical version of the code.
 
-#TODO: Explain the format of the deps directive
+#TODO: Explain the format of the dependencies directive
 
 To actually download the dependencies run +rebar get_deps+ it will go
-and clone all of the repositories from github or other online sources
+and clone all of the repositories from github or other on-line sources
 into your _deps_ directory. In addition it will also download any of
-the dependencies of those projects. 
+the dependencies of those projects.
 
- 
+
 This can also be a good way to break apart a large project. By
 creating several smaller applications each with their own repository
 and then pull them together with rebar. This means that each project
 will stand alone and can be built and tested in isolation. This is a
 good way to deal with a long build process. By having 10-12 git
 repositories each with their own tests and CI jobs it will ensure that
-CI does not get out of hand, and that all tests run in a reasoanble amount of
+CI does not get out of hand, and that all tests run in a reasonable amount of
 time.
