@@ -12,12 +12,12 @@ would be good to be able to test that our application can withstand
 these failures and keep on doing its job.
 
 One way to do this is ensure that things will randomly fail to ensure
-that other parts are weekly coupled and can keep working. A standard
+that other parts are weakly coupled and can keep working. A standard
 tool for doing this is a _Chaos Monkey_. Which is a program that will
 randomly kill processes from time to time. Thus forcing developers to
 deal with the possibility of degraded service.
 
-=== How a  Chaos Monkey works
+=== How a Chaos Monkey works
 
 === How to implement one
 
