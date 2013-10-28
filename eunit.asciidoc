@@ -242,8 +242,16 @@ things should of course be subject to some form of verification, but it does not
 have to be a unit test, it can be done in some other type of test.
 
 
+=== Testing larger functions 
 
-=== Keeping tests Organized
+If your functions are too long then, testing them becomes more difficult, in
+this case it is probably a clue that your code needs to be refactored. Shorter
+functions are easier to test and easier to reason about. 
+
+TODO: Expand 
+
+
+=== Keeping Tests Organized
 
 There are three places that eunit lets you setup a test. You can place the test in
 the main file of the module. This has the advantages of the fact that it keeps the tests

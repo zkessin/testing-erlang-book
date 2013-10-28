@@ -24,10 +24,19 @@
 ** Dialyzer Options
 ** Getting Dialyzer and EUnit to work together
 * [PropER](prop_er.asciidoc)
-** The concept of Property based Testing
+** The concept of Property Based Testing
+** Using types to create a test
+** Running tests
+** Testing common types of code
+*** Example 1
+*** Example 2
+*** Example 3
+*** Example 4
+* Finding Concurrency Errors using Concuerror
 * Setting up CI
 ** The basics of CI
 ** Travis CI
 ** Circle CI
-** Jenkins-CI 
+** Jenkins-CI
+* Performance Testing
 

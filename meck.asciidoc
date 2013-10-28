@@ -72,3 +72,13 @@ In addition in the case of meck the order in which rebar compiles your project
 can matter. If your project consists of many OTP applications in one git
 repository then if meck can not find a module it will fail. So while in normal
 compilation order of modules does not matter with meck it does.
+
+
+== Meck version Hell
+
+Sometimes you will include several sub projects with different functionality, the problem is
+that each of these will often include meck as well. The problem is that often they will include different 
+versions of meck. The problem with this is that rebar will often not compile when the versions don't match.
+
+
+
