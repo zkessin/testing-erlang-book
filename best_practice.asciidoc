@@ -1,0 +1,91 @@
+
+=== How to Write code to take advantage of Dialyzer
+
+WARNING: This section is a work in progress, feel free to send corrections etc as pull request. Please
+Use advice here with caution
+
+Dialyzer is great at finding problems in existing code, but it seems that if we are cleaver in
+how we write our code then dialyzer could be even more powerful in helping us find bad
+code. And as Dialyzer can work on the existing code this could save us time in terms of 
+not having to write explicit tests and so on. 
+
+The question is how to best do this, I think this is an open topic, but I expect a number of common sense
+rules will help us make sense of it.
+
+
+* Use Spec's everywhere
+* Use specific types
+* Use Opaque Types
+* Write Short Functions
+* Compose Functions 
+
+Lets go threw those in order
+
+==== Use Spec's everywhere
+
+You should add +-spec()+ lines to all of your functions and types to all of your records.
+Of course Dialyzer can try to deduce types for you, but it will work better if you are explicit.
+
+==== Use Specific types
+
+Your "Customer ID" value may just be a binary, but if you give it the
+type +customer_id()+ vis +binary()+ you have the distinct advantage
+that it can't cross contaminate with other things that might have the
+same underlying type. This is the same idea that was done in days past
+with Hungarian Notation, where you would use a naming system to keep
+different different variables separate.
+
+Even better would be instead of hving +customer_id()+ be an alias for
++binary()+ would be to have it have the signature +{'customer_id',
+binary()}+ this way you can pattern match on it and have dialyzer
+positively identify it.
+
+==== Use Taged types
+
+Instead of passing a simple data to a function passing the data to 
+the function as a taged type has a lot of advantages. First of all the
+function can pattern match on its input 
+
+
+First of all
+it lets dialyzer check that functions match.
+
+Secondly it allow pattern matching to 
+
+.Tagged Function
+[source,Erlang]
+----
+
+----
+
+==== Use Opaque types
+
+Use of Opaque types can also help with program correctness by allowing
+a type to be only accessed in one module.
+
+TODO EXPAND
+
+
+TODO Examples
+
+
+==== Use Short functions
+
+Keeping functions short helps with just about everything. 
+TODO Expand
+
+==== Compose type transformers
+
+By creating a number of smaller functions that can be reused to
+transform data it is possible to create simple tests  that will test
+those functions and dialyzer can make sure that they are put together
+in a sane way.
+
+TODO: Example
+
+==== Split Pure and Impure code
+
+One can improve code quality if you take a page from the Haskell
+playbook. By splitting the code that deals with IO including the
+database, WebInterface or the like from the logic that transforms the
+data it functions will be easier to test and to type check.
