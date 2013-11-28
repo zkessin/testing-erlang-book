@@ -23,22 +23,18 @@ performance tests and more.
 
 === Chapters
 
-* link:preface.asciidoc.html[Preface]
-* link:rebar.asciidoc.html[Building With Rebar]
-* link:eunit.asciidoc.html[Using EUnit]
-* link:meck.asciidoc.html[Mocking With meck]
-* link:dialyzer.asciidoc.html[Checking types with Dialyzer]
-* link:prop_er.asciidoc.html[PropEr]
-* link:ci.asciidoc.html[CI with Travis and Jenkins]
-* link:best_practice.asciidoc.html[Best Practices]
+* link:00_preface.html[Preface]
+* link:01_rebar.html[Building With Rebar]
+* link:02_eunit.html[Eunit]
+* link:03_common_test.html[Common Test]
+* link:04_dialyzer.html[Dialyzer]
+* link:05_proper.html[Proper]
+* link:06_quick_check.html[Quick Check]
+* link:07_wrangler.html[Wrangler]
+* link:08_concuerror.html[Concerrer]
+* link:09_ci.html[Contious Integration]
+* link:10_best_practice.html[Best Practice]
 
 
 
 
-=== Chapters that will probably be in the 2nd Edition
-* link:common_test.asciidoc.html[Common Test]
-* link:quick_check.asciidoc.html[Quick Check]
-* link:advanced_eunit.asciidoc.html[Advanced Topics in EUnit]
-
-==== New Chapters 
-Add any new chapter links here, they will be moved up later

@@ -83,5 +83,16 @@ To build this on Linux install the asciidoc package (via yum or
 apt-get) make a html directory and run the build.sh script this will
 turn everything into HTML
 
-include::outline.asciidoc[]
+* link:00_preface.asciidoc[Preface]
+* link:01_rebar.asciidoc[Building With Rebar]
+* link:02_eunit.asciidoc[Eunit]
+* link:03_common_test.asciidoc[Common Test]
+* link:04_dialyzer.asciidoc[Dialyzer]
+* link:05_proper.asciidoc[Proper]
+* link:06_quick_check.asciidoc[Quick Check]
+* link:07_wrangler.asciidoc[Wrangler]
+* link:08_concuerror.asciidoc[Concerrer]
+* link:09_ci.asciidoc[Contious Integration]
+* link:10_best_practice.asciidoc[Best Practice]
+
 
