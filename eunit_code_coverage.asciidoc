@@ -1,6 +1,0 @@
-== Generating EUnit Code Coverage Reports
-
-NOTE: Redo with rebar
-
-Remove this with rebar it can be folded into the eunit chapter
-
