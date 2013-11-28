@@ -30,6 +30,8 @@ performance tests and more.
 * link:dialyzer.asciidoc.html[Checking types with Dialyzer]
 * link:prop_er.asciidoc.html[PropEr]
 * link:ci.asciidoc.html[CI with Travis and Jenkins]
+* link:best_practice.asciidoc.html[Best Practices]
+
 
 
 
