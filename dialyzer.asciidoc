@@ -109,7 +109,6 @@ if [ ! -f $PLT ]; then
        echo "Adding $app to PLT\n"
        dialyzer  --add_to_plt $app  --output_plt $PLT
    done
-   echo "********************************************************************************"
    echo ""
 fi
 ----
@@ -370,44 +369,3 @@ If your project is already using a CI system like Jenkins or Travis then it
 makes sense to have that system also run dialyzer over the code base after
 running the unit tests. (Or it could be done in parallel, it doesn't really
 matter).
-
-=== How to Write code to take advantage of Dialyzer
-
-WARNING: This section is a work in progress, feel free to send corrections etc as pull request. Please
-Use advice here with caution
-
-Dialyzer is great at finding problems in existing code, but it seems that if we are cleaver in
-how we write our code then dialyzer could be even more powerful in helping us find bad
-code. And as Dialyzer can work on the existing code this could save us time in terms of 
-not having to write explicit tests and so on. 
-
-The question is how to best do this, I think this is an open topic, but I expect a number of common sense
-rules will help us make sense of it.
-
-
-* Use Spec's everywhere
-* Use specific types
-* Write Short Functions
-* Compose Functions 
-
-Lets go threw those in order
-
-==== Use Spec's everywhere
-
-You should add +-spec()+ lines to all of your functions and types to all of your records.
-Of course Dialyzer can try to deduce types for you, but it will work better if you are explicit.
-
-==== Use Specific types
-
-Your "Customer ID" value may just be a binary, but if you give it the type +customer_id()+ vis +binary()+ you 
-have the distinct advantage that it can't cross contaminate with other things that might have the same underlying
-type. This is the same idea that was done in days past with Hungarian Notation, where you would use a naming system
-to keep different different variables separate.
-
-TODO Examples
-
-
-==== Use Short functions
-
-Keeping functions short helps with just about everything. 
-TODO Expand
