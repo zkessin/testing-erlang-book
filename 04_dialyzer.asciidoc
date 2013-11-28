@@ -1,49 +1,60 @@
 == Type Checking with Dialyzer
 
-Unlike Haskell and other members of the ML family, Erlang is not a statically
-typed language. There are a number of historical reasons for this, mostly that
-when Erlang was being created that the people who created it did not really know
-how to build a type System. While Erlang is not a statically typed language it is however a
-strongly typed language, in that it will mostly not automatically convert types for you
-and if you pass the wrong type it will not silently handle it like some languages would.
+Unlike Haskell and other members of the ML family, Erlang is not a
+statically typed language. There are a number of historical reasons
+for this, mostly that when Erlang was being created that the people
+who created it did not really know how to build a type system. While
+Erlang is not a statically typed language it is however a strongly
+typed language, in that it will mostly not automatically convert types
+for you and if you pass the wrong type it will not silently handle it
+like some languages would.
 
-However there are some very nice tools for providing type annotations and
-doing static type testing. These give some of the benefit that a type system
-like haskell's without having to invest in the full mechanism of Haskell's
-types.
+That being said over the past few years an optional system for static
+types has been added to the Erlang language in the form of type
+annotations. These are strictly optional in that if you don't specify
+them the code will still compile and they do not affect the way that
+the code runs. What you can do with them is use tools like +dialyzer+
+to check that the program is consistent. 
+
+However there are some very nice tools for providing type annotations
+and doing static type testing. These give some of the benefit that a
+type system like haskell's without having to invest in the full
+mechanism of Haskell's types.
 
 .Thanks Kostas for all of this
-NOTE: Almost all of the tools relating to types are the product of the work of
-Kostis Sagonas and his teams at Uppsala University (Sweden) and the National
-Technical University of Athens (Greece).
+NOTE: Almost all of the tools relating to types are the product of the
+work of Kostis Sagonas and his teams at Uppsala University (Sweden)
+and the National Technical University of Athens (Greece).
 
-The main tool for testing types is Dialyzer, which is a utility that can check
-compiled code for type inconsistencies. This can be a powerful way to check your
-code for all sorts of problems, in terms of consistency of how functions are
-called. For Example, if you have some parts of your application that treat
-string data as lists and other parts that use binaries, dialyzer will find that
-for you.
+The main tool for testing types is Dialyzer, which is a utility that
+can check compiled code for type inconsistencies. This can be a
+powerful way to check your code for all sorts of problems, in terms of
+consistency of how functions are called. For Example, if you have some
+parts of your application that treat string data as lists and other
+parts that use binaries, dialyzer will find that for you.
 
-Or to show an example from an application that I have worked on, we had a
-function that was changed from having 4 arguments to 5. When we put the code in
-production there was one place where we had not converted it to the new
-signature. Had we run dialyzer on this we would have caught it before deploying
-our code to production.
+Or to show an example from an application that I have worked on, we
+had a function that was changed from having 4 arguments to 5. When we
+put the code in production there was one place where we had not
+converted it to the new signature. Had we run dialyzer on this we
+would have caught it before deploying our code to production.
 
-One of the goals of Dialyzer was that it should not require any changes to your
-source code to be useful. You can specify types in your function and record
-definitions but it is not required. If you do nothing but take your existing
-code and run Dialyzer on it, then Dialyzer should be able to show many possible
-patterns in your code base.
+One of the goals of Dialyzer was that it should not require any
+changes to your source code to be useful. You can specify types in
+your function and record definitions but it is not required. If you do
+nothing but take your existing code and run Dialyzer on it, then
+Dialyzer should be able to show many possible patterns in your code
+base.
 
 .Dialyzer Internals
 ****
 TODO: Expand
 
-The way dialyzer works is treating the parameters and return values of your project
-as a large constraint problem. It tries to figure out what types each function accepts
-and returns then sees if everything matches up. Once it has done that it tries to
-tighten up the constrains and repeats over several passes.
+The way dialyzer works is treating the parameters and return values of
+your project as a large constraint problem. It tries to figure out
+what types each function accepts and returns then sees if everything
+matches up. Once it has done that it tries to tighten up the
+constrains and repeats over several passes.
 ****
 
 
@@ -51,17 +62,17 @@ WARNING:  Dialyzer will hurt your feelings
 
 === Setting up Dialyzer to run the first time
 
-In order to run dialyzer you need to create a Persistent Lookup Table. This is a
-file that normally lives in your home directory (but you can put it anywhere.
-This file contains basic information about the type signatures of system
-applications
+In order to run dialyzer you need to create a Persistent Lookup
+Table. This is a file that normally lives in your home directory (but
+you can put it anywhere.  This file contains basic information about
+the type signatures of system applications
 
-To create a basic PLT file use a command line like this one. It will take a few
-minutes to run and then create a plt file in the current directory. If you omit
-the +--output_plt+ command then it will create a plt file under a default name
-in your home directory. It is probably a good idea to have a separate PLT file
-for each project, as different projects may use different versions of
-dependencies and so on.
+To create a basic PLT file use a command line like this one. It will
+take a few minutes to run and then create a plt file in the current
+directory. If you omit the +--output_plt+ command then it will create
+a plt file under a default name in your home directory. It is probably
+a good idea to have a separate PLT file for each project, as different
+projects may use different versions of dependencies and so on.
 
 .Basic PLT File
 [source,bash]
@@ -70,9 +81,10 @@ dialyzer  --build_plt --apps kernel stdlib mnesia inets ssl crypto \
 	--output_plt project.plt
 ----
 
-If you find that you have forgotten to add some applications to your plt file
-then you can always add more applications to a PLT file with a command like
-this. You can also add more than one application at a time.
+If you find that you have forgotten to add some applications to your
+plt file then you can always add more applications to a PLT file with
+a command like this. You can also add more than one application at a
+time.
 
 .Add to PLT file
 [source,bash]
@@ -80,16 +92,18 @@ this. You can also add more than one application at a time.
 dialyzer  --add_to_plt httpc  --output_plt project.plt
 ----
 
-If your project, like mine, has a lot of dependences that you have pulled of off
-github with rebar you can also add those to your PLT file. I have a custom
-script that I use to run dialyzer that will check if the plt file exists and if
-it does not will create it for me. This script will pull all of the rebar
-dependencies, compile them and build the plt file.
+If your project, like mine, has a lot of dependences that you have
+pulled of off github with rebar you can also add those to your PLT
+file. I have a custom script that I use to run dialyzer that will
+check if the plt file exists and if it does not will create it
+for me. This script will pull all of the rebar dependencies, compile
+them and build the plt file.
 
 [NOTE]
-On my macbook air this takes 5 minutes to run or so. Its a good time to get a
-cup of tea. But you only have to build the PLT file once. You may have to redo it after massive changes
-to the dependencies of a code base.
+On my macbook air this takes 5 minutes to run or so. Its a good time
+to get a cup of tea. But you only have to build the PLT file once. You
+may have to redo it after massive changes to the dependencies of a
+code base.
 
 
 .build Project PLT
@@ -113,17 +127,18 @@ if [ ! -f $PLT ]; then
 fi
 ----
 
+=== Dialyzer Options 
 === Running Dialyzer
 
-Once the PLT file has been created then we can run dialyzer on the code base.
-Normally dialyzer is run on the compiled *beam* file but it is also possible to
-run it on erlang source files.
+Once the PLT file has been created then we can run dialyzer on the
+code base.  Normally dialyzer is run on the compiled *beam* file but
+it is also possible to run it on erlang source files.
 
 To run the basic dialyzer on a source projects from the unix command
-line use a command like this. This requires that ebin contain the beam files to
-be examined that have been compiled with the *debug_info* flag. This can be done
-with rebar by specifying  _{erl_opts, [debug_info]}._ in the *rebar.config*
-file.
+line use a command like this. This requires that ebin contain the beam
+files to be examined that have been compiled with the *debug_info*
+flag. This can be done with rebar by specifying _{erl_opts,
+[debug_info]}._ in the *rebar.config* file.
 
 .dialyzer
 [source, bash]
@@ -131,22 +146,23 @@ file.
 dialyzer ebin --plt $PLT
 -----
 
-If you have more than one subdirectory of erlang applications then you can run
-dialyzer on all of them at once.
+If you have more than one subdirectory of erlang applications then you
+can run dialyzer on all of them at once.
 
 
 === Understanding Errors
 
 TODO: Expand this a lot
 
-Dialyzer when run can emit several kinds of errors. The most simple kind of
-error is that of an unknown function. In this case what it really means is a
-function in an unknown module (if there is a known module but no function of a
-given name or arity that will be reported elsewhere) In this example, the
-system is showing three missing functions. The first one is an actual problem as
-it represents a real bug. In this case I had meant to call the function
-+emysql:execute/3+ but had left out the "y" in +emysql+ so of course this
-function does not exist.
+Dialyzer when run can emit several kinds of errors. The most simple
+kind of error is that of an unknown function. In this case what it
+really means is a function in an unknown module (if there is a known
+module but no function of a given name or arity that will be reported
+elsewhere) In this example, the system is showing three missing
+functions. The first one is an actual problem as it represents a
+real bug. In this case I had meant to call the function
++emysql:execute/3+ but had left out the "y" in +emysql+ so of course
+this function does not exist.
 
 .Unknown Functions
 [source,bash]
@@ -157,16 +173,19 @@ Unknown functions:
   mochiweb_cookies:cookie/3
 ----
 
-The second function is a render function from a erlydtl (django) template that
-is created at run time, as such it is not included in the set of beam files that
-are being checked by dailyzer. (TODO How to fix this)
+The second function is a render function from a erlydtl (django)
+template that is created at run time, as such it is not included in
+the set of beam files that are being checked by dailyzer. (TODO How to
+fix this)
 
 
 .Using Dialyzer with Erlydtl
 ****
-if your project contains some ErlyDTL templates that are used to render HTML (or other
-text, you will want to compile them with debug info so that Dialyzer can work with them. To
-do this with rebar place the templates in the "template" directory, and add this to your +rebar.config+ file.
+if your project contains some ErlyDTL templates that are used to
+render HTML (or other text, you will want to compile them with debug
+info so that Dialyzer can work with them. To do this with rebar place
+the templates in the "template" directory, and add this to your
++rebar.config+ file.
 
 .rebar.config
 [source,erlang]
@@ -178,20 +197,23 @@ do this with rebar place the templates in the "template" directory, and add this
 
 ****
 
-The final error, +mochiweb_cookies:cookie/3+ is a function in a module that was
-not included in the +plt+ file, so it should just be added to the plt file.
+The final error, +mochiweb_cookies:cookie/3+ is a function in a module
+that was not included in the +plt+ file, so it should just be added to
+the plt file.
 
-A more subtle case that Dialyzer can catch is when patterns do not match. Which
-is to say that a function can return several things and your code does not match
-all of them.
+A more subtle case that Dialyzer can catch is when patterns do not
+match. Which is to say that a function can return several things and
+your code does not match all of them.
 
-For example if a function could return +{ok,Value}+ or +{error, REASON}+ and
-your code only matches the +{ok, Value}+ variation then Dialyzer will point it
-out to you by giving you a set of errors like in this example.
+For example if a function could return +{ok,Value}+ or +{error,
+REASON}+ and your code only matches the +{ok, Value}+ variation then
+Dialyzer will point it out to you by giving you a set of errors like
+in this example.
 
 A more subtle bug is that in this case the function
-+get_component:get_component/1+ will never return +{error, not_found}+ so there
-is a whole chain of error checks that are catching errors that may never show
++get_component:get_component/1+ will never return +{error, not_found}+
+so there is a whole chain of error checks that are catching errors
+that may never show
 up.
 .never_match.erl
 [source, erlang]
@@ -208,18 +230,18 @@ src/never_match.erl:15: The pattern {'error', 'not_found'} can never match the t
 ----
 
 This one takes some understanding to figure out what you are supposed to do with
-it. What it is saying is that in +never_match.erl:15+  the pattern +{'error',
-'not_found'}+ will never match and that this block is in effect dead code. This
-is because the +get_component/1+ function will always return +{'ok',
-jsx:json_term()}+ and can never return +{'error', 'not_found'}+. Note in this
-case the +-spec+ for that function says that it can return +{'error',
-'not_found'}+, but the code says it can not so Dialyzer will figure out the
-correct success typing.
+it. What it is saying is that in +never_match.erl:15+ the pattern
++{'error', 'not_found'}+ will never match and that this block is in
+effect dead code. This is because the +get_component/1+ function will
+always return +{'ok', jsx:json_term()}+ and can never return
++{'error', 'not_found'}+. Note in this case the +-spec+ for that
+function says that it can return +{'error', 'not_found'}+, but the
+code says it can not so Dialyzer will figure out the correct success
+typing.
 
 
 Sometimes the error message is a bit complex, and takes some parsing
-to understand. This error comes from a call to upload an object to
-S3.
+to understand. This error comes from a call to upload an object to S3.
 
 .Reformatted for readability
 [source, erlang]
@@ -247,24 +269,62 @@ will never return since the success typing is
 
 ----
 
+=== How Erlang views types
+
+The Erlang type system can be very expresive, but it does not always
+work the same way type systems in Object Oriented langauges such as
+Java work. There are some ideas that can be easy to express in an
+erlang type but would be very hard to express in Java and vice versa. 
+
+The basic types that are seen in Erlang will be familar to anyone who
+has used the language for a while, they they include such things as
++pid()+, +integer()+, +atom()+, +float()+, +binary()+, +refrence()+, +
+and so on. 
+
+Types can be constructed by unions of basic types, So the +number()+
+type is equivilent to +integer()|float()+.
+
+An atom can be its own type, so the +boolean()+ type is the same as
++'true'|'false'+, and you could define other unions of atoms, so HTTP
+verbs would be +'get'|'post'|'put'...+ (the quotes are optional but
+are good style). Integers can also be a good type, so you could have a
+type +http_success_codes()+ can be defined as +200|201|202|203|204+ or
+just +200..204+. 
+
+An array canb e indicated as one would expect with square brackets,
+the type +[]+ indicates an empty array, while an aarray of integers
+would be shown as +[integer()]+, and a string is defined as +[char()]+
+a non empty string is defined as +[char(),...]+. 
+
+A tuple 
+
+A record
+
+Algebraic types
+
+Opaque types
+
+
 
 === Adding type annotations to functions
 
-By default dialyzer will try to infer what types each function takes as
-arguments and returns, however this often results in an overly broad type
-signature that will accept things that it should not.
+By default dialyzer will try to infer what types each function takes
+as arguments and returns, however this often results in an overly
+broad type signature that will accept things that it should not.
 
-As a developer Erlang gives us a way to fix this problem, we can tell the
-compiler what types we think a function should be working with. This also
-provides someone reading the code with some extra information about the intent
-of the developer, which will be checked by dialyzer.
+As a developer Erlang gives us a way to fix this problem, we can tell
+the compiler what types we think a function should be working
+with. This also provides someone reading the code with some extra
+information about the intent of the developer, which will be checked
+by dialyzer.
 
-To add a type specification to a function use the +-spec()+ declaration as in
-this example. This tells dialyzer that the function +known_content_type/2+ takes
-2 arguments, a +wm_reqdata+ record and a +payload+ record, and it returns a
-tuple consisting of a boolean, and the same two record types. However unlike a
-comment this declaration can be checked with dialyzer, so if the function
-changes, or a record definition changes it will be caught.
+To add a type specification to a function use the +-spec()+
+declaration as in this example. This tells dialyzer that the function
++known_content_type/2+ takes 2 arguments, a +wm_reqdata+ record and a
++payload+ record, and it returns a tuple consisting of a boolean, and
+the same two record types. However unlike a comment this declaration
+can be checked with dialyzer, so if the function changes, or a record
+definition changes it will be caught.
 
 .Type Annotation
 [source,erlang]
@@ -279,16 +339,19 @@ known_content_type(ReqData, Context) ->
     {Allowed, ReqData, Context}.
 ----
 
-Most erlang abstract types are written in a way that they look like functions.
-So, for example, the type integer is +integer()+ and a boolean is +boolean()+.
+Most erlang abstract types are written in a way that they look like
+functions.  So, for example, the type integer is +integer()+ and a
+boolean is +boolean()+.
 
-In addition to abstract types there are also literal types, these are atoms or
-integers that represent themselves. So for example the atom +'ok'+ is a literal
-type that will match itself, or the number +42+ is also a literal type.
+In addition to abstract types there are also literal types, these are
+atoms or integers that represent themselves. So for example the atom
++'ok'+ is a literal type that will match itself, or the number +42+ is
+also a literal type.
 
-Types can also be combined with a vertical bar to make more complex type. So the
-type +number()+ is defined as +integer() | float()+. You could also define a new
-type as +'ok'|'error'+ which might be the value returned by a function.
+Types can also be combined with a vertical bar to make more complex
+type. So the type +number()+ is defined as +integer() | float()+. You
+could also define a new type as +'ok'|'error'+ which might be the
+value returned by a function.
 
 Erlang has a number of predefined types, and they can be found in the
 Erlang reference manual
@@ -297,10 +360,11 @@ cover all of the basic types you would expect, such as +integer()+,
 +binary()+, +iolist()+, +atom()+ and so on.
 
 
-A record can also be used as its own type with the syntax +#RecordName{}+. When
-defining a record it is often a good idea to define types for each field in the
-record as shown in this example. Here we have a user record with three fields,
-all of which have a type of +binary()+ as they are string fields, however the
+A record can also be used as its own type with the syntax
++#RecordName{}+. When defining a record it is often a good idea to
+define types for each field in the record as shown in this
+example. Here we have a user record with three fields, all of which
+have a type of +binary()+ as they are string fields, however the
 +avatar+ field could also be blank.
 
 [source, erlang]
@@ -314,12 +378,13 @@ all of which have a type of +binary()+ as they are string fields, however the
 ----
 
 We could make that declaration more expressive if we could replace the
-+binary()+ type with specific types. in this example we replace the first two
-fields generic +binary()+ with a more specific type of +user_id()+ and +email()+
-that are for now just aliases of binary but we could also make them more
-specific if we chose.
++binary()+ type with specific types. in this example we replace the
+first two fields generic +binary()+ with a more specific type of
++user_id()+ and +email()+ that are for now just aliases of binary but
+we could also make them more specific if we chose.
 
-However this does make the record definition easier to understand as we can
+However this does make the record definition easier to understand as
+we can
 
 [source, erlang]
 ----
