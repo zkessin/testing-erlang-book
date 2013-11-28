@@ -15,7 +15,7 @@ work. However it is possible to compile the module with a +export_all+
 directive for testing. This can be done as in this example by using the erlang
 +-ifdef(EUNIT)+.  If the tests are in their own module then that
 module should be named the same at the module to be tested but with
-the suffix +_test+. So a module +square+ will have tests in
+the suffix +_test+ or +_tests+. So a module +square+ will have tests in
 +square_test+.
 
 .Export all for testing
@@ -203,8 +203,21 @@ is and is not covered.
 -----
 {cover_enabled, true}.
 -----
-
 TODO: Example screenshot
+
+If you would like to have coverage in more detail than on a line by
+line basis than the smother module https://github.com/ramsay-t/smother
+can provide Modified Decision/Condition Coverage. which is to say that instead of just
+telling you if a given line of code was executed it can tell you if
+each conditional on that line had all possible values tried. 
+This can find cases where bugs can creap in despite test coverage due
+to the fact that a possible condition is masked by other factors
+
+TODO: Example
+
+
+
+
 
 === Test Generators
 
@@ -224,24 +237,9 @@ delete a table or close a resource you can do it there.
 
 .fixtures.erl
 [source, erlang]
-----
+-----
 include::eunit/src/fixtures.erl[source, erlang]
-----
-
-
-=== Macros For Debugging
-
-
-=== What to test and what not to test
-
-There is always an issue of what to test and what not to test. Some people like
-to test everything. However some code is hard to test in a way that can prove
-illuminating. I have found that tests for the initialization function of supervisors is
-often hard to test in a way that can prove useful for the developer. These
-things should of course be subject to some form of verification, but it does not
-have to be a unit test, it can be done in some other type of test.
-
-
+-----
 === Testing larger functions 
 
 If your functions are too long then, testing them becomes more difficult, in
@@ -268,3 +266,14 @@ My method of choice is to put the tests in the +test+ directory in +_test.erl+ f
 you run the tests with rebar it will put the beam files in the +.eunit+ directory and not
 in the +ebin+ directory, so there is no chance that these will get executed by mistake when
 they are not supposed to.
+
+=== What to Unit Test and what Not to Test
+
+There is always an issue of what to test and what not to test. Some
+people like to test everything. However some code is hard to test in a
+way that can prove illuminating. I have found that tests for the
+initialization function of supervisors is ation function of
+supervisors is often hard to test in a way that can prove useful for
+the developer. These things should of course be subject to some form
+of verification, but it does not have to be a unit test, it can be
+done in some other type of test.
