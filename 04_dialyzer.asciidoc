@@ -296,14 +296,23 @@ the type +[]+ indicates an empty array, while an aarray of integers
 would be shown as +[integer()]+, and a string is defined as +[char()]+
 a non empty string is defined as +[char(),...]+. 
 
-A tuple 
+A record is its own type and is represented as +#record{}+ TODO: Expand
 
-A record
+A tuple can be defined with braces as one would expect, so +{ok,
+string()}+ would be a common return value of a function. 
 
-Algebraic types
+One of the major streignths of the erlang type system is that types
+can be joined together. For example the function +lookup_item_by_id/1+
+might have the return value +{ok, #item{}}|nothing+ which will express
+all possible successful results of this call, it will eather find the
+item (presumably in a database) or return the atom +nothing+ to
+indicate that there is no such item. The truly excpetional case of
+unrecoverable failure (for example if someone dropped the stored
+procedure from the database) is not mentioned and would have to be
+handled by the process supervisor. 
 
 Opaque types
-
+TODO: Write this
 
 
 === Adding type annotations to functions
