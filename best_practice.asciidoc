@@ -44,18 +44,17 @@ positively identify it.
 
 Instead of passing a simple data to a function passing the data to 
 the function as a taged type has a lot of advantages. First of all the
-function can pattern match on its input 
+function can pattern match on its input to prevent the wrong inputs
+being passed.
 
-
-First of all
-it lets dialyzer check that functions match.
-
-Secondly it allow pattern matching to 
+It also allows dialyzer to be more specific with checking for
+impedence mismatches. 
 
 .Tagged Function
 [source,Erlang]
 ----
-
+find_word(Board = {boggle_board, _}) ->
+   ....
 ----
 
 ==== Use Opaque types
