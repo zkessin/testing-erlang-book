@@ -1,3 +1,58 @@
 == Wrangler
 
-How to refactor your code
+One of the values of having a full set of tests is that should you
+desire to refactor your code is that it is easier to do with the
+confidence that you will not change the behavior of the code in a way
+that you can't understand. 
+
+Your tests can ensure that you can controll your code base before and
+after testing. 
+
+If you want to refactor your Erlang code check out Wrangler from Simon
+Thompson and Huiqing Li at the Univeristy of
+Kent. https://www.cs.kent.ac.uk/projects/wrangler/Wrangler/Home.html
+Wrangler provides a number of refactoring that a developer can use to
+work on their code base. In addition this also includes an API that
+allows developers and teams to create their own refactorings. 
+
+Uses of Wrangler include finding cloned code, extracting or inlining
+functions and more. 
+
+You can also use Wrangler to provide an automated way to update code
+to match API changes. 
+
+Wrangler can be used from Emacs or Eclipse via ErlIDE. 
+
+=== Installing Wrangler on Emacs
+
+You can download wrangler from the project's home page or from
+GitHub. To use Wrangler with Emacs you need to tell emacs where to
+find wrangler and tell emacs to load it. On my mac it looks like this, 
+but the path will be different on your system. 
+
+.Add to .emacs
+------
+(add-to-list 'load-path 
+	     "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/wrangler-1.0/elisp")
+(require 'wrangler)
+------ 
+
+To start wrangler then run the command "M-x wrangler-menu-init", you
+will now have a set of menus showing a number of refactorings.
+
+
+=== Detecing Cloned Code
+
+=== Extracting and Inlining Functions 
+
+If you have a function that is overly long or you otherwise wish to
+turn a block of code into its own function Wrangler makes it quite
+easy just select the code in Emacs and chose "Extract function" from
+the wrangler menu, or hit "C-c C-w n f". Wrangler will then prompt you
+for the name of the new function. Wrangler will then take care of all
+of the details of creating the new function, making sure all the
+parameters are setup and return values are assigned. 
+
+
+
+=== Introducing a Variable 
