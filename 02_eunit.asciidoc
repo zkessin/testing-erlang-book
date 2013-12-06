@@ -4,14 +4,14 @@
 === Basics of Writing Tests
 
 The most basic of any group of tests will be the Unit Test. Unit tests
-should be to validate the basic logic of the application. For building
+should be used to validate the basic logic of the application. For building
 Unit tests in Erlang the normal tool is EUnit which comes as a
 standard part of the Erlang distribution.
 
 Tests in EUnit can be created in the same module as the code to be
-tested or in a separate module. If the tests are in their own module
+tested or in a separate module. If the tests are in the same module
 then all the functions to be tested must be exported for the tests to
-work. However it is possible to compile the module with a +export_all+
+work. However it is possible to compile the module with an +export_all+
 directive for testing. This can be done as in this example by using the erlang
 +-ifdef(EUNIT)+.  If the tests are in their own module then that
 module should be named the same at the module to be tested but with
@@ -26,7 +26,7 @@ the suffix +_test+ or +_tests+. So a module +square+ will have tests in
 -endif.
 ----
 
-However there is no requirement that there be a one to one correspondence
+However there is no requirement that there be a one-to-one correspondence
 between test modules and production modules. If having the tests for
 one module spread over two or more files makes sense then EUnit will
 let you do that.
@@ -74,7 +74,7 @@ is true and fail otherwise. There is also an +?assertNot/1+ which will
 pass if the value is false
 
 The next form is +?assertEqual/2+ which takes an expected value and an
-expression for example +?asssertEqual(4, square:square(2))+ will pass
+expression; for example +?asssertEqual(4, square:square(2))+ will pass
 and +?assertEqual(5, square:square(2))+ will fail.
 
 The converse of the +?assertEqual/2+ macro is the +?assertNotEqual/2+
@@ -95,7 +95,7 @@ macros to test for an error +?assertException/2+, +assertError/2+,
 === Running Tests
 
 There are a few ways to run a test suite in EUnit. First of all you
-can call +module:test()+ to run the tests in the +square_test+ module
+can call +module:test()+; to run the tests in the +square_test+ module
 run the function +square_test/0+ from the REPL. You can also run tests
 by calling the function +eunit:test/1+ and passing the name of the
 test module. So in this case you can call +eunit:test(square_test)+.
@@ -146,12 +146,12 @@ Normally when running tests all tests that pass are not shown (after
 all there may be a large number of them). To show them call the
 function +eunit:test/2+ with the second parameter being set to
 +[verbose]+ this will show all the tests and will also show timing
-information on the tests.
+information for the tests.
 
 
 If you have a whole directory of tests and wish to run them as a group
 you can call the +eunit:test/1,2+ functions with the name of the
-directory instead of a file this will cause EUnit to run all tests in
+directory instead of a file; this will cause EUnit to run all tests in
 a directory.
 
 If you wish to run a test from the unix command line you can start the
@@ -161,7 +161,7 @@ tests and then call +init:stop/0+ to cause Erlang to exit.
 
 I like to run my tests from a Makefile as in this example. The
 Makefile will build everything that may need it and then start erlang
-and run the test suite. The Erlang compiler can output create Makefile
+and run the test suite. The Erlang compiler can create Makefile
 directives for each source file to track dependencies of include files
 if needed.
 
@@ -193,9 +193,9 @@ Rebar is my preferred method of running tests.
 === Code Coverage
 
 Ideally you want your unit tests to cover as much of your project as
-you can have. However there is an issue of how do you figure out what
+you can. However there is an issue of how do you figure out what
 parts of your code base are covered? The practical way is to have your
-code base tell you.If you are running your tests with rebar then you
+code base tell you. If you are running your tests with rebar then you
 can add the following directive to your +rebar.config+ file and it
 will create HTML pages that will tell you what is and is not covered.
 
@@ -208,10 +208,10 @@ TODO: Example screenshot
 
 If you would like to have coverage in more detail than on a line by
 line basis than the smother module https://github.com/ramsay-t/smother
-can provide Modified Decision/Condition Coverage. which is to say that
+can provide Modified Decision/Condition Coverage. Which is to say that
 instead of just telling you if a given line of code was executed it
 can tell you if each conditional on that line had all possible values
-tried.  This can find cases where bugs can creap in despite test
+tried. This can find cases where bugs can creep in, despite test
 coverage due to the fact that a possible condition is masked by other
 factors
 
@@ -226,7 +226,7 @@ TODO: Example
 === Setup and Clean-up (Fixtures)
 
 Often when running tests we want to have some form of setup and
-clean-up happen before and after each test. For example The setup code
+clean-up happen before and after each test. For example the setup code
 could create a Mnesia or ETS table and the clean-up code can delete
 it. In order to do this we need to use a test generator instead of a
 basic test.
@@ -235,7 +235,7 @@ In +fixtures.erl+ we use have a generator that returns the tuple
 +{setup, setup/0, cleanup/1, ?_test()}+ which is the actual test. In
 this case +setup/0+ and +cleanup/1+ are called before and after each
 test. The return value of setup is passed to cleanup, so if you need
-say delete a table or close a resource you can do it there.
+to delete a table or close a resource, you can do it there.
 
 .fixtures.erl
 [source, erlang]
@@ -259,9 +259,9 @@ worry about questions like, the status of an external API or the
 complex behaviour of a library method.
 
 Therefore for any external functions which are not pure in the
-functional sense we want to replace them with a simple known function
+functional sense we want to replace them with a simple function
 that we know will always do what we want so that only the code under
-test is
+test is verified.
 
 NOTE: Pure in the functional sense, which is to say that the return
 value of the function is only a result of the input parameters. You
@@ -272,18 +272,18 @@ outside your control.
 
 To do that we use a mocking library such as +meck+ which can take
 functions in other modules and replace them with test functions that
-allow a simplified truth table.
+provide a simplified truth table.
 
-Meck provides mocks on the level of the Erlang module, before running
+Meck provides mocks on the level of the Erlang module. Before running
 a test you must setup mocking for that library, then remove it when
 done.
 
-For example if you want to mock the webmachine +wrq:req_body/1+
-function you might use code like this in this example.
+For example, if you want to mock the webmachine +wrq:req_body/1+
+function you might use code like this example.
 
 Here we setup the test with +meck:new(wrq)+ which tells meck to mock
 that module, then in the body of the test we use +meck:expect/3+ to
-tell it when the wrq:req_body/1 function is called to call our test
+tell it when the +wrq:req_body/1+ function is called to call our test
 function which returns a set binary to the caller. After this we can
 call +wrq:req_body/1+ and know exactly what it will return.
 
@@ -297,7 +297,7 @@ include::meck/src/meck_simple.erl[source, erlang]
 ==== Including Meck in your project
 
 The most basic way to include _meck_ in your project is to include it
-via Rebar, add this to the project's rebar.config file and run "rebar
+via Rebar. Add this to the project's rebar.config file and run "rebar
 get_deps" to install it.
 
 .rebar.config
@@ -313,14 +313,14 @@ get_deps" to install it.
 
 ==== Places Meck can go wrong
 
-The real problem with mocking frameworks like meck is that they
-violate the idea of DRY. For example if you have two modules, +a+ and
+The real problem with mocking frameworks like _meck_ is that they
+violate the principle of DRY. For example, if you have two modules, +a+ and
 +b+ and you change the way a function works in +b+ you must also
 change the mocks in +a_test+.
 
-In addition in the case of meck the order in which rebar compiles your
+In addition in the case of _meck_ the order in which rebar compiles your
 project can matter. If your project consists of many OTP applications
-in one git repository then if meck can not find a module it will
+in one git repository then if meck cannot find a module it will
 fail. So while in normal compilation order of modules does not matter
 with meck it does.
 
@@ -347,8 +347,8 @@ with wrangler (chapter 7).
 
 === Testing larger functions
 
-If your functions are too long then, testing them becomes more
-difficult, in this case it is probably a clue that your code needs to
+If your functions are too long, testing them becomes more
+difficult. In this case it is probably a clue that your code needs to
 be refactored. Shorter functions are easier to test and easier to
 reason about.
 
@@ -366,7 +366,7 @@ helpful. However it also mixes the test code with the actually code.
 
 A second option is to put the tests in a +_test.erl+ file in the +src+
 directory, the problem with this is that the beam files will end up in
-the ebin directory with the executable code, which is not necessary, I
+the ebin directory with the executable code, which is not necessary. I
 dislike this approach as it tends to create a bunch of executables
 that may end up getting shipped when they don't need to be.
 
@@ -380,9 +380,8 @@ they are not supposed to.
 
 There is always an issue of what to test and what not to test. Some
 people like to test everything. However some code is hard to test in a
-way that can prove illuminating. I have found that tests for the
-initialization function of supervisors is ation function of
-supervisors is often hard to test in a way that can prove useful for
-the developer. These things should of course be subject to some form
-of verification, but it does not have to be a unit test, it can be
-done in some other type of test.
+way that can prove illuminating. I have found that the
+initialization functions of supervisors are often hard to test in a 
+way that can prove useful for the developer. These things should of 
+course be subject to some form of verification, but it does not have 
+to be a unit test, it can be done in some other type of test.

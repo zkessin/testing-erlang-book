@@ -13,11 +13,11 @@ root directory. The _rebar.config_ file is at its core a set of Erlang
 terms that describe the project. There are a number of options that
 are in common usage.
 
-If your project contains a number of sub directories then use the
+If your project contains a number of sub-directories then use the
 _{sub_dirs, []}_ directive to list the directories in which each
-part of the project will live in.
+part of the project will live.
 
-In addition if your project is dependent on external libraries (as
+In addition, if your project is dependent on external libraries (as
 most are) then you can list those in the +{deps, []}+ directive. It
 will look like this example.
 
@@ -30,7 +30,7 @@ will look like this example.
         {jsxd,          ".*",           {git, "git://github.com/Licenser/jsxd.git",	"HEAD"}}]}.
 --------
 
-The final element which is +"HEAD"+ here can be any refrence to a git commit.
+The final element, which is +"HEAD"+ here, can be any reference to a git commit.
 In most cases it is probably better to not use "HEAD" but to use an explicit tag
 or SHA1 value. This is because if you use "HEAD" it is possible for whomever
 owns the repository to update the code and when you next load your dependencies
@@ -49,7 +49,7 @@ the dependencies of those projects.
 
 
 This can also be a good way to break apart a large project. By
-creating several smaller applications each with their own repository
+creating several smaller applications, each with their own repository,
 and then pull them together with rebar. This means that each project
 will stand alone and can be built and tested in isolation. This is a
 good way to deal with a long build process. By having 10-12 git
