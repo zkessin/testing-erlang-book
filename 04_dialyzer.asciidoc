@@ -432,6 +432,7 @@ this.
 TODO: Subtypes
 
 === Using Dialyzer with a CI System
+NOTE: We may wish to move this to the CI Chapter
 
 Of course a tool like Dialyzer is only useful if you run it on a regular basis.
 Ideally it should be run over every commit that is pushed into the repository.
