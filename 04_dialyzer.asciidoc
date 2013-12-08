@@ -1,4 +1,4 @@
-== Type Checking with Dialyzer
+== Dialyzer and Static Types
 
 Unlike Haskell and other members of the ML family, Erlang is not a
 statically typed language. There are a number of historical reasons
@@ -14,7 +14,9 @@ types has been added to the Erlang language in the form of type
 annotations. These are strictly optional in that if you don't specify
 them the code will still compile and they do not affect the way that
 the code runs. What you can do with them is use tools like +dialyzer+
-to check that the program is consistent. 
+to check that the program is consistent. If you do not include types
+dialyzer will dynamicly derive the types from the code. But it will
+often assign a more broad type than might be called for.
 
 However there are some very nice tools for providing type annotations
 and doing static type testing. These give some of the benefit that a
@@ -34,10 +36,14 @@ parts of your application that treat string data as lists and other
 parts that use binaries, dialyzer will find that for you.
 
 Or to show an example from an application that I have worked on, we
-had a function that was changed from having 4 arguments to 5. When we
+had a function that was changed from having four arguments to five. When we
 put the code in production there was one place where we had not
 converted it to the new signature. Had we run dialyzer on this we
-would have caught it before deploying our code to production.
+would have caught it before deploying our code to production.  When we
+finally did run Dialyzer on it we found that the same error was
+lurking somewhere else in a part of the code base that was not
+currently in use, but would have appeared when that was moved to
+production. 
 
 One of the goals of Dialyzer was that it should not require any
 changes to your source code to be useful. You can specify types in
@@ -58,14 +64,20 @@ constraints and repeats over several passes.
 ****
 
 
-WARNING:  Dialyzer will hurt your feelings
+WARNING:  Dialyzer will hurt your feelings (TODO MOVE THIS)
 
 === Setting up Dialyzer to run the first time
 
 In order to run dialyzer you need to create a Persistent Lookup
 Table (PLT). This is a file that normally lives in your home directory (but
 you can put it anywhere).  This file contains basic information about
-the type signatures of system applications
+the type signatures of system applications. This file should contain
+all of the basic erlang applications that are in use. This can include
+basic system things like +mnesia+ and +inets+ as well as application
+specific dependencies such as +cowboy+ or +webmachine+. This way
+dialyzer can check that all of your program's calls to the interfaces
+of those modules are consistent, without having to rescan them every
+time.  
 
 To create a basic PLT file, use a command line like this one. It will
 take a few minutes to run and then create a PLT file in the current
