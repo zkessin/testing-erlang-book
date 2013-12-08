@@ -3,19 +3,19 @@
 There are a number of CI packages out there that can work with Erlang,
 including Travis-ci, circle-ci and Jenkins-ci. At the most basic level
 they all do about the same job. They watch the project repository for
-changes and when they see one they grab the code, compile build and
-test it as so to report any build problems to the team.
+changes and when they see one they grab the code, compile and
+test it so as to report any build problems to the team.
 
 In many projects this build will include Erlang, as well as other
 kinds of code, which may include Java, Ruby, JavaScript or other
-languages. As such most CI solutions will support and have guides for
+languages. As such, most CI solutions will support and have guides for
 a number of languages. When choosing a CI solution it is worthwhile to
 check that all required languages are supported and that there are
-decent guides to how to use them with that setup.
+decent guides for how to use them with that setup.
 
-In addition CI systems come in two major types, SAAS CI and hosted
-CI. Travis-CI is a SAAS service, which is to say that it runs on the
-Their servers and you can point it at your Github Repository for
+In addition CI systems come in two major types, SaaS CI and hosted
+CI. Travis-CI is a SaaS service, which is to say that it runs on the
+their servers and you can point it at your Github Repository for
 testing. Travis is free for Open Source Projects and costs money for
 closed source projects.
 
@@ -23,13 +23,13 @@ In order to use a CI solution we first need a repository, as our goal
 here is to setup CI and test it we will go with a very simple
 repository called "increment-ci"
 https://github.com/zkessin/increment-ci which will contain a single
-Erlang module with 1 function that only adds one. Our goal here is to
-simply demonstrate how our CI System works so there is no reason to
+Erlang module with one function that only adds 1. Our goal here is to
+simply demonstrate how our CI System works, so there is no reason to
 use a complex setup.
 
-Thankfully both Jenkins and Travis once setup understand the output
-from EUnit when run in rebar. So Once the setup is complete and you
-have gotten the project to build everything should just work.
+Thankfully, both Jenkins and Travis, once setup, understand the output
+from EUnit when run in rebar. So once the setup is complete and you
+have gotten the project to build, everything should just work.
 
 === Using Travis-CI
 
@@ -69,7 +69,7 @@ you do a push to your repository.
 Another nice feature of travis-ci is that if you are building an open
 source library that must work with multiple versions of Erlang and OTP
 you can specify several versions of OTP with the _otp_release_ option
-in the +.travis.yml+ file. If you do this it will run a separate job
+in the +.travis.yml+ file. If you do this, it will run a separate job
 for each version of OTP and let you know if any of them fail.
 
 WARNING: As of this writing travis-ci does not work with Erlang
@@ -83,7 +83,7 @@ NOTE: TODO Expand that
 === Using Circle-CI
 
 In addition to Travis-CI there is also Circle-CI, which is a competing service. As of this writing
-Circle-CI defaults to erlang V14B02, but they will happily set your project to any version of erlang if you ask them
+Circle-CI defaults to erlang R14B02, but they will happily set your project to any version of erlang if you ask them
 to.
 
 To run your test suite with circle you need to create a "circle.yml" file, which should look somewhat like this.
@@ -107,7 +107,7 @@ everything. It will then run all of the tests with rebar and report the results.
 ==== Running Dialyzer
 
 If you wish to run dialyzer, you first need to setup your plt file. This is a relatively slow operation
-so you only want to have to do it once. Thankfully Circle provides a nice feature where it will
+so you only want to do it once. Thankfully Circle provides a nice feature where it will
 let you cache some directories so that persistent files can be kept around.
 
 ==== Building a PLT file and caching it
@@ -121,7 +121,7 @@ your own environment that is configured as you want it. Of course you
 have to figure out how you do want Jenkins to be setup first.
 
 Jenkins itself is written in Java and primarily is targeted at Java
-and other JVM languages. As such much of the documentation you will
+and other JVM languages. As such, much of the documentation you will
 find on-line is about how to use Jenkins with Java.
 
 If you want a very easy install of Jenkins CI consider using the
@@ -136,7 +136,7 @@ that will have to be updated. This can be done by replacing the
 appliance.
 
 ==== Setting Up Jenkins for Erlang
-First of all if you are using Jenkins-CI you will have to do a bit of
+First of all, if you are using Jenkins-CI you will have to do a bit of
 manual setup. Jenkins was originally for use with Java and Ant/Maven
 projects, so you may have to coach it a bit to get it to speak Erlang.
 
@@ -164,44 +164,44 @@ the unix command +ssh-keygen+. (you can accept all the defaults), then
 do a manual checkout of the remote repository. It may ask you to
 accept the remote host for SSH usage, in that case say yes.
 
-After you have done that you should be able to set off builds from the
+After you have done that you should be able to kick off builds from the
 web page.
 
 
-*TODO setup walk threw*
+*TODO setup walk through*
 
 
 ==== Triggering Builds on a GitHub Commit
 
-The idea workflow for Jenkins would be that when a team member pushes
+The ideal workflow for Jenkins would be that when a team member pushes
 code into github Jenkins will somehow notice this change and trigger a
 build. There are several ways to go about this.
 
-First of all we could have Jenkins poll GitHub. In theory we could
+First of all, we could have Jenkins poll GitHub. In theory we could
 have it poll once a minute or so. There are two problems with
-this. First of all it will generate a lot of extra network usage for
+this. First of all, it will generate a lot of extra network usage for
 no good reason. If you only have one or two repositories this is
 probably not that big a deal, but if your team has dozens it could get
 ugly.
 
 What would be better is if we could get our GitHub Repository to
 notify Jenkins as soon as a push is made which would kick off a
-build. Thankfully this is actually not to hard to do. Github, like
-most hosting providers has a +post-commit hook+ that can execute a
-unix command. In this case we want to use CURL or WGET to make a HTTP
-request to Jenkins to trigger the build. In this case the build will
+build. Thankfully this is actually not too hard to do. Github, like
+most hosting providers, has a +post-commit hook+ that can execute a
+unix command. In this case we want to use CURL or WGET to make an HTTP
+request to Jenkins to trigger the build. In this case, the build will
 normally kick-off within a few seconds of when the code is pushed to
 GitHub. For most teams a delay of less than 10 seconds is probably
 fine.
 *TODO EXPAND*
 
-However if your Jenkins server is sitting behind a firewall then
-things get a bit more complex. In this case GitHub can not make a
+However, if your Jenkins server is sitting behind a firewall then
+things get a bit more complex. In this case GitHub cannot make a
 direct HTTP request to your server. There are several ways to handle this.
 
 ====  Run Dialyzer from Jenkins
 
-If you go threw the effort to setup Dialyzer to work on your project
+If you go through the effort to setup Dialyzer to work on your project
 (which you should) and if you have Jenkins setup you should have
 Jenkins run dialyzer for you. This can be done as part of the same
 jenkins job that runs your unit tests, or as part of a separate job
