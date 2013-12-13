@@ -2,6 +2,7 @@
 
 for chapter in `ls *.asciidoc` 
 do 
-    asciidoc --backend=html4 --out-file=html/$chapter.html $chapter
+    chapter_name="${chapter%.*}"
+    asciidoc --backend=html4 --out-file=html/$chapter_name.html $chapter
 done
-cp html/book.asciidoc.html html/index.html
+cp html/book.html html/index.html
