@@ -60,6 +60,66 @@ constrains and repeats over several passes.
 
 WARNING:  Dialyzer will hurt your feelings
 
+
+=== How Erlang views types
+
+The Erlang type system can be very expressive, but it does not always
+work the same way type systems in Object Oriented languages such as
+Java work. There are some ideas that can be easy to express in an
+Erlang type but would be very hard to express in Java and vice versa. 
+
+The major difference is that the Erlang type system creates new types
+by algebraic composition and not by inheratence. This enables you to
+have useful optional types such as +{ok, something()}|nothing+ which
+can represent an optional value, and therefore avoid the Null pointer
+type errors that can often result in optional languages. 
+
+When combined with Erlang's pattern matching this can result in very
+clean code. TODO Expand  
+
+The basic types that are seen in Erlang will be familiar to anyone who
+has used the language for a while, they they include such things as
++pid()+, +integer()+, +atom()+, +float()+, +binary()+, +reference()+, +
+and so on. 
+
+Types can be constructed by unions of basic types, So the +number()+
+type is equivalent to +integer()|float()+.
+
+An atom can be its own type, so the +boolean()+ type is the same as
++'true'|'false'+, and you could define other unions of atoms, so HTTP
+verbs would be +'get'|'post'|'put'...+ (the quotes are optional but
+are good style). Integers can also be a good type, so you could have a
+type +http_success_codes()+ can be defined as +200|201|202|203|204+ or
+just +200..204+. 
+
+An array can e indicated as one would expect with square brackets,
+the type +[]+ indicates an empty array, while an array of integers
+would be shown as +[integer()]+, and a string is defined as +[char()]+
+a non empty string is defined as +[char(),...]+. 
+
+A record is its own type and is represented as +#record{}+ TODO: Expand
+
+A tuple can be defined with braces as one would expect, so +{ok,
+string()}+ would be a common return value of a function. 
+
+TODO: Types of funs
+
+
+One of the major streignths of the Erlang type system is that types
+can be joined together. For example the function +lookup_item_by_id/1+
+might have the return value +{ok, #item{}}|nothing+ which will express
+all possible successful results of this call, it will either find the
+item (presumably in a database) or return the atom +nothing+ to
+indicate that there is no such item. The truly exceptional case of
+unrecoverable failure (for example if someone dropped the stored
+procedure from the database) is not mentioned and would have to be
+handled by the process supervisor. 
+
+
+Opaque types
+TODO: Write this
+
+
 === Setting up Dialyzer to run the first time
 
 In order to run dialyzer you need to create a Persistent Lookup
@@ -132,9 +192,9 @@ fi
 
 Once the PLT file has been created then we can run dialyzer on the
 code base.  Normally dialyzer is run on the compiled *beam* file but
-it is also possible to run it on erlang source files.
+it is also possible to run it on Erlang source files.
 
-To run the basic dialyzer on a source projects from the unix command
+To run the basic dialyzer on a source projects from the Unix command
 line use a command like this. This requires that ebin contain the beam
 files to be examined that have been compiled with the *debug_info*
 flag. This can be done with rebar by specifying _{erl_opts,
@@ -146,7 +206,7 @@ flag. This can be done with rebar by specifying _{erl_opts,
 dialyzer ebin --plt $PLT
 -----
 
-If you have more than one subdirectory of erlang applications then you
+If you have more than one subdirectory of Erlang applications then you
 can run dialyzer on all of them at once.
 
 
@@ -175,7 +235,7 @@ Unknown functions:
 
 The second function is a render function from a erlydtl (django)
 template that is created at run time, as such it is not included in
-the set of beam files that are being checked by dailyzer. (TODO How to
+the set of beam files that are being checked by dialyzer. (TODO How to
 fix this)
 
 
@@ -268,51 +328,6 @@ will never return since the success typing is
  and the contract is (string(),string(),iolist(),proplist(),[{string(),string()}] | aws_config()) -> proplist()
 
 ----
-
-=== How Erlang views types
-
-The Erlang type system can be very expresive, but it does not always
-work the same way type systems in Object Oriented langauges such as
-Java work. There are some ideas that can be easy to express in an
-erlang type but would be very hard to express in Java and vice versa. 
-
-The basic types that are seen in Erlang will be familar to anyone who
-has used the language for a while, they they include such things as
-+pid()+, +integer()+, +atom()+, +float()+, +binary()+, +refrence()+, +
-and so on. 
-
-Types can be constructed by unions of basic types, So the +number()+
-type is equivilent to +integer()|float()+.
-
-An atom can be its own type, so the +boolean()+ type is the same as
-+'true'|'false'+, and you could define other unions of atoms, so HTTP
-verbs would be +'get'|'post'|'put'...+ (the quotes are optional but
-are good style). Integers can also be a good type, so you could have a
-type +http_success_codes()+ can be defined as +200|201|202|203|204+ or
-just +200..204+. 
-
-An array canb e indicated as one would expect with square brackets,
-the type +[]+ indicates an empty array, while an aarray of integers
-would be shown as +[integer()]+, and a string is defined as +[char()]+
-a non empty string is defined as +[char(),...]+. 
-
-A record is its own type and is represented as +#record{}+ TODO: Expand
-
-A tuple can be defined with braces as one would expect, so +{ok,
-string()}+ would be a common return value of a function. 
-
-One of the major streignths of the erlang type system is that types
-can be joined together. For example the function +lookup_item_by_id/1+
-might have the return value +{ok, #item{}}|nothing+ which will express
-all possible successful results of this call, it will eather find the
-item (presumably in a database) or return the atom +nothing+ to
-indicate that there is no such item. The truly excpetional case of
-unrecoverable failure (for example if someone dropped the stored
-procedure from the database) is not mentioned and would have to be
-handled by the process supervisor. 
-
-Opaque types
-TODO: Write this
 
 
 === Adding type annotations to functions
@@ -426,12 +441,12 @@ if any of the internal structure of that type is used anywhere else. This
 includes pattern matching on the type or any effort to reference the inside of
 the object.
 
-WARNING: The erlang compiler and runtime will still allow you to reference the
+WARNING: The Erlang compiler and runtime will still allow you to reference the
 internal structure of an opaque type, Only Dialyzer will warn you about doing
 this.
 
 
-=== Parametrized types
+=== Parameterized types
 
 TODO: Subtypes
 
@@ -443,3 +458,5 @@ If your project is already using a CI system like Jenkins or Travis then it
 makes sense to have that system also run dialyzer over the code base after
 running the unit tests. (Or it could be done in parallel, it doesn't really
 matter).
+
+//  LocalWords:  inheratence
