@@ -30,7 +30,7 @@ GitHub. To use Wrangler with Emacs you need to tell emacs where to
 find wrangler and tell emacs to load it. On my mac it looks like this, 
 but the path will be different on your system. 
 
-.Add to .emacs
+.Add to .emacs	  
 ------
 (add-to-list 'load-path 
 	     "/usr/local/Cellar/erlang/R15B03/lib/erlang/lib/wrangler-1.0/elisp")
