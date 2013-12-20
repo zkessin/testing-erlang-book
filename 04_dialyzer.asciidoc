@@ -50,18 +50,25 @@ base.
 ****
 TODO: Expand
 
-The way dialyzer works is by treating the parameters and return values of
-your project as a large constraint problem. It tries to figure out
+The way dialyzer works is by treating the parameters and return values
+of your project as a large constraint problem. It tries to figure out
 what types each function accepts and returns, then sees if everything
 matches up. Once it has done that it tries to tighten up the
 constraints and repeats over several passes.
 ****
 
 
-WARNING:  Dialyzer will hurt your feelings
+
 
 
 === How Erlang views types
+
+Before we dive into how to use types to test our code, we have to
+understand how Erlang types work. When learning Erlang a programmer
+will be exposed to pattern matching and the various primitive types
+that Erlang uses, including atoms, integers, binaries, pids and so on,
+as well as the compound types which generally are tuples, arrays and
+records.  
 
 The Erlang type system can be very expressive, but it does not always
 work the same way type systems in Object Oriented languages such as
@@ -72,7 +79,7 @@ The major difference is that the Erlang type system creates new types
 by algebraic composition and not by inheratence. This enables you to
 have useful optional types such as +{ok, something()}|nothing+ which
 can represent an optional value, and therefore avoid the Null pointer
-type errors that can often result in optional languages. 
+type errors that can often result in many object oriented languages. 
 
 When combined with Erlang's pattern matching this can result in very
 clean code. TODO Expand  
@@ -97,10 +104,14 @@ the type +[]+ indicates an empty array, while an array of integers
 would be shown as +[integer()]+, and a string is defined as +[char()]+
 a non empty string is defined as +[char(),...]+. 
 
-A record is its own type and is represented as +#record{}+ TODO: Expand
-
 A tuple can be defined with braces as one would expect, so +{ok,
 string()}+ would be a common return value of a function. 
+
+
+A record is its own type and is represented as +#record{}. Each field
+in the record of course can also have type information attached to it,
+so 
+
 
 TODO: Types of funs
 
@@ -116,8 +127,13 @@ procedure from the database) is not mentioned and would have to be
 handled by the process supervisor. 
 
 
-Opaque types
-TODO: Write this
+If you want to have a data type that should be only used in one
+module you can create it as an opaque type. To do this create the type
+with +-opaque([typename/0]).+ Instead of the normal export
+mechanism. An opaque type can be passed around, but any attempt to
+access the internal structure or pattern match on it will result in an
+error from Dialyzer. 
+
 
 
 === Setting up Dialyzer to run the first time
@@ -149,7 +165,7 @@ time.
 .Add to PLT file
 [source,bash]
 ----
-dialyzer  --add_to_plt httpc  --output_plt project.plt
+dialyzer  --add_to_plt httpc  --plt project.plt
 ----
 
 If your project, like mine, has many dependences that you have
@@ -190,6 +206,8 @@ fi
 === Dialyzer Options 
 === Running Dialyzer
 
+WARNING:  Dialyzer will hurt your feelings
+
 Once the PLT file has been created then we can run dialyzer on the
 code base.  Normally dialyzer is run on the compiled *beam* file but
 it is also possible to run it on Erlang source files.
@@ -207,8 +225,19 @@ dialyzer ebin --plt $PLT
 -----
 
 If you have more than one subdirectory of Erlang applications then you
-can run dialyzer on all of them at once.
+can run dialyzer on all of them at once, by giving dialyzer all of the
+ebin directories.
 
+The first time you run dialyzer it will find a lot of issues in your
+code base. The creators of dialyzer have worked very hard to make sure
+that there are no false positives, so if dialyzer says there is an
+error you can be confident that it is an actual code problem. 
+
+Some errors represent a major problem, such as a call to a function
+that does not exist or a mismatched return value, which in theory
+should be found via other forms of testing eventually. However
+dialyzer will also find errors like guard clauses that can never
+match. 
 
 === Understanding Errors
 
@@ -328,50 +357,7 @@ will never return since the success typing is
 
 ----
 
-=== How Erlang views types
 
-The Erlang type system can be very expressive, but it does not always
-work the same way type systems in Object Oriented languages such as
-Java work. There are some ideas that can be easy to express in an
-erlang type but would be very hard to express in Java and vice versa. 
-
-The basic types that are seen in Erlang will be familiar to anyone who
-has used the language for a while, they include such things as
-+pid()+, +integer()+, +atom()+, +float()+, +binary()+, +refrence()+, +
-and so on. 
-
-Types can be constructed by unions of basic types, So the +number()+
-type is equivalent to +integer()|float()+.
-
-An atom can be its own type, so the +boolean()+ type is the same as
-+'true'|'false'+, and you could define other unions of atoms, so HTTP
-verbs would be +'get'|'post'|'put'...+ (the quotes are optional but
-are good style). Integers can also be a good type, so you could have a
-type +http_success_codes()+ can be defined as +200|201|202|203|204+ or
-just +200..204+. 
-
-An array can be indicated as one would expect with square brackets,
-the type +[]+ indicates an empty array, while an array of integers
-would be shown as +[integer()]+, and a string is defined as +[char()]+
-a non empty string is defined as +[char(),...]+. 
-
-A record is its own type and is represented as +#record{}+ TODO: Expand
-
-A tuple can be defined with braces as one would expect, so +{ok,
-string()}+ would be a common return value of a function. 
-
-One of the major strengths of the erlang type system is that types
-can be joined together. For example the function +lookup_item_by_id/1+
-might have the return value +{ok, #item{}}|nothing+ which will express
-all possible successful results of this call, it will either find the
-item (presumably in a database) or return the atom +nothing+ to
-indicate that there is no such item. The truly exceptional case of
-unrecoverable failure (for example if someone dropped the stored
-procedure from the database) is not mentioned and would have to be
-handled by the process supervisor. 
-
-Opaque types
-TODO: Write this
 
 
 === Adding type annotations to functions
@@ -465,6 +451,9 @@ we could also make them more specific if we choose.
 ----
 
 === Adding Type annotations to records
+
+=== Adding type annotations to behaviors
+
 
 === Creating your own types
 
