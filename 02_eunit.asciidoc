@@ -333,24 +333,23 @@ meck as well. The problem is that often they will include different
 versions of meck. The problem with this is that rebar will often not
 compile when the versions don't match.
 
-==== Meck as a Code Smell
-It is possible to create code that requires multiple modules to be
-mocked in order to test the code. This should be considered a major
-code smell. 
-
-This is probably a good indication that the code should be refactored
-to split the pure code from the code that does IO. This can be done
-with wrangler (chapter 7).
-
-
 
 
 === Testing larger functions
 
+It is possible to create code that requires multiple modules to be
+mocked in order to test the code. This should be considered a major
+code smell. 
+
 If your functions are too long then, testing them becomes more
 difficult, in this case it is probably a clue that your code needs to
 be refactored. Shorter functions are easier to test and easier to
-reason about.
+reason about. 
+
+
+If a major part of your code is gluing together external functions
+that is probably a good sign that the code should be tested not with
+unit tests but with integration tests and static analysis. 
 
 TODO: Expand 
 
