@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p html
 for chapter in `ls *.asciidoc` 
 do 
     asciidoc --backend=html4 --out-file=html/$chapter.html $chapter
