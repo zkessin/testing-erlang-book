@@ -1,1 +1,36 @@
 == Concuerror
+
+Erlang exists to do massivly conccurent programming ( You knew that
+right?). One of the problems of massivly concurrent programs is that
+we can not know the order in which things will happen in advance. In
+general Erlang provides a lot of way to make this matter less by
+isolation of processes, but that being said there are times when it
+does. 
+
+This is one of the places that is a key source of Heisenbugs. It is
+possible to write code that produces an unpredictable result such as
+in this example.
+
+.
+[source,Erlang]
+-----------
+is_alive_test() ->
+  {ok, Pid} = spawn(fun () -> 
+       io:format("Spawn and exit"), 
+       ok
+     end),
+  ?assert(is_process_alive(Pid)).
+
+-----------
+  
+Here we can not predict which will happen first, will the process be
+alive when the assert runs or not? If you run it 100 times you the
+test will pass some number of times and fail some other number of
+times, if you run it on different computer (say with more cores) then
+you may find that the results are totally different. 
+
+While that example is trivial, there are many other places where such
+race conditions happen in a real code base that can cause a major
+headache. Especially when you have a case where it only fails once in
+a great while. What is needed is a tool that will let you guarantee
+that these conditions do not happen.  
