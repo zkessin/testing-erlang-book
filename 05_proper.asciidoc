@@ -4,14 +4,14 @@ Similar to QuickCheck
 https://github.com/manopapad/proper
 === Installing PropER
 
-NOTE: Like Dialyzer, Proper is a product of the research group of Kostis Sagonis at 
-Upsala University and NTUA. 
+NOTE: Like Dialyzer, PropER is a product of the research group of Kostis Sagonas at 
+Uppsala University and NTUA. 
 
 PropER is a testing framework that uses a model to create random inputs and make sure
-that the results make sense. The idea is that a unit test may try a few possible inputs
+that the results make sense. The idea is that a unit test may try a few possible inputs, but
 with PropER you can make hundreds of tests that will hopefully expose any strange corner cases.
 
-However there is an art of how to do this. You need to find a way to test the code such that you are not
+However, there is an art of how to do this. You need to find a way to test the code such that you are not
 testing it against itself. If you say +f(A) =:= f(A)+ then you probably have not learned very much from your tests
 
 
