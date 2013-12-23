@@ -24,6 +24,43 @@ forms of testing in Erlang.
 
 === Who this Book is Not For
 
+
+=== Types of Bugs and Types of testing
+
+There are multiple types of bugs in the software world and of course
+many ways of testing code to find and avoid them.
+
+There names of major classes of bugs derive from Quantum Mechanics,
+the most famous of these is a "Heisenbug" which is a bug that seems to
+appear and disappear at random and the act of trying to debug it may
+alter the timing enough to make it disappear. These bugs can make
+programers pull their hair out. The best ways to track down Heisenbugs
+is probably a combination of Static Anayasis with Dialyzer, property
+based testing and using Concoerrer to ensure that it is not an
+artifact of timing issues.
+
+The most common bugs are sometimes Called Bohrbugs after Niels Bohr's
+model of the atom. These bugs are easy to reproduce and once you find
+them they can be isolated with unit tests and integration
+tests. Dialyzer will often find cases that might produce Bohrbugs in
+cases where functions are being called wrong as well. 
+
+A Mandelbug (ok this one is from fractal math not quantum mechanics)
+is a bug which is so complex it defies understanding. In this case
+property based testing will probably be the best way to find a case
+that can produce the bug and then reduce it to a simple easy to
+understand case. 
+
+A Schrödinbug is a bug that manifests after a programmer looks at code
+and wonders how this could have ever worked in the first place. 
+
+And finally a Hindenbug is a bug with catastrophic behavior, for
+example if you are running a trading firm and a bug causes your
+software to make a number of bad trades that cause your company to
+loose $50,000,000 in an hour that could be classified as a
+Hindenbug.(It might also be a Mandelbug or a Heisenbug)
+ 
+
 === Contributors
 
 _Please add a paragraph about yourself here and include it with your
