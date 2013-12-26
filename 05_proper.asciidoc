@@ -2,10 +2,11 @@
 
 Similar to QuickCheck
 https://github.com/manopapad/proper
-=== Installing PropER
+=== What is PropER
 
-NOTE: Like Dialyzer, PropER is a product of the research group of Kostis Sagonas at 
-Uppsala University and NTUA. 
+NOTE: Like Dialyzer, PropER is a product of the research group of
+Kostis Sagonas at Uppsala University and NTUA.
+
 
 PropER is a testing framework that uses a model to create random
 inputs and make sure that the results make sense. The idea is that a
@@ -17,8 +18,25 @@ test the code such that you are not testing it against itself. If you
 say +f(A) =:= f(A)+ then you probably have not learned very much from
 your tests
 
+This can work very well for some types of code but is more difficult
+for others, This chapter will explore how I applied PropER to the
++tiny_pq+ library which is used by Chicago Boss s part of its TinyMQ.
 
+TinyMQ has a tree structure in which each element looks like this,
+where the keys are integers and the values are a possible list. We
+want to generate an initial starting state and then apply an operation
+to it and validate the end result. For example one possible operation
+is to change the priority of an item. In this case we want to verify
+that after we do it that it does not exist in the list for the old
+priority but does exist for the new one.
 
+.DataStructure
+[source,erlang]
+----
+3 -> [ 5, 9, 11]
+----
+
+=== Installing PropER
 
 === Setting up basic tests
 
@@ -26,4 +44,23 @@ your tests
 === Using types to drive tests
 
 
+=== Running our properties
 
+We may wish to run a property based test from the erlang REPL. by calling
++proper:quickcheck(my_prop())+ This is good for explratory testing and
+the like. However you may also wish to run your property based tests
+as part of a larger test suite. The easist way to do that is to wrap
+it in an eunit assertion like this.
+
+[source, erlang]
+=====
+delete_test() ->
+    ?assert(proper:quickcheck(delete_prop(), [{to_file,user}])).
+
+=====
+
+A few things to note, first of all function +proper:quickcheck/2+ will
+return true if everything passed so the eunit +?assert+ macro will
+run the property.Seconly you will note the option of +{to_file,user}+
+this is because eunit will capture output of the tests. this gets
+around this. 
