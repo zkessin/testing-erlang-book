@@ -1,2 +1,16 @@
 
 == Testing against a Model with QuickCheck
+
+Unit tests give us a way to check code against a specific test case,
+but it is limited by the creativity and patience of the programmer who
+writes them. If the function takes a boolean a parameter then it is of
+course possible to try both 'true' and 'false' and make sure that the
+function returns the correct result.
+
+However there are many cases where the possible input domain is more
+complex. For example we may wish to determine that some operations are
+communicative in nature. In this case we can establish the property
+that +F(L) =F(L')+ where +L'+ is a list of the same elements as +L+
+but in a different order. 
+
+
