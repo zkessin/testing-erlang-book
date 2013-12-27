@@ -1,7 +1,21 @@
 == PropER
 
-Similar to QuickCheck
-https://github.com/manopapad/proper
+Property based testing is a field of testing that represents a major
+improvement over unit testing in many ways. While a unit test will try
+one or two possible inputs to a function to ensure that it is doing
+the correct thing, a property based testing system will use a set of
+rules to apply hundreds or thousands of inputs to a system to ensure
+that they all act correctly. 
+
+The problem from the developer's point of view is that this is as this
+is a newer form of testing we the programming community may not be as
+familar with it and may not understand how and when to best apply it
+to get optimal results. 
+
+Furthermore the two main tools (QuickCheck and PropER) both suffer
+from a lack of documentation and examples of how to build these
+tests for our code
+
 === What is PropER
 
 NOTE: Like Dialyzer, PropER is a product of the research group of
@@ -49,7 +63,7 @@ priority but does exist for the new one.
 We may wish to run a property based test from the erlang REPL. by calling
 +proper:quickcheck(my_prop())+ This is good for explratory testing and
 the like. However you may also wish to run your property based tests
-as part of a larger test suite. The easist way to do that is to wrap
+is part of a larger test suite. The easist way to do that is to wrap
 it in an eunit assertion like this.
 
 [source, erlang]
@@ -62,5 +76,10 @@ delete_test() ->
 A few things to note, first of all function +proper:quickcheck/2+ will
 return true if everything passed so the eunit +?assert+ macro will
 run the property.Seconly you will note the option of +{to_file,user}+
-this is because eunit will capture output of the tests. this gets
-around this. 
+this is because eunit will capture output of the tests. By passing the
+option we get around this.
+
+The other issue is that both proper and eunit define a macro
++?LET+. To ensure that the proper version of this macro is used
+include proper before eunit, or you could just have the PropER and
+EUnit tests in seperate modules.
