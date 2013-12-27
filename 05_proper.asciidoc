@@ -58,6 +58,19 @@ priority but does exist for the new one.
 === Using types to drive tests
 
 
+=== How many Tests to run
+Property based tests work on the principle that we will create a
+number of random tests and ensure that they all pass your model. The
+question is how many tests to run, too few and we won't find as many
+bugs, too many and the tests will take too long to run. So how to find
+the optimal number of tests. 
+
+
+One valid option is to run a smaller number as part of your CI build,
+and then run a larger number of tests as part of a nightly build. 
+
+TODO Research this more
+
 === Running our properties
 
 We may wish to run a property based test from the erlang REPL. by calling
@@ -78,7 +91,7 @@ return true if everything passed so the eunit +?assert+ macro will
 run the property.Seconly you will note the option of +{to_file,user}+
 this is because eunit will capture output of the tests. By passing the
 option we get around this.
-
+       78
 The other issue is that both proper and eunit define a macro
 +?LET+. To ensure that the proper version of this macro is used
 include proper before eunit, or you could just have the PropER and
