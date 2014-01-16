@@ -6,7 +6,45 @@ expore the idea of how to test a developing system with property based
 testing.
 
 In this case we are going to take a look at a the betting system of a
-poker game for two players.
+poker game for two players. We want to look at how we handle betting,
+we are not going to focus on making sure that the shuffle of the cards
+is really random. nor on determining a winner at showdown. 
 
 
+NOTE: I am assuming a heads up game of limit Texas-Holdem, if you are
+not familar with poker then don't worry, it won't affect your
+understanding of the chapter much. You can find the rules on the web
+if you want.
 
+In this game we have two players, the _dealer_ and the _big blind_, in the
+start state the dealer has put out 1 credit, and the big blind 2 and
+each player has two cards. 
+
+The players take turns acting, at any given point a player has several
+possible actions, he can _fold_ which will end the game and cause the
+other player to win, he can _bet_ which will push the action back to
+the other player or he can _call_ which is to say that he matches the
+other player's bet, and this will end the round. (We are going to
+ignore the option of checking and all in bets for now).
+
+After each round more cards are delt. and a new round of betting
+happens. In the first round the _dealer_ goes first, in the other
+rounds the _big blind_ goes first. There are four rounds of betting,
+_initial_, _flop_ , _turn_ and _river_. At the end of the _river_. At
+the end of the _river_ round if no player has folded then the game
+procedes to a showdown. Where the player with the best hand will win,
+(or if players have equivilent hands they will split the pot.) This
+chapter will not concern the determining winner at showdown, only that
+it happens or not. 
+
+
+This gives us a FINITE state machine that looks like this
+
+.Poker FSM 
+image::images/pker_fsm.jpg
+#TODO Redraw image without "all in" lines
+
+While we can (and probably should) write tests for each transition in
+the FSM it would also be useful to have a set of tests that we can run
+on the system as a whole to test the properties of the game as a
+system. 
