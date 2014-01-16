@@ -16,6 +16,7 @@ Furthermore the two main tools (QuickCheck and PropER) both suffer
 from a lack of documentation and examples of how to build these
 tests for our code
 
+
 === What is PropER
 
 NOTE: Like Dialyzer, PropER is a product of the research group of
@@ -57,13 +58,52 @@ priority but does exist for the new one.
 
 === Using types to drive tests
 
+If you can derive your tests directly from the +-spec+ of a function
+then you can run that property direclty by using the function
++proper:check_spec/1+ and passing it a MFA tuple. For example this
+test checks a function from the Chicago Boss boss_compiler module. As long
+as that function's spec defines what it will do completly then this
+makes a very good test.
+
+To test a functions spec you can call the command
++proper:check_spec/1+ from the erlang REPL. This will use the function
+spec to generate 100 random tests and ensure that they all pass. If
+they do not pass it will then try to shrink the failing case. In this
+case the function passes all 100 tests so check_spec will return
+true. 
+
+[source, erlang]
+====
+(erlang@sag)4> proper:check_spec({boss_compiler, flatten_token_locations, 1}).
+....................................................................................................
+OK: Passed 100 test(s).
+true
+====
+
+
+
+.Testing a Function's specs
+[source, erlang]
+=====
+
+unpack_id_test() ->
+    ?assert(proper:check_spec({boss_db_adapter_mongodb,unpack_id, 2},
+			      [{to_file, user}])),
+    ok.
+
+=====
+
+The problem is that Erlang's functional specs are not always able to
+define all that we might want to do. For example there is no way to
+say that a binary should only consist of valid UTF-8 strings.  
 
 === How many Tests to run
+
 Property based tests work on the principle that we will create a
 number of random tests and ensure that they all pass your model. The
 question is how many tests to run, too few and we won't find as many
 bugs, too many and the tests will take too long to run. So how to find
-the optimal number of tests. 
+the optimal number of tests.
 
 
 One valid option is to run a smaller number as part of your CI build,
@@ -82,7 +122,8 @@ it in an eunit assertion like this.
 [source, erlang]
 =====
 delete_test() ->
-    ?assert(proper:quickcheck(delete_prop(), [{to_file,user}])).
+    ?assert(proper:quickcheck(delete_prop(), [{to_file,user}])),
+    ok 
 
 =====
 
@@ -91,7 +132,7 @@ return true if everything passed so the eunit +?assert+ macro will
 run the property.Seconly you will note the option of +{to_file,user}+
 this is because eunit will capture output of the tests. By passing the
 option we get around this.
-       78
+       
 The other issue is that both proper and eunit define a macro
 +?LET+. To ensure that the proper version of this macro is used
 include proper before eunit, or you could just have the PropER and
