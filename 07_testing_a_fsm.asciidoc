@@ -1,0 +1,12 @@
+== Testing a FSM with properties
+
+In the prior two chapters I talked about how to test functions and the
+like with properties via proper and quickcheck. This chapter will
+expore the idea of how to test a developing system with property based
+testing.
+
+In this case we are going to take a look at a the betting system of a
+poker game for two players.
+
+
+

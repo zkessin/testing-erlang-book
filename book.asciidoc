@@ -30,10 +30,11 @@ performance tests and more.
 * link:04_dialyzer.html[Dialyzer]
 * link:05_proper.html[Proper]
 * link:06_quick_check.html[Quick Check]
-* link:07_wrangler.html[Wrangler]
-* link:08_concuerror.html[Concerrer]
-* link:09_ci.html[Contious Integration]
-* link:10_best_practice.html[Best Practice]
+* link:07_testing_a_fsm.html[Testing a FSM With Properties]
+* link:08_wrangler.html[Wrangler]
+* link:09_concuerror.html[Concerrer]
+* link:10_ci.html[Contious Integration]
+* link:11_best_practice.html[Best Practice]
 
 
 
