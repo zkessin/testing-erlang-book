@@ -1,18 +1,20 @@
 
 === How to Write code to take advantage of Dialyzer
 
-WARNING: This section is a work in progress, feel free to send corrections etc as pull request. Please
-Use advice here with caution
+WARNING: This section is a work in progress, feel free to send
+corrections etc as pull request. Please Use advice here with caution
 
-Dialyzer is great at finding problems in existing code, but it seems that if we are cleaver in
-how we write our code then dialyzer could be even more powerful in helping us find bad
-code. And as Dialyzer can work on the existing code this could save us time in terms of 
-not having to write explicit tests and so on. 
+Dialyzer is great at finding problems in existing code, but it seems
+that if we are cleaver in how we write our code then dialyzer could be
+even more powerful in helping us find bad code. And as Dialyzer can
+work on the existing code this could save us time in terms of not
+having to write explicit tests and so on.
 
-The question is how to best do this, I think this is an open topic, but I expect a number of common sense
-rules will help us make sense of it.
+The question is how to best do this, I think this is an open topic,
+but I expect a number of common sense rules will help us make sense of
+it.
 
-
+* Fix Warnings
 * Use Spec's everywhere
 * Use specific types
 * Use Opaque Types
@@ -21,10 +23,19 @@ rules will help us make sense of it.
 
 Lets go threw those in order
 
+=== Fix all warnings
+
+There are many things that the compiler or other tools will warn you
+about (such as a variable that is not used). It is a good practice to
+fix all of these. You can tell the compiler to treat warnings as
+errors to force you to do so. If they are in a library then fix them
+and send a pull request. 
+
 ==== Use Spec's everywhere
 
-You should add +-spec()+ lines to all of your functions and types to all of your records.
-Of course Dialyzer can try to deduce types for you, but it will work better if you are explicit.
+You should add +-spec()+ lines to all of your functions and types to
+all of your records.  Of course Dialyzer can try to deduce types for
+you, but it will work better if you are explicit.
 
 ==== Use Specific types
 
@@ -88,3 +99,36 @@ One can improve code quality if you take a page from the Haskell
 playbook. By splitting the code that deals with IO including the
 database, WebInterface or the like from the logic that transforms the
 data it functions will be easier to test and to type check.
+
+
+==== Understand what can be caught by what
+
+This book has shown numbers of different kinds of tests, unit tests,
+Integration tests, property tests, static checks and more. Each of
+these can best capture some types of errors, it is important to
+understand which ones can best help you find a problem. It is not a
+good deal to spend hours writing unit tests for things that dialyzer
+can find for you automaticly, nor should you write a unit test that
+tests one case and proclaim yourself done, create a property based
+test to really exercise the function.  
+
+
+==== Testing library code
+
+Most modern projects will rely on a number of external libraries that
+have been pulled down from github or other sources. You may use JSX
+for parsing JSONs or webmachine to create a web api. The question is
+how much should you test these yourself and how much should you just
+assume that they will work. 
+
+For my regular test runs I generally will run rebar with
++skip_deps=true+ if nothing else this prevents my build from taking up
+time running the same tests on the same code each time I make a small
+change. 
+
+
+==== Practice 
+
+Doing TDD, and even more so TDD with properties has a learning curve,
+it requires a real effort to do it well and to make sure it is done
+every time. 
