@@ -488,7 +488,45 @@ this.
 
 === Parameterized types
 
-TODO: Subtypes
+You may have noticed that Erlang type declarations look a lot like
+functions with an arity of 0. Which of course will lead the observant
+reader to ask if it is possible to have a type with an arity of more
+than 0, of course the answer to that is yes. 
+
+.types
+[source, erlang]
+----
+-spec(find_user(_,_)     -> {ok, User}     | not_found).
+-spec(find_customer(_,_) -> {ok, Customer} | not_found).
+-spec(find_item(_,_)     -> {ok, Item}     | not_found).
+----
+
+It is possible that you might have some type specifications like those
+above in your code. This violates the basic principle of Don't repeat
+yourself, and is more wordy than might be needed. 
+
+What would be nice is if we could encapsulate the whole envelope
+structure into a type that could take the return type as a parameter.
+
+That would look like this:
+.Maybe type spec
+[source, erlang]
+----
+-type maybe(A) -> {ok, A} | not_found.
+-spec(find_user(_,_)     -> maybe(User).
+-spec(find_customer(_,_) -> maybe(Customer).
+-spec(find_item(_,_)     -> maybe(Item).
+----
+
+Now the structure is much cleaner as the declaration moves the +ok+
+and the +| not_found+ into the type itself and we just have to focus
+on the actual desired return values. 
+
+NOTE: if this looks familiar it is based on the Maybe Monad in
+Haskell. 
+
+
+
 
 === Using Dialyzer with a CI System
 NOTE: We may wish to move this to the CI Chapter
