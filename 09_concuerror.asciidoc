@@ -37,7 +37,6 @@ that these conditions do not happen.
 
 . One Race Condition that is OK 
 ****
-
 There is probably one place in your code that there is a race
 condition, at least if your code is anything like mine, the random
 number generator. Random Number generators use the entropy of the
@@ -54,3 +53,4 @@ The upshot of this, before you run concuerror mock out anything that
 uses the random number generator including the generation of UUIDs and
 the like. 
 ****
+
