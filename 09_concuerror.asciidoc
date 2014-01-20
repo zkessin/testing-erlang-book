@@ -44,9 +44,11 @@ number generator. Random Number generators use the entropy of the
 system and the fact that the things are unpredictable to well generate
 an unpredictable stream of numbers. 
 
-This is in general a good thing, the problem is that it is exactly
-what we are tying to find so it will show up as a giant false
-positive. 
+This is in general a good thing, You can imagine that if you have lots
+of processes that rely on random numbers than having an entropy pool
+that is very large will work in your favor. The problem is that it is
+exactly what we are tying to find so it will show up as a giant false
+positive.
 
 The upshot of this, before you run concuerror mock out anything that
 uses the random number generator including the generation of UUIDs and
