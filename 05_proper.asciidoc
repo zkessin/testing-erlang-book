@@ -152,6 +152,15 @@ This is also useful to ensure that an element is not in a dictionary
 or other key/value data structure. If you need to ensure that it is
 present then generate it and insert it yourself.
 
+==== Testing Reversible Function Pairs
+
+There are many times that we need to test functions that can be
+reversed. By reversed what I mean is that +For any I, f(g(I)) =:= I+ For
+example a reader and a writer would make a good pair, In theory if we
+data any legal data structure, write it out and then read it back in
+we should get the original data structure back. 
+
+
 
 === How many Tests to run
 
@@ -199,3 +208,4 @@ The other issue is that both proper and eunit define a macro
 +?LET+. To ensure that the proper version of this macro is used
 include proper before eunit, or you could just have the PropER and
 EUnit tests in seperate modules.
+
