@@ -97,19 +97,81 @@ The problem is that Erlang's functional specs are not always able to
 define all that we might want to do. For example there is no way to
 say that a binary should only consist of valid UTF-8 strings.  
 
+=== Creating a Custom Property
+
+If you want to test some invariant of a function that can not be
+expressed only with the spec of a function then you can create your
+own properties of the function for proper to run. The most basic
+generator can be done with the +?FORALL/3+ macro as shown in this
+example. This macro takes three parameters A tuple of variables that
+will be substituted into the function, generators for those variables,
+and then a block to test that.
+
+.Basic Generator
+=====
+prop_reverse_list() ->
+   ?FORALL(List, list(any()),
+       begin
+       L =:= reverse(reverse(List))
+    end).
+
+===== 
+
+In this example we only have one variable +List+ which is a list (the
+type of the elements does not really matter in this case, so we will
+give it a type of "any()", We will then assert that for all lists that
+if we reverse them twice we will get the original list back. The block
+should return a boolean. 
+
+%%TODO Expand
+
+If we want to limit the generated in lists in some way we can use the
++?IMPLIES/2+ macro which will reject items that do not match. For
+example if we want to modify the above property so that we only tests
+lists that have a length that is greater than 5 we could do this. When
+you run this you will see interspersed into the periods of the test an
++x+ which represent the times that the property rejects the generated macro.
+
+
+.Basic Generator
+=====
+prop_reverse_list() ->
+   ?FORALL(List, list(any()),
+    ?IMPLIES(length(List) > 5,
+        begin
+            L =:= reverse(reverse(List))
+        end)).
+
+===== 
+
+If you have more than one condition then you can stack the implies or
+just put all your conditions into an external function that will
+return a boolean and use that as your guard clause. 
+
+This is also useful to ensure that an element is not in a dictionary
+or other key/value data structure. If you need to ensure that it is
+present then generate it and insert it yourself.
+
+
 === How many Tests to run
 
 Property based tests work on the principle that we will create a
 number of random tests and ensure that they all pass your model. The
 question is how many tests to run, too few and we won't find as many
 bugs, too many and the tests will take too long to run. So how to find
-the optimal number of tests.
+the optimal number of tests? 
+
+By default Proper will run 100 tests, and absent some reason to change
+it this is probably a good default. Remember that if you are running
+it in your CI type system then to will run 100 every time. 
+
+However if your property tends to time out then reducing that number
+can help. In the ChicagoBoss Framework there are some tests that we
+run only 25 or 40 times as part of our regular build, as anything
+larger will cause a timeout. 
 
 
-One valid option is to run a smaller number as part of your CI build,
-and then run a larger number of tests as part of a nightly build. 
 
-TODO Research this more
 
 === Running our properties
 
