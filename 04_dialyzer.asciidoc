@@ -525,6 +525,27 @@ on the actual desired return values.
 NOTE: if this looks familiar it is based on the Maybe Monad in
 Haskell. 
 
+=== Make Dialyzer go faster
+
+You may have noticed that dialyzer can take a while to run and wished
+it would run faster. (Or at least I have). In this case there are a
+few options you can take to make it run faster.
+
+The first and most obvious option is to run it on a faster
+computer. Dialyzer will take advantage of multiple cores, so putting
+more cores on the project will help if you have them. 
+
+Of course your spouse or boss may not let you go buy a top of the line
+computer, and even if you do it may still be worth it to optimize your
+build.
+
+You can dialyzer a part of your project instead of the whole thing. So
+make a custom PLT that includes everything else and only run dialyzer
+on the parts you are working on. 
+
+
+
+
 
 
 
