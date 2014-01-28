@@ -541,7 +541,8 @@ build.
 
 You can dialyzer a part of your project instead of the whole thing. So
 make a custom PLT that includes everything else and only run dialyzer
-on the parts you are working on. 
+on the parts you are working on, just make sure to run it on
+everything at some point.
 
 
 
