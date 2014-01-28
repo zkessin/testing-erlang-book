@@ -210,3 +210,33 @@ The other issue is that both proper and eunit define a macro
 include proper before eunit, or you could just have the PropER and
 EUnit tests in seperate modules.
 
+
+=== Using Proper for Integration tests
+
+So far we have covered the case where we are using Proper For what is
+in effect unit testing, where we want to ensure that the logic of some
+application is correct.
+
+But what if we wish to ensure that for example our connection to the
+database is working well. In this case we have an obvious set of
+properties that we can exploit, in that we can test that the round
+trip to the database works. If we Create a Record, write it to the
+database, then read it back from the database it should be the same
+(with the possible excpetion of ID columns and timestamps.
+
+In doing this for the Chicago Boss I discovered a major bug in the
+MySQL integration. I found that the escaping of strings was not being
+done correctly. If you saved the string "\\ " it would strip out the 2
+backslashes. I don't think I would have found this by manual testing
+but proper found it in the first block of 100 tests. It actually found
+it in a much larger string, but then reduced it down to the "\\ " that
+I was able to test. Once I had found the problem then actually solving
+it was pretty easy.
+
+As for how I solved it I connected boss to a mysql virtual machine
+and had a table with the correct fields. Then I used this 
+
+[source,erlang]
+----
+include::proper/mysql_test.erl]
+----
