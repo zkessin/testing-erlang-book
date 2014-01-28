@@ -37,7 +37,6 @@ When the book is finished it will be published by O'Reilly media.
 
 ## Technical Details
 
-
 This project is being written in AsciiDoc which is a pretty simple
 format, you can find details here: http://www.methods.co.nz/asciidoc/
 
@@ -76,23 +75,24 @@ so on for each chapter.
 Indent code with spaces not tabs, make it easy to read. Make sure all
 code is referenced in the text in some useful way. 
 
-
 ## To Build 
 
 To build this on Linux install the asciidoc package (via yum or
 apt-get) make a html directory and run the build.sh script this will
 turn everything into HTML
 
-* link:00_preface.asciidoc[Preface]
-* link:01_rebar.asciidoc[Building With Rebar]
-* link:02_eunit.asciidoc[Eunit]
-* link:03_common_test.asciidoc[Common Test]
-* link:04_dialyzer.asciidoc[Dialyzer]
-* link:05_proper.asciidoc[Proper]
-* link:06_quick_check.asciidoc[Quick Check]
-* link:07_wrangler.asciidoc[Wrangler]
-* link:08_concuerror.asciidoc[Concerrer]
-* link:09_ci.asciidoc[Contious Integration]
-* link:10_best_practice.asciidoc[Best Practice]
+## Chapters
 
+* [Preface](https://github.com/zkessin/testing-erlang-book/blob/master/00_preface.asciidoc)
+* [Building With Rebar](https://github.com/zkessin/testing-erlang-book/blob/master/01_rebar.asciidoc)
+* [Eunit](https://github.com/zkessin/testing-erlang-book/blob/master/02_eunit.asciidoc)
+* [Common Test](https://github.com/zkessin/testing-erlang-book/blob/master/03_common_test.asciidoc)
+* [Dialyzer](https://github.com/zkessin/testing-erlang-book/blob/master/04_dialyzer.asciidoc)
+* [Proper](https://github.com/zkessin/testing-erlang-book/blob/master/05_proper.asciidoc)
+* [Quick Check](https://github.com/zkessin/testing-erlang-book/blob/master/06_quick_check.asciidoc)
+* [Testing a FSM With Properties](https://github.com/zkessin/testing-erlang-book/blob/master/07_testing_a_fsm.asciidoc)
+* [Wrangler](https://github.com/zkessin/testing-erlang-book/blob/master/08_wrangler.asciidoc)
+* [Concerrer](https://github.com/zkessin/testing-erlang-book/blob/master/09_concuerror.asciidoc)
+* [Contious Integration](https://github.com/zkessin/testing-erlang-book/blob/master/10_ci.asciidoc)
+* [Best Practice](https://github.com/zkessin/testing-erlang-book/blob/master/11_best_practices.asciidoc)
 
