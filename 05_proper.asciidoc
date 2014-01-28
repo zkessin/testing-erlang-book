@@ -137,3 +137,17 @@ The other issue is that both proper and eunit define a macro
 +?LET+. To ensure that the proper version of this macro is used
 include proper before eunit, or you could just have the PropER and
 EUnit tests in seperate modules.
+
+
+=== Using Proper for Integration tests
+
+So far we have covered the case where we are using Proper For what is
+in effect unit testing, where we want to ensure that the logic of some
+application is correct, 
+
+But what if we wish to ensure that for example our connection to the
+database is working well. In this case we have an obvious set of
+properties that we can exploit, in that we can test that the round
+trip to the database works. If we Create a Record, write it to the
+database, then read it back from the database it should be the same
+(with the possible excpetion of ID columns and timestamps.
