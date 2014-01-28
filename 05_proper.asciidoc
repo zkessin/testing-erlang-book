@@ -234,9 +234,12 @@ I was able to test. Once I had found the problem then actually solving
 it was pretty easy.
 
 As for how I solved it I connected boss to a mysql virtual machine
-and had a table with the correct fields. Then I used this 
+and had a table with the correct fields. Then I used this code to
+exercise write a bunch of records to the database and read them back,
+with the assumption that the returned value should be the same as the
+written value. 
 
 [source,erlang]
 ----
-include::proper/mysql_test.erl]
+include::proper/mysql_test.erl[]
 ----
