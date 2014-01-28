@@ -7,6 +7,13 @@ the correct thing, a property based testing system will use a set of
 rules to apply hundreds or thousands of inputs to a system to ensure
 that they all act correctly. 
 
+With Unit testing we have been focusing on covering a high percentage
+of the code, with Property Based testing we can not only cover a high
+precentage of the code but also attempt to statisticly cover the
+problem space as well. For most interesting problems we will probably
+not get every possible input, but enough to find any weird corner
+cases.  
+
 The problem from the developer's point of view is that this is as this
 is a newer form of testing we the programming community may not be as
 familar with it and may not understand how and when to best apply it
