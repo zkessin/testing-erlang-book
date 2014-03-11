@@ -218,6 +218,7 @@ include proper before eunit, or you could just have the PropER and
 EUnit tests in seperate modules.
 
 
+
 === Using Proper for Integration tests
 
 So far we have covered the case where we are using Proper For what is
@@ -249,4 +250,60 @@ written value.
 [source,erlang]
 ----
 include::proper/mysql_test.erl[]
+
+=== A basic property
+
+Suppose that we have a function that removes an element from a list
+(Yes there is one in the library, its an example), as in this
+example. And let us assume all of the elements are integers, just to
+keep things simple. Then we would like to assert that given an element
+and a list if we apply the function to the list then the resulting
+element might would not have that element in it. 
+
+If we used a classical unit test we might setup test cases like this:
+
+[source,erlang]
+----
+remove_from_list_test() ->
+    ?assertEqual([], remove_from_list(3,[3])),
+    ?assertEqual([1], remove_from_list(2,[1,2])),
+    ?assertEqual([1], remove_from_list(2,[2])).                        
+
+----
+
+And we might assume that we have covered all the cases. However there
+is a bug in this code, in that if it will not do the right thing if an
+element is duplicated, in that case it will only remove the first
+instance of that element. 
+
+.remove_from_list.erl
+----
+include:proper/remove_from_list.erl
+----
+
+We can test this with the property shown above, the function
+_prop_not_in_list/0_ states for an integer, El, and a list of
+integers, List, that El will be removed from the list by the function
+remove_from_list/2. 
+
+This will then generate a lot of random values until it can find a
+counter example. When I ran the property It came up with this counter
+example: 
+
+.counter example
+----
+{2,[-53,39,2,11,6,72,2,-6,-10,-24,0,-14,-14,-13,18,17,31,15,71,-6,10]}
+----
+
+However this example has more than 20 elements in the list (and there
+is no reason why it could not have had 250 or more). So the exact
+problem might be hard to find. As such PropER will attempt to shrink
+the counter example to the most simplified form it can find. In this
+case after shrinking it found the example of _{0, [0,0]}_ which is
+expresses the idea that a duplicate item is what is exposing the bug.  
+
+.counter example after shrinking
+----
+{0,[0,0]}
+
 ----
