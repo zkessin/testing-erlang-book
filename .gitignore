@@ -1,3 +1,6 @@
 html/*.html
 *~
 dump.rdb
+*_mock.js
+*beam
+*~
