@@ -60,6 +60,13 @@ priority but does exist for the new one.
 
 === Installing PropER
 
+To instal proper just add the proper repository to your project's
+rebar.config file like this and run the standard +rebar get-deps
+compile+ command
+
+----
+{proper,	".*",	{git, "git://github.com/manopapad/proper.git", "HEAD"}},
+----
 === Setting up basic tests
 
 
@@ -159,6 +166,70 @@ This is also useful to ensure that an element is not in a dictionary
 or other key/value data structure. If you need to ensure that it is
 present then generate it and insert it yourself.
 
+==== Creating Custom Data
+
+While the use of the type system will sometimes provide a way to
+generate the mock data for your tests there are other times when it
+will not do so. In cases where you need more that just the filtering
+that the +?IMPLIES+ macro can provide you will need to generate your
+own data.
+
+Proper provides a rich set of tools to allow you to do this, you can
+find a reference on their website here:
+http://proper.softlab.ntua.gr/doc/proper_types.html.
+
+==== Limited Input set
+in the case where the input might be a finite set of inputs, we can
+very easily provide proper with a list and use the _oneof/1_ function
+to have it select one of them. 
+
+In this case our function expects to get the day of the week as a
+string, and it could be either with an initial capital letter or
+without. As we can enumerate the options we simply provide them as a
+list. When we run our property it will pick one at random. 
+
+[source,erlang]
+----
+include::proper/weekday_test.erl[]
+----
+
+The way PropER will shrink this input is by moving to the front of the
+list. So If our test finds an error when it sends in "friday", it will
+attempt to use earlier days of the week until "sunday". In general if
+you find that the first element of the list is causing the error that
+is probably a sign that all inputs are broken. 
+
+===== Dictionary Input
+
+It may happen that you want to try a wide range of dictionary words as
+input. Thankfully most unix systems come with a dictionary file or two
+somewhere on the system for a spell check program. (If your system
+does not have this you may want to install ispell or aspell). In
+addition dictionaries are available for a wide range of languages, so
+if you need to test Hebrew, German, Greek, Russian etc you can
+probably find those in your standard package repositories as well.
+
+In my system the spelling dictionaries are in the _/usr/share/dict_
+directory, (yours may be somewhere else). We could just read the file
+in at run time, but that might be rather slow as we would end up
+reading it many times. 
+
+Thankfully Ulf Wiger has a nice library of
+https://github.com/uwiger/parse_trans parse transforms that will
+enable us to do it at compile time. the +ct_expand+ parse transform
+will execute the +ct_expand:term/1+ function at compile time and
+replace it with the result. So we can use something like this example
+which will read in the file (on my computer is is about 99,000 words
+btw) and then load it into an erlang list at compile time.
+
+[source,erlang]
+----
+include::proper/words.erl[]
+----
+
+Once again when shrinking the system will tend to move to the front of
+the list, which is in alphabetical order. 
+
 ==== Testing Reversible Function Pairs
 
 There are many times that we need to test functions that can be
@@ -167,7 +238,7 @@ example a reader and a writer would make a good pair, In theory if we
 data any legal data structure, write it out and then read it back in
 we should get the original data structure back. 
 
-TODO: SHow database test here
+TODO: Show database test here
 
 
 === How many Tests to run
@@ -250,6 +321,7 @@ written value.
 [source,erlang]
 ----
 include::proper/mysql_test.erl[]
+----
 
 === A basic property
 
