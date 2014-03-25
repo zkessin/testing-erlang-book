@@ -38,11 +38,13 @@ hundreds of tests that will hopefully expose any strange corner cases.
 However there is an art of how to do this. You need to find a way to
 test the code such that you are not testing it against itself. If you
 say +f(A) =:= f(A)+ then you probably have not learned very much from
-your tests
+your tests, other than the fact that a function returns consistent
+output for consistent input.
 
 This can work very well for some types of code but is more difficult
 for others, This chapter will explore how I applied PropER to the
-+tiny_pq+ library which is used by Chicago Boss s part of its TinyMQ.
++tiny_pq+ library which is used by Chicago Boss as part of its TinyMQ,
+as well as other projects.
 
 TinyMQ has a tree structure in which each element looks like this,
 where the keys are integers and the values are a possible list. We
@@ -53,10 +55,9 @@ that after we do it that it does not exist in the list for the old
 priority but does exist for the new one.
 
 .DataStructure
-[source,erlang]
-----
+-----
 3 -> [ 5, 9, 11]
-----
+-----
 
 === Installing PropER
 
@@ -86,26 +87,26 @@ they do not pass it will then try to shrink the failing case. In this
 case the function passes all 100 tests so check_spec will return
 true. 
 
-[source, erlang]
-====
+-----
+
 (erlang@sag)4> proper:check_spec({boss_compiler, flatten_token_locations, 1}).
-....................................................................................................
+ ....................................................................................................
+
 OK: Passed 100 test(s).
 true
-====
+-----
 
 
 
 .Testing a Function's specs
-[source, erlang]
-=====
+-----
 
 unpack_id_test() ->
     ?assert(proper:check_spec({boss_db_adapter_mongodb,unpack_id, 2},
 			      [{to_file, user}])),
     ok.
 
-=====
+-----
 
 The problem is that Erlang's functional specs are not always able to
 define all that we might want to do. For example there is no way to
@@ -122,20 +123,25 @@ will be substituted into the function, generators for those variables,
 and then a block to test that.
 
 .Basic Generator
-=====
+-----
 prop_reverse_list() ->
    ?FORALL(List, list(any()),
        begin
        L =:= reverse(reverse(List))
     end).
 
-===== 
+----- 
 
 In this example we only have one variable +List+ which is a list (the
 type of the elements does not really matter in this case, so we will
 give it a type of "any()", We will then assert that for all lists that
 if we reverse them twice we will get the original list back. The block
-should return a boolean. 
+should return a boolean.
+
+In general instead of any it is often better to use a list of
+integers, any can create atoms which can fill up the VM's atom
+table. It can also create large recursive data structures, which can
+cause the test to time out. 
 
 %%TODO Expand
 
@@ -148,7 +154,7 @@ you run this you will see interspersed into the periods of the test an
 
 
 .Basic Generator
-=====
+-----
 prop_reverse_list() ->
    ?FORALL(List, list(any()),
     ?IMPLIES(length(List) > 5,
@@ -156,7 +162,7 @@ prop_reverse_list() ->
             L =:= reverse(reverse(List))
         end)).
 
-===== 
+----- 
 
 If you have more than one condition then you can stack the implies or
 just put all your conditions into an external function that will
@@ -188,7 +194,7 @@ string, and it could be either with an initial capital letter or
 without. As we can enumerate the options we simply provide them as a
 list. When we run our property it will pick one at random. 
 
-[source,erlang]
+
 ----
 include::proper/weekday_test.erl[]
 ----
@@ -215,20 +221,26 @@ in at run time, but that might be rather slow as we would end up
 reading it many times. 
 
 Thankfully Ulf Wiger has a nice library of
-https://github.com/uwiger/parse_trans parse transforms that will
+https://github.com/uwiger/parse_trans[parse transforms] that will
 enable us to do it at compile time. the +ct_expand+ parse transform
 will execute the +ct_expand:term/1+ function at compile time and
 replace it with the result. So we can use something like this example
 which will read in the file (on my computer is is about 99,000 words
 btw) and then load it into an erlang list at compile time.
 
-[source,erlang]
+
 ----
 include::proper/words.erl[]
 ----
 
 Once again when shrinking the system will tend to move to the front of
-the list, which is in alphabetical order. 
+the list, which is in alphabetical order.
+
+If we want to create something that sort of looks like text, we can
+use this to create a list of words. However to get something that
+really looks like text we will also need to add spaces between
+words. (the idea of splitting text into paragraphs is left as an
+exercise for the reader).  
 
 ==== Testing Reversible Function Pairs
 
@@ -239,6 +251,8 @@ data any legal data structure, write it out and then read it back in
 we should get the original data structure back. 
 
 TODO: Show database test here
+
+==== Testing vs External Model
 
 
 === How many Tests to run
@@ -269,13 +283,13 @@ the like. However you may also wish to run your property based tests
 is part of a larger test suite. The easist way to do that is to wrap
 it in an eunit assertion like this.
 
-[source, erlang]
-=====
+
+-----
 delete_test() ->
     ?assert(proper:quickcheck(delete_prop(), [{to_file,user}])),
     ok 
 
-=====
+-----
 
 A few things to note, first of all function +proper:quickcheck/2+ will
 return true if everything passed so the eunit +?assert+ macro will
@@ -318,7 +332,6 @@ exercise write a bunch of records to the database and read them back,
 with the assumption that the returned value should be the same as the
 written value. 
 
-[source,erlang]
 ----
 include::proper/mysql_test.erl[]
 ----
@@ -334,7 +347,7 @@ element might would not have that element in it.
 
 If we used a classical unit test we might setup test cases like this:
 
-[source,erlang]
+
 ----
 remove_from_list_test() ->
     ?assertEqual([], remove_from_list(3,[3])),
