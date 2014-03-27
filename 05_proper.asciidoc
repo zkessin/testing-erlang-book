@@ -9,19 +9,21 @@ that they all act correctly.
 
 With Unit testing we have been focusing on covering a high percentage
 of the code, with Property Based testing we can not only cover a high
-precentage of the code but also attempt to statisticly cover the
+percentage of the code but also attempt to statisticly cover the
 problem space as well. For most interesting problems we will probably
 not get every possible input, but enough to find any weird corner
 cases.  
 
 The problem from the developer's point of view is that this is as this
 is a newer form of testing we the programming community may not be as
-familar with it and may not understand how and when to best apply it
+familiar with it and may not understand how and when to best apply it
 to get optimal results. 
 
 Furthermore the two main tools (QuickCheck and PropER) both suffer
-from a lack of documentation and examples of how to build these
-tests for our code
+from a lack of documentation and examples of how to build these tests
+for our code. It is my aim to improve the documentation for both
+tools, with the hope that the developer community can use both to lead
+to better software.
 
 
 === What is PropER
@@ -55,6 +57,7 @@ that after we do it that it does not exist in the list for the old
 priority but does exist for the new one.
 
 .DataStructure
+[source, erlang]
 -----
 3 -> [ 5, 9, 11]
 -----
@@ -65,28 +68,121 @@ To instal proper just add the proper repository to your project's
 rebar.config file like this and run the standard +rebar get-deps
 compile+ command
 
+[source, erlang]
 ----
 {proper,	".*",	{git, "git://github.com/manopapad/proper.git", "HEAD"}},
 ----
 === Setting up basic tests
 
 
+=== A basic property
+
+Suppose that we have a function that removes an element from a list
+(Yes there is one in the library, its an example), as in this
+example. And let us assume all of the elements are integers, just to
+keep things simple. Then we would like to assert that given an element
+and a list if we apply the function to the list then the resulting
+element might would not have that element in it. 
+
+If we used a classical unit test we might setup test cases like this:
+
+[source, erlang]
+----
+remove_from_list_test() ->
+    ?assertEqual([],  remove_from_list(3,[3])),
+    ?assertEqual([1], remove_from_list(2,[1,2])),
+    ?assertEqual([1], remove_from_list(2,[1])).                        
+
+----
+
+And we might assume that we have covered all the cases. However there
+is a bug in this code, in that if it will not do the right thing if an
+element is duplicated, in that case it will only remove the first
+instance of that element. 
+
+.remove_from_list.erl
+[source, erlang]
+----
+include:proper/remove_from_list.erl
+----
+
+We can test this with the property shown above, the function
+_prop_not_in_list/0_ states for an integer, El, and a list of
+integers, List, that El will be removed from the list by the function
+remove_from_list/2. 
+
+This will then generate a lot of random values until it can find a
+counter example. When I ran the property It came up with this counter
+example: 
+
+.counter example
+[source, erlang]
+----
+{2,[-53,39,2,11,6,72,2,-6,-10,-24,0,-14,-14,-13,18,17,31,15,71,-6,10]}
+----
+
+However this example has more than 20 elements in the list (and there
+is no reason why it could not have had 250 or more). So the exact
+problem might be hard to find. In technical terms this counter example
+could be said to have a high signal to noise ratio. 
+
+As such PropER will attempt to shrink the counter example to the most
+simplified form it can find. In this case after shrinking it found the
+example of _{0, [0,0]}_ which is expresses the idea that a duplicate
+item is what is exposing the bug.
+
+.counter example after shrinking
+[source, erlang]
+----
+{0,[0,0]}
+----
+
+=== How shrinking works
+
+When working with Property based testing you will hear the term
+*shrinking* a lot. The idea of shrinking is that since PBT uses
+randomness to find issues then the problem cases are often very
+complex with a lot of unimportant details in them, (See previous
+example). In general shrinking will apply several rules to any created
+values.
+
+.Shrinking methods
+[options="header"]
+|====================================================================
+| Type                      | Operation
+| Integer                   | Move closer to 0
+| Float                     | Move closer to 0
+| Atom                      | Drop Chars
+| Bitstring                 | Drop bits, convert 1's to 0's
+| Function                  | return simpler values
+| Tuple                     | Shrink elements
+| Loose Tuple               | Drop or simplify Elements
+| List                      | Drop or simplify Elements
+| Vector                    | Shrink Elements
+| Fixed List                | Shirnk Elements
+| Weighted Union (oneof/1)  | Move to head of list of options
+| Literal                   | None
+|====================================================================
+
+
+
 === Using types to drive tests
 
 If you can derive your tests directly from the +-spec+ of a function
-then you can run that property direclty by using the function
+then you can run that property directly by using the function
 +proper:check_spec/1+ and passing it a MFA tuple. For example this
 test checks a function from the Chicago Boss boss_compiler module. As long
-as that function's spec defines what it will do completly then this
+as that function's spec defines what it will do completely then this
 makes a very good test.
 
 To test a functions spec you can call the command
-+proper:check_spec/1+ from the erlang REPL. This will use the function
++proper:check_spec/1+ from the Erlang REPL. This will use the function
 spec to generate 100 random tests and ensure that they all pass. If
 they do not pass it will then try to shrink the failing case. In this
 case the function passes all 100 tests so check_spec will return
 true. 
 
+[source, erlang]
 -----
 
 (erlang@sag)4> proper:check_spec({boss_compiler, flatten_token_locations, 1}).
@@ -99,6 +195,7 @@ true
 
 
 .Testing a Function's specs
+[source, erlang]
 -----
 
 unpack_id_test() ->
@@ -123,6 +220,7 @@ will be substituted into the function, generators for those variables,
 and then a block to test that.
 
 .Basic Generator
+[source, erlang]
 -----
 prop_reverse_list() ->
    ?FORALL(List, list(any()),
@@ -154,6 +252,7 @@ you run this you will see interspersed into the periods of the test an
 
 
 .Basic Generator
+[source, erlang]
 -----
 prop_reverse_list() ->
    ?FORALL(List, list(any()),
@@ -194,7 +293,7 @@ string, and it could be either with an initial capital letter or
 without. As we can enumerate the options we simply provide them as a
 list. When we run our property it will pick one at random. 
 
-
+[source, erlang]
 ----
 include::proper/weekday_test.erl[]
 ----
@@ -208,7 +307,7 @@ is probably a sign that all inputs are broken.
 ===== Dictionary Input
 
 It may happen that you want to try a wide range of dictionary words as
-input. Thankfully most unix systems come with a dictionary file or two
+input. Thankfully most Unix systems come with a dictionary file or two
 somewhere on the system for a spell check program. (If your system
 does not have this you may want to install ispell or aspell). In
 addition dictionaries are available for a wide range of languages, so
@@ -226,9 +325,9 @@ enable us to do it at compile time. the +ct_expand+ parse transform
 will execute the +ct_expand:term/1+ function at compile time and
 replace it with the result. So we can use something like this example
 which will read in the file (on my computer is is about 99,000 words
-btw) and then load it into an erlang list at compile time.
+BTW) and then load it into an Erlang list at compile time.
 
-
+[source, erlang]
 ----
 include::proper/words.erl[]
 ----
@@ -277,13 +376,13 @@ larger will cause a timeout.
 
 === Running our properties
 
-We may wish to run a property based test from the erlang REPL. by calling
-+proper:quickcheck(my_prop())+ This is good for explratory testing and
+We may wish to run a property based test from the Erlang REPL. by calling
++proper:QuickCheck(my_prop())+ This is good for exploratory testing and
 the like. However you may also wish to run your property based tests
-is part of a larger test suite. The easist way to do that is to wrap
+is part of a larger test suite. The easiest way to do that is to wrap
 it in an eunit assertion like this.
 
-
+[source, erlang]
 -----
 delete_test() ->
     ?assert(proper:quickcheck(delete_prop(), [{to_file,user}])),
@@ -293,14 +392,14 @@ delete_test() ->
 
 A few things to note, first of all function +proper:quickcheck/2+ will
 return true if everything passed so the eunit +?assert+ macro will
-run the property.Seconly you will note the option of +{to_file,user}+
+run the property.Secondly you will note the option of +{to_file,user}+
 this is because eunit will capture output of the tests. By passing the
 option we get around this.
        
 The other issue is that both proper and eunit define a macro
 +?LET+. To ensure that the proper version of this macro is used
 include proper before eunit, or you could just have the PropER and
-EUnit tests in seperate modules.
+EUnit tests in separate modules.
 
 
 
@@ -315,7 +414,7 @@ database is working well. In this case we have an obvious set of
 properties that we can exploit, in that we can test that the round
 trip to the database works. If we Create a Record, write it to the
 database, then read it back from the database it should be the same
-(with the possible excpetion of ID columns and timestamps.
+(with the possible exception of ID columns and timestamps.
 
 In doing this for the Chicago Boss I discovered a major bug in the
 MySQL integration. I found that the escaping of strings was not being
@@ -332,63 +431,7 @@ exercise write a bunch of records to the database and read them back,
 with the assumption that the returned value should be the same as the
 written value. 
 
+[source, erlang]
 ----
 include::proper/mysql_test.erl[]
-----
-
-=== A basic property
-
-Suppose that we have a function that removes an element from a list
-(Yes there is one in the library, its an example), as in this
-example. And let us assume all of the elements are integers, just to
-keep things simple. Then we would like to assert that given an element
-and a list if we apply the function to the list then the resulting
-element might would not have that element in it. 
-
-If we used a classical unit test we might setup test cases like this:
-
-
-----
-remove_from_list_test() ->
-    ?assertEqual([], remove_from_list(3,[3])),
-    ?assertEqual([1], remove_from_list(2,[1,2])),
-    ?assertEqual([1], remove_from_list(2,[2])).                        
-
-----
-
-And we might assume that we have covered all the cases. However there
-is a bug in this code, in that if it will not do the right thing if an
-element is duplicated, in that case it will only remove the first
-instance of that element. 
-
-.remove_from_list.erl
-----
-include:proper/remove_from_list.erl
-----
-
-We can test this with the property shown above, the function
-_prop_not_in_list/0_ states for an integer, El, and a list of
-integers, List, that El will be removed from the list by the function
-remove_from_list/2. 
-
-This will then generate a lot of random values until it can find a
-counter example. When I ran the property It came up with this counter
-example: 
-
-.counter example
-----
-{2,[-53,39,2,11,6,72,2,-6,-10,-24,0,-14,-14,-13,18,17,31,15,71,-6,10]}
-----
-
-However this example has more than 20 elements in the list (and there
-is no reason why it could not have had 250 or more). So the exact
-problem might be hard to find. As such PropER will attempt to shrink
-the counter example to the most simplified form it can find. In this
-case after shrinking it found the example of _{0, [0,0]}_ which is
-expresses the idea that a duplicate item is what is exposing the bug.  
-
-.counter example after shrinking
-----
-{0,[0,0]}
-
 ----
