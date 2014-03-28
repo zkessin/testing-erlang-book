@@ -1,4 +1,4 @@
-== PropER
+== Property based testing with PropER and QuickCheck
 
 Property based testing is a field of testing that represents a major
 improvement over unit testing in many ways. While a unit test will try
@@ -21,21 +21,50 @@ to get optimal results.
 
 Furthermore the two main tools (QuickCheck and PropER) both suffer
 from a lack of documentation and examples of how to build these tests
-for our code. It is my aim to improve the documentation for both
-tools, with the hope that the developer community can use both to lead
-to better software.
+for our code in non trivial cases. It is my aim to improve the
+documentation for both tools, with the hope that the developer
+community can use both to lead to better software.
 
+=== What is QuickCheck
+
+QuickCheck was invited by John Hughes and his team at Chalmers
+University in Gotenburg Sweden. They originally created QuickCheck for
+Haskell, then moved it to Erlang.
+
+They formed a company Quviq to commercialize the technology. There are
+two versions of QuickCheck, one is commercial, and requires a
+licence. They also have a free to use (though closed sourced) version
+that is somewhat limited in function.
 
 === What is PropER
 
-NOTE: Like Dialyzer, PropER is a product of the research group of
-Kostis Sagonas at Uppsala University and NTUA.
+
+PropER was created by Kostis Sagonas and his students at Upsala
+University and NTUA. It is similar to QuickCheck but with some
+differences.
+
+QuickCheck is proprietary software, while PropER is licenced under the
+GPL. This alone may cause you to choose to use one or the other. 
 
 
-PropER is a testing framework that uses a model to create random
-inputs and make sure that the results make sense. The idea is that a
-unit test may try a few possible inputs with PropER you can make
-hundreds of tests that will hopefully expose any strange corner cases.
+
+Both QuickCheck and Proper are testing frameworks that allow you to
+use a model to create random inputs or events and run your program
+against them. The two packages are broadly similar with a few key
+differences that are worth noting.
+
+PropER can use the language of specs and types that was created for
+dialyzer to build tests. While this is not applicable in all cases it
+can often get you some basic testing for free or close to it. 
+
+QuickCheck does not have this feature, but have some more advanced
+features for testing a FSM. It also has some features for testing C
+code. QuickCheck also may be somewhat faster and have better shrinking
+features. 
+
+Most of what is in this chapter will apply to both packages, however
+there are details that will different. I will do my best to note where
+those are.  
 
 However there is an art of how to do this. You need to find a way to
 test the code such that you are not testing it against itself. If you
