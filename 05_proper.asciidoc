@@ -1,5 +1,8 @@
 == Property based testing with PropER and QuickCheck
 
+NOTE: This chapter is being reworked to cover both PropER and
+QuickCheck.
+
 Property based testing is a field of testing that represents a major
 improvement over unit testing in many ways. While a unit test will try
 one or two possible inputs to a function to ensure that it is doing
