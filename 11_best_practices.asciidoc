@@ -1,4 +1,3 @@
-
 === How to Write code to take advantage of Dialyzer
 
 WARNING: This section is a work in progress, feel free to send
@@ -44,9 +43,9 @@ type +customer_id()+ vis +binary()+ you have the distinct advantage
 that it can't cross contaminate with other things that might have the
 same underlying type. This is the same idea that was done in days past
 with Hungarian Notation, where you would use a naming system to keep
-different different variables separate.
+different variables separate.
 
-Even better would be instead of hving +customer_id()+ be an alias for
+Even better would be instead of having +customer_id()+ be an alias for
 +binary()+ would be to have it have the signature +{'customer_id',
 binary()}+ this way you can pattern match on it and have dialyzer
 positively identify it.
