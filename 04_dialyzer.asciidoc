@@ -18,6 +18,10 @@ to check that the program is consistent. If you do not include types
 dialyzer will dynamicly derive the types from the code. But it will
 often assign a more broad type than might be called for.
 
+Using type annotations and dialyzer it is possible to express many
+kinds of invariants as types which can then be tested, as part of a
+compile cycle.
+
 However there are some very nice tools for providing type annotations
 and doing static type testing. These give some of the benefit that a
 type system like Haskell's, without having to invest in the full
@@ -512,7 +516,7 @@ That would look like this:
 .Maybe type spec
 [source, erlang]
 ----
--type maybe(A) -> {ok, A} | not_found.
+-type maybe(A)           -> {ok, A} | not_found.
 -spec(find_user(_,_)     -> maybe(User).
 -spec(find_customer(_,_) -> maybe(Customer).
 -spec(find_item(_,_)     -> maybe(Item).

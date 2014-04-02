@@ -72,8 +72,6 @@ you can specify several versions of OTP with the _otp_release_ option
 in the +.travis.yml+ file. If you do this it will run a separate job
 for each version of OTP and let you know if any of them fail.
 
-WARNING: As of this writing travis-ci does not work with Erlang
-R15B03, R15B02 does work.
 
 The one downside of Travis-CI is that if you are not building an open
 source project then you have to pay to use their hosted service.

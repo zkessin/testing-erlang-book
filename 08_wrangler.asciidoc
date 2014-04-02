@@ -13,7 +13,7 @@ Thompson and Huiqing Li at the Univeristy of
 Kent. https://www.cs.kent.ac.uk/projects/wrangler/Wrangler/Home.html
 Wrangler provides a number of refactoring that a developer can use to
 work on their code base. In addition this also includes an API that
-allows developers and teams to create their own refactorings. 
+allows developers and teams to create their own refactorings.
 
 Uses of Wrangler include finding cloned code, extracting or inlining
 functions and more. 

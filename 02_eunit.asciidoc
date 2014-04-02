@@ -12,11 +12,11 @@ Tests in EUnit can be created in the same module as the code to be
 tested or in a separate module. If the tests are in their own module
 then all the functions to be tested must be exported for the tests to
 work. However it is possible to compile the module with a +export_all+
-directive for testing. This can be done as in this example by using the erlang
-+-ifdef(EUNIT)+.  If the tests are in their own module then that
-module should be named the same at the module to be tested but with
-the suffix +_test+ or +_tests+. So a module +square+ will have tests in
-+square_test+.
+directive for testing. This can be done as in this example by using
+the erlang +-ifdef(EUNIT)+.  If the tests are in their own module then
+that module should be named the same at the module to be tested but
+with the suffix +_test+ or +_tests+. So a module +square+ will have
+tests in +square_test+.
 
 .Export all for testing
 [source, erlang]
@@ -39,7 +39,8 @@ tests.
 
 NOTE: Any valid atom is a legal function name in Erlang, so naming a test
 function something like +'check that function does the right thing _test'+ is
-perfectly legal and will work just fine.
+perfectly legal and will work just fine as far as eunit is concerned,
+though some of the other tools may not work well with it.
 
 To illustrate this lets define a very simple module +square+ that
 contains a simple function +square/1+ that takes a number and squares it.
@@ -154,29 +155,6 @@ you can call the +eunit:test/1,2+ functions with the name of the
 directory instead of a file this will cause EUnit to run all tests in
 a directory.
 
-If you wish to run a test from the unix command line you can start the
-tests on load with the erlang +-run+ command parameter. I generally
-have wrapped my test runner into a custom function that will run the
-tests and then call +init:stop/0+ to cause Erlang to exit.
-
-I like to run my tests from a Makefile as in this example. The
-Makefile will build everything that may need it and then start erlang
-and run the test suite. The Erlang compiler can output create Makefile
-directives for each source file to track dependencies of include files
-if needed.
-
-.Makefile
-[source, makefile]
-----
-include::eunit/src/Makefile[source, make]
-----
-
-.tests.erl
-[source, erlang]
-----
-include::eunit/src/tests.erl[source, erlang]
-----
-
 If you are building your project with +rebar+ then running your tests
 is as simple as running +rebar eunit+. It will then build everything
 and run all the eunit tests in your project. By default if you do this
@@ -216,9 +194,6 @@ coverage due to the fact that a possible condition is masked by other
 factors
 
 TODO: Example
-
-
-
 
 
 === Test Generators
@@ -316,13 +291,18 @@ get_deps" to install it.
 The real problem with mocking frameworks like meck is that they
 violate the idea of DRY. For example if you have two modules, +a+ and
 +b+ and you change the way a function works in +b+ you must also
-change the mocks in +a_test+.
+change the mocks in +a_test+. 
+
+Dialyzer can solve some of this problem. If the contracts between two
+functions don't match then dialyzer will find it, even if meck
+does not. 
 
 In addition in the case of meck the order in which rebar compiles your
 project can matter. If your project consists of many OTP applications
 in one git repository then if meck can not find a module it will
 fail. So while in normal compilation order of modules does not matter
 with meck it does.
+
 
 
 === Meck version Hell
@@ -343,7 +323,7 @@ code smell.
 
 If your functions are too long then, testing them becomes more
 difficult, in this case it is probably a clue that your code needs to
-be refactored. Shorter functions are easier to test and easier to
+be re-factored. Shorter functions are easier to test and easier to
 reason about. 
 
 

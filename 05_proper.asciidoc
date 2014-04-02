@@ -135,7 +135,7 @@ instance of that element.
 .remove_from_list.erl
 [source, erlang]
 ----
-include:proper/remove_from_list.erl
+include::proper/remove_from_list.erl[]
 ----
 
 We can test this with the property shown above, the function
@@ -373,15 +373,45 @@ really looks like text we will also need to add spaces between
 words. (the idea of splitting text into paragraphs is left as an
 exercise for the reader).  
 
+=== Custom Shrinking 
+
+Sometimes the default shrinking behavior is not what an property
+needs. In this case you will want to define how your generator shrinks
+its data. 
+
+TODO: Expand
+
+
+
 ==== Testing Reversible Function Pairs
 
 There are many times that we need to test functions that can be
-reversed. By reversed what I mean is that +For any I, f(g(I)) =:= I+ For
-example a reader and a writer would make a good pair, In theory if we
-data any legal data structure, write it out and then read it back in
-we should get the original data structure back. 
+reversed. By reversed what I mean is that +For any I, f(g(I)) =:= I+
+For example a reader and a writer would make a good pair, In theory if
+we data any legal data structure, write it out and then read it back
+in we should get the original data structure back.
+
+TODO: JSX test here
 
 TODO: Show database test here
+
+=== Testing vs an external command
+
+Sometimes you will wish to test a property that can be checked by some
+code in an external language. For example if you have some code that
+will generate a JSON structure, and you would like to know if the
+output is a valid JSON document. One obvious way to this is use an
+existing JSON program written in another language. 
+
+There are programs to validate JSON in most languages, in this case
+the python json.tool will provide a good check on our code. (If python
+is not your thing, then feel free to substitute Javascript, Perl, PHP,
+Ruby or other language of your choice.) 
+
+[source, erlang]
+----
+include::proper/test_json_vs_python\.erl[]
+----
 
 ==== Testing vs External Model
 
