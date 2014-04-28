@@ -93,6 +93,6 @@ turn everything into HTML
 * [Testing a FSM With Properties](https://github.com/zkessin/testing-erlang-book/blob/master/07_testing_a_fsm.asciidoc)
 * [Wrangler](https://github.com/zkessin/testing-erlang-book/blob/master/08_wrangler.asciidoc)
 * [Concerrer](https://github.com/zkessin/testing-erlang-book/blob/master/09_concuerror.asciidoc)
-* [Contious Integration](https://github.com/zkessin/testing-erlang-book/blob/master/10_ci.asciidoc)
+* [Continuous Integration](https://github.com/zkessin/testing-erlang-book/blob/master/10_ci.asciidoc)
 * [Best Practice](https://github.com/zkessin/testing-erlang-book/blob/master/11_best_practices.asciidoc)
 
