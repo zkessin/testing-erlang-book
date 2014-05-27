@@ -1,7 +1,7 @@
 
 
 
-=== Chapters
+== Chapters
 
 * [Preface](preface.asciidoc)
 * [Building With Rebar](rebar.asciidoc)

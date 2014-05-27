@@ -34,7 +34,7 @@ performance tests and more.
 * link:08_wrangler.html[Wrangler]
 * link:09_concuerror.html[Concerrer]
 * link:10_ci.html[Contious Integration]
-* link:11_best_practice.html[Best Practice]
+* link:11_best_practices.html[Best Practice]
 
 
 

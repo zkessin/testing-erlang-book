@@ -1,4 +1,4 @@
-=== How to Write code to take advantage of Dialyzer
+== How to Write code to take advantage of Dialyzer
 
 WARNING: This section is a work in progress, feel free to send
 corrections etc as pull request. Please Use advice here with caution
