@@ -1,5 +1,7 @@
 # Testing Erlang
 
+I have created a new book on using QuickCheck with Erlang which you can find here http://www.erlang-quickcheck-book.com/
+
 ## About this Book
 
 Erlang has existed for a long time but has only recently become a
