@@ -15,7 +15,7 @@ annotations. These are strictly optional in that if you don't specify
 them the code will still compile and they do not affect the way that
 the code runs. What you can do with them is use tools like +dialyzer+
 to check that the program is consistent. If you do not include types
-dialyzer will dynamicly derive the types from the code. But it will
+dialyzer will dynamically derive the types from the code. But it will
 often assign a more broad type than might be called for.
 
 Using type annotations and dialyzer it is possible to express many
@@ -107,7 +107,7 @@ are good style). Integers can also be a good type, so you could have a
 type +http_success_codes()+ can be defined as +200|201|202|203|204+ or
 just +200..204+. 
 
-An array can e indicated as one would expect with square brackets,
+An array can be indicated as one would expect with square brackets,
 the type +[]+ indicates an empty array, while an array of integers
 would be shown as +[integer()]+, and a string is defined as +[char()]+
 a non empty string is defined as +[char(),...]+. 
