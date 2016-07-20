@@ -4,3 +4,5 @@ dump.rdb
 *_mock.js
 *beam
 *~
+output/*
+
