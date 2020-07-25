@@ -1,0 +1,27 @@
+= Testing Erlang
+
+Zachary Kessin
+v0.1, 2016-07-20
+:doctype: book
+:producer: Asciidoctor
+:keywords: Erlang, QuickCheck, EUnit, Testing
+:copyright: CC-BY-SA 3.0
+:imagesdir: images
+
+include::00_preface.asciidoc[Preface]
+include::01_rebar.asciidoc[Building With Rebar]
+include::02_eunit.asciidoc[Eunit]
+include::03_common_test.asciidoc[Common Test]
+include::04_dialyzer.asciidoc[Dialyzer]
+include::05_proper.asciidoc[Proper]
+include::06_quick_check.asciidoc[Quick Check]
+include::07_testing_a_fsm.asciidoc[Testing a FSM With Properties]
+include::08_wrangler.asciidoc[Wrangler]
+include::09_concuerror.asciidoc[Concerrer]
+include::10_ci.asciidoc[Contious Integration]
+include::11_best_practices.asciidoc[Best Practice]
+
+
+
+
+
