@@ -88,12 +88,12 @@ turn everything into HTML
 It is possible to convert the document to the EPub3 format. To do that you will need the [AsciiDoctor](http://asciidoctor.org/) and [Asciidoctor-EPUB3](https://github.com/asciidoctor/asciidoctor-epub3) Ruby gems. 
 
 Here's how:
-
-	$> gem install asciidoctor
-  $> NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install asciidoctor-epub3 --pre
-  $> gem install coderay 
-	$> asciidoctor-epub3 -D output testing-erlang.adoc
-
+```
+$> gem install asciidoctor
+$> NOKOGIRI_USE_SYSTEM_LIBRARIES=1 gem install asciidoctor-epub3 --pre
+$> gem install coderay 
+$> asciidoctor-epub3 -D output testing-erlang.adoc
+```
 
 ## Chapters
 
